@@ -1,0 +1,8 @@
+{
+  "_comment": "Copy this to settings.local.json and customize for your environment",
+  "env": {
+    "CUDA_VISIBLE_DEVICES": "0",
+    "TRANSFORMERS_CACHE": "~/.cache/huggingface",
+    "HF_HOME": "~/.cache/huggingface"
+  }
+}

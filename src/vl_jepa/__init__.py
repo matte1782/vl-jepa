@@ -1,0 +1,30 @@
+"""
+VL-JEPA Lecture Summarizer
+
+An event-aware lecture summarizer using V-JEPA visual encoder
+for real-time, context-aware summaries and retrieval.
+"""
+
+__version__ = "0.1.0"
+
+from vl_jepa.decoder import YDecoder
+from vl_jepa.detector import EventDetector
+from vl_jepa.encoder import ModelLoadError, VisualEncoder
+from vl_jepa.frame import FrameSampler
+from vl_jepa.index import EmbeddingIndex
+from vl_jepa.storage import Storage
+from vl_jepa.text import TextEncoder
+from vl_jepa.video import VideoDecodeError, VideoInput
+
+__all__ = [
+    "VideoInput",
+    "VideoDecodeError",
+    "FrameSampler",
+    "VisualEncoder",
+    "ModelLoadError",
+    "EventDetector",
+    "Storage",
+    "TextEncoder",
+    "YDecoder",
+    "EmbeddingIndex",
+]

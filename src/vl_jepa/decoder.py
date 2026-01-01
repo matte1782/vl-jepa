@@ -173,7 +173,9 @@ class YDecoder:
                 )
 
             # Decode and extract summary
-            full_text: str = self._tokenizer.decode(outputs[0], skip_special_tokens=True)
+            full_text: str = self._tokenizer.decode(
+                outputs[0], skip_special_tokens=True
+            )
             return full_text[len(prompt) :].strip()
 
         # Cross-platform timeout using ThreadPoolExecutor

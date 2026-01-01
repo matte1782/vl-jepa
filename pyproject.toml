@@ -56,8 +56,8 @@ all = [
 vl-jepa = "vl_jepa.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/username/vl-jepa"
-Repository = "https://github.com/username/vl-jepa"
+Homepage = "https://github.com/matte1782/lecture-mind"
+Repository = "https://github.com/matte1782/lecture-mind"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/vl_jepa"]
@@ -92,6 +92,7 @@ disallow_untyped_defs = true
 disallow_incomplete_defs = true
 check_untyped_defs = true
 strict_optional = true
+disable_error_code = ["type-arg"]  # numpy.ndarray generic params are noisy
 
 [[tool.mypy.overrides]]
 module = [

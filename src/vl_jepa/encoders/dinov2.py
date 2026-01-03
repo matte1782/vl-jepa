@@ -102,7 +102,7 @@ class DINOv2Encoder:
             processor = AutoImageProcessor.from_pretrained(cls.MODEL_NAME)
             model = AutoModel.from_pretrained(cls.MODEL_NAME)
             model = model.to(device)
-            model.set_grad_enabled(False)
+            model.train(False)  # Set to inference mode (equivalent to .eval())
 
             logger.info("DINOv2 loaded successfully on %s", device)
 

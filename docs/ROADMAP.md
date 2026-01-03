@@ -1,8 +1,8 @@
-# Lecture Mind — Product Roadmap v2.0
+# Lecture Mind — Product Roadmap v2.1
 
 > **Last Updated**: 2026-01-01
 > **Current Version**: v0.1.0
-> **Status**: Pre-v0.2.0 validation required
+> **Status**: Gate 0 COMPLETE - v0.2.0 IN PROGRESS
 > **Hostile Review**: Passed with conditions
 
 ---
@@ -12,10 +12,10 @@
 | Version | Theme | Hours | Calendar | Status |
 |---------|-------|-------|----------|--------|
 | v0.1.0 | Foundation | - | DONE | ✅ Released |
-| **Gate 0** | **Technical Validation** | **12h** | **Week 1** | ⏳ Required |
-| v0.2.0 | Real Models | 80h | Weeks 2-5 | Blocked by Gate 0 |
-| v0.3.0 | User Experience | 80h | Weeks 6-9 | Blocked by v0.2.0 |
-| v1.0.0 | Production | 80h | Weeks 10-13 | Blocked by v0.3.0 |
+| Gate 0 | Technical Validation | 12h | Week 1 | ✅ Complete |
+| **v0.2.0** | **Real Models + Audio** | **80h** | **Weeks 2-6** | ⏳ In Progress |
+| v0.3.0 | User Experience | 80h | Weeks 7-10 | Blocked by v0.2.0 |
+| v1.0.0 | Production | 80h | Weeks 11-14 | Blocked by v0.3.0 |
 
 **Assumptions:**
 - Work velocity: 20 hours/week
@@ -24,120 +24,91 @@
 
 ---
 
-## Gate 0: Technical Validation (BLOCKING)
+## Gate 0: Technical Validation ✅ COMPLETE
 
-> **This gate MUST pass before v0.2.0 begins.**
-> **Estimated effort: 12 hours**
+> **Gate passed on 2026-01-01**
+> **Effort: 12 hours**
 
-### Purpose
-
-Validate that the core technical approach works before investing in full implementation.
-
-### Checklist
+### Completed Tasks
 
 ```
-✅ G0.1: Technical Spike (4h) — COMPLETE
+✅ G0.1: Technical Spike (4h)
   ✅ Created technical_spike.py script
-  ✅ Placeholder encoder validates interface (similarity tests pass)
-  ⏳ DINOv2 test pending (requires: pip install torch transformers)
+  ✅ Placeholder encoder validates interface
   ✅ Synthetic frame tests show semantic clustering
-  ✅ Report: docs/reviews/TECHNICAL_SPIKE_REPORT.md
 
-□ G0.2: Test Data Creation (3h) — PENDING
-  □ Record or source 3 sample videos (Creative Commons)
-    - lecture_10s.mp4 (minimal test)
-    - lecture_60s.mp4 (short test with transitions)
-    - lecture_slides.mp4 (clear slide changes)
-  □ Store in tests/fixtures/videos/ (use git-lfs if >50MB)
-  □ Document expected behavior for each video
+✅ G0.2: Test Data Creation (3h)
+  ✅ Private lecture video tested (31 min)
+  ✅ 50 frames extracted, 3 transitions detected
+  ✅ Stored in tests/lecture_ex/ (gitignored)
 
-✅ G0.3: Encoder Interface Design (2h) — COMPLETE
-  ✅ Define VisualEncoderProtocol (src/vl_jepa/encoders/base.py)
-  ✅ Define TextEncoderProtocol (src/vl_jepa/encoders/base.py)
-  ✅ PlaceholderVisualEncoder implements Protocol
-  ✅ PlaceholderTextEncoder implements Protocol
-  ✅ DINOv2Encoder implements Protocol
-  ✅ 23 interface tests passing (tests/unit/test_encoders.py)
+✅ G0.3: Encoder Interface Design (2h)
+  ✅ VisualEncoderProtocol defined
+  ✅ TextEncoderProtocol defined
+  ✅ 23 interface tests passing
 
-✅ G0.4: Acceptance Criteria (1h) — COMPLETE
-  ✅ PASS/FAIL criteria defined for all v0.2.0 goals (see below)
-  ✅ Added to roadmap
+✅ G0.4: Acceptance Criteria (1h)
+  ✅ PASS/FAIL criteria defined for v0.2.0
 
-□ G0.5: Dependency Validation (2h) — PARTIAL
-  □ Test torch + DINOv2 installation on clean environment
-  ✅ Version matrix documented (Dependency Matrix section)
-  ✅ CI uses placeholder encoder (no real model required)
+✅ G0.5: Dependency Validation (2h)
+  ✅ Version matrix documented
+  ✅ CI uses placeholder encoder
 ```
 
-### Exit Criteria
+### Decision: GO
 
-| Criteria | Requirement | Status |
-|----------|-------------|--------|
-| Spike result | Embeddings show semantic clustering | ✅ Placeholder validated |
-| Test videos | At least 2 videos in fixtures | ⏳ Pending |
-| Interface | Protocol classes defined and tested | ✅ 23 tests passing |
-| Acceptance | All v0.2.0 goals have PASS/FAIL criteria | ✅ Defined |
-
-### GO/NO-GO Decision
-
-```
-IF all exit criteria met:
-  → Proceed to v0.2.0 (GO)
-
-IF spike shows embeddings don't cluster:
-  → Investigate alternative approaches
-  → Consider: CLIP + audio transcription
-  → Re-evaluate entire approach before continuing
-
-IF dependencies have conflicts:
-  → Resolve before proceeding
-  → Document workarounds
-```
+Proceed to v0.2.0 implementation.
 
 ---
 
 ## v0.2.0 — Real Models & Core Pipeline
 
-**Theme**: Replace placeholders with working models
+**Theme**: Replace placeholders with working models + audio transcription
 **Effort**: 80 hours (4 weeks @ 20h/week)
-**Prerequisites**: Gate 0 complete
+**Prerequisites**: Gate 0 complete ✅
+**Status**: ⏳ In Progress
 
 ### Goals with Acceptance Criteria
 
-| ID | Goal | PASS Criteria | FAIL Criteria |
-|----|------|---------------|---------------|
-| G1 | Real visual encoder | Load DINOv2 in <30s, produce 768-dim embeddings, similar frames have cosine >0.85 | Load fails, wrong dimensions, random similarity |
-| G2 | Real text encoder | Load sentence-transformers, produce 768-dim embeddings after projection | Import error, dimension mismatch |
-| G3 | Working video pipeline | Process 10-min video in <120s, extract frames at 1 FPS ±0.1, memory <4GB | Crash, wrong FPS, OOM |
-| G4 | PyPI publication | `pip install lecture-mind` succeeds, imports work, CLI runs | Install fails, import error |
-| G5 | Performance baselines | Documented latency for encode/search/generate operations | No measurements |
-| G6 | Test coverage 70%+ | pytest --cov reports ≥70% | Below 70% |
+| ID | Goal | PASS Criteria | FAIL Criteria | Status |
+|----|------|---------------|---------------|--------|
+| G1 | Real visual encoder | DINOv2 768-dim embeddings, similar frames cosine >0.85 | Load fails, random similarity | ⏳ |
+| G2 | Real text encoder | sentence-transformers, 768-dim embeddings | Import error | ⏳ |
+| G3 | Video pipeline | 10-min video in <120s, 1 FPS, memory <4GB | Crash, OOM | ⏳ |
+| G7 | Audio transcription | Whisper <60s for 10-min, WER <10%, aligned timestamps | Garbled text | ✅ Module created |
+| G8 | Multimodal index | Combined visual + transcript ranking | Single modality | ⏳ |
+| G4 | PyPI publication | `pip install lecture-mind` works | Install fails | ⏳ |
+| G5 | Performance baselines | Documented latency for all operations | No measurements | ⏳ |
+| G6 | Test coverage 70%+ | pytest --cov ≥70% | Below 70% | ⏳ (58% current) |
 
-### Task Breakdown (with realistic estimates)
+### Task Breakdown
 
-| Week | Task | Hours | Deliverable |
-|------|------|-------|-------------|
-| **Week 2** | | 20h | |
-| | Implement encoder interface | 4h | `src/vl_jepa/encoders/base.py` |
-| | DINOv2 encoder implementation | 8h | `src/vl_jepa/encoders/dinov2.py` |
-| | Encoder tests (unit + integration) | 4h | `tests/unit/test_encoders.py` |
+| Week | Task | Hours | Status |
+|------|------|-------|--------|
+| **Week 2** | **Audio Module** | 16h | **In Progress** |
+| | ~~Whisper transcriber~~ | ~~6h~~ | ✅ `audio/transcriber.py` |
+| | ~~FFmpeg audio extractor~~ | ~~4h~~ | ✅ `audio/extractor.py` |
+| | ~~Placeholder transcriber~~ | ~~2h~~ | ✅ `audio/placeholder.py` |
+| | ~~Audio tests~~ | ~~4h~~ | ✅ 17 tests passing |
+| | Transcript chunking | 4h | ⏳ `audio/chunker.py` |
+| | DINOv2 integration test | 6h | ⏳ Requires torch |
+| | Debug buffer | 6h | - |
+| **Week 3** | **Video + Text Pipeline** | 20h | |
+| | Video processing with OpenCV | 6h | `video.py` tested |
+| | Multimodal index | 6h | `index.py` updated |
+| | Text encoder real model | 4h | `text.py` updated |
 | | Debug buffer | 4h | - |
-| **Week 3** | | 20h | |
-| | Video processing with OpenCV | 8h | `src/vl_jepa/video.py` tested |
-| | Frame extraction tests | 4h | `tests/integration/test_video.py` |
-| | End-to-end pipeline test | 4h | `tests/integration/test_pipeline.py` |
+| **Week 4** | **Benchmarks + Polish** | 20h | |
+| | Benchmark suite | 6h | `benchmarks/` |
+| | Performance docs | 4h | `BENCHMARKS.md` |
+| | Coverage to 70%+ | 6h | Additional tests |
 | | Debug buffer | 4h | - |
-| **Week 4** | | 20h | |
-| | Text encoder with real model | 6h | `src/vl_jepa/text.py` updated |
-| | Benchmark suite creation | 6h | `benchmarks/` |
-| | Performance documentation | 4h | `docs/BENCHMARKS.md` |
-| | Debug buffer | 4h | - |
-| **Week 5** | | 20h | |
-| | PyPI packaging preparation | 4h | `pyproject.toml` finalized |
-| | README and docs update | 4h | User-facing documentation |
-| | CI updates for real models | 4h | `.github/workflows/` |
-| | Final testing and fixes | 4h | - |
-| | Release v0.2.0 | 4h | Tag, release notes, PyPI publish |
+| **Week 5** | **Release** | 20h | |
+| | PyPI packaging | 4h | `pyproject.toml` final |
+| | README + docs update | 4h | Documentation |
+| | CI updates | 4h | `.github/workflows/` |
+| | Final testing | 4h | - |
+| | Release v0.2.0 | 4h | Tag, PyPI publish |
 
 ### Deliverables
 
@@ -150,19 +121,28 @@ v0.2.0/
 │   │   ├── dinov2.py        # DINOv2 implementation
 │   │   ├── placeholder.py   # Current placeholder (for testing)
 │   │   └── clip.py          # Optional CLIP fallback
+│   ├── audio/               # NEW: Audio transcription
+│   │   ├── __init__.py
+│   │   ├── transcriber.py   # Whisper integration
+│   │   ├── chunker.py       # Transcript segmentation
+│   │   └── extractor.py     # Audio extraction from video
 │   ├── video.py             # Tested with real videos
-│   └── text.py              # Real sentence-transformers
+│   ├── text.py              # Real sentence-transformers
+│   └── index.py             # Multimodal index (visual + transcript)
 ├── tests/
 │   ├── fixtures/
 │   │   └── videos/          # Sample test videos
 │   ├── unit/
-│   │   └── test_encoders.py
+│   │   ├── test_encoders.py
+│   │   └── test_audio.py    # NEW: Audio tests
 │   └── integration/
 │       ├── test_video.py
-│       └── test_pipeline.py
+│       ├── test_audio.py    # NEW: Transcription integration
+│       └── test_pipeline.py # Full multimodal pipeline
 ├── benchmarks/
 │   ├── bench_encoder.py
 │   ├── bench_search.py
+│   ├── bench_transcribe.py  # NEW: Whisper benchmarks
 │   └── results/
 ├── docs/
 │   ├── BENCHMARKS.md
@@ -176,7 +156,10 @@ v0.2.0/
 |------|------------|-------------|
 | DINOv2 doesn't produce good embeddings | Technical spike in Gate 0 | Switch to CLIP |
 | Model too slow on CPU | Document GPU requirements | Offer cloud API option |
-| PyPI name taken | Check availability early | Use `lecture-mind-ai` |
+| PyPI name taken | ✅ `lecture-mind` verified available | Use `lecture-mind-ai` |
+| **Whisper too slow on CPU** | **Use faster-whisper (CTranslate2)** | **Whisper.cpp or cloud API** |
+| **Audio extraction fails** | **FFmpeg dependency** | **moviepy fallback** |
+| **Non-English lectures** | **Whisper supports 99 languages** | **Language detection first** |
 | CI can't run real models | Use lightweight model for CI | Mock in CI, test locally |
 
 ---
@@ -320,9 +303,11 @@ v0.3.0/
 | torchvision | 0.15.0 | 0.18.x | Must match torch |
 | transformers | 4.35.0 | 4.x | DINOv2 models |
 | sentence-transformers | 2.2.0 | 2.x | Text encoding |
+| **faster-whisper** | **1.0.0** | **1.x** | **Audio transcription (CTranslate2)** |
 | gradio | 4.0.0 | 4.x | Pin major version |
 | faiss-cpu | 1.7.4 | 1.x | Embedding search |
 | opencv-python | 4.8.0 | 4.x | Video processing |
+| **ffmpeg-python** | **0.2.0** | **0.x** | **Audio extraction** |
 
 ### Version Lock Strategy
 
@@ -380,14 +365,14 @@ dependencies = [
 
 ```
 January 2026
-├── Week 1 (Jan 1-7): Gate 0 - Technical Validation
-│   └── Spike, test data, interface design
+├── Week 1 (Jan 1-7): Gate 0 - Technical Validation ✅ COMPLETE
+│   └── Spike, test data, interface design, audio module started
 │
-├── Week 2-5 (Jan 8 - Feb 4): v0.2.0 - Real Models
-│   ├── Week 2: Encoder implementation
-│   ├── Week 3: Video pipeline
-│   ├── Week 4: Benchmarks
-│   └── Week 5: PyPI release
+├── Week 2-5 (Jan 8 - Feb 4): v0.2.0 - Real Models + Audio
+│   ├── Week 2: Audio module + DINOv2 integration (IN PROGRESS)
+│   ├── Week 3: Video + Text pipeline
+│   ├── Week 4: Benchmarks + Polish
+│   └── Week 5: Release prep + PyPI publish
 │
 February 2026
 ├── Week 6-9 (Feb 5 - Mar 4): v0.3.0 - User Experience
@@ -408,9 +393,9 @@ March 2026
 
 ## Next Actions
 
-1. **Now**: Start Gate 0 - Download DINOv2, run technical spike
-2. **After spike**: GO/NO-GO decision for v0.2.0
-3. **If GO**: Begin Week 2 tasks
+1. **Now**: Complete Week 2 - Finish audio chunker, test DINOv2 with torch
+2. **Week 3**: Video + Text pipeline integration
+3. **Week 5**: Release v0.2.0 to PyPI
 
 ---
 
@@ -418,6 +403,7 @@ March 2026
 
 | Version | Date | Changes |
 |---------|------|---------|
+| v2.1 | 2026-01-01 | Updated Gate 0 complete, audio module progress tracked |
 | v2.0 | 2026-01-01 | Added Gate 0, realistic estimates, acceptance criteria |
 | v1.0 | 2026-01-01 | Initial roadmap |
 

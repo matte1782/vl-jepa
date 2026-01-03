@@ -148,3 +148,59 @@ class TestTextEncoder:
         encoder = TextEncoder(model=None, projection=custom_proj)
 
         assert np.array_equal(encoder._projection, custom_proj)
+
+
+class TestTextEncoderRealModel:
+    """Tests for TextEncoder with real sentence-transformers model."""
+
+    @pytest.fixture
+    def encoder(self):
+        """Load real text encoder, skip if model not available."""
+        from vl_jepa.text import TextEncoder
+
+        enc = TextEncoder.load()
+        if enc._model is None:
+            pytest.skip("sentence-transformers model not available")
+        return enc
+
+    @pytest.mark.unit
+    def test_real_model_output_shape(self, encoder):
+        """Real model produces 768-dim embeddings."""
+        embedding = encoder.encode("Test sentence for embedding")
+        assert embedding.shape == (768,)
+
+    @pytest.mark.unit
+    def test_real_model_l2_normalized(self, encoder):
+        """Real model embeddings are L2 normalized."""
+        embedding = encoder.encode("Another test sentence")
+        norm = np.linalg.norm(embedding)
+        assert abs(norm - 1.0) < 1e-5
+
+    @pytest.mark.unit
+    def test_real_model_semantic_similarity(self, encoder):
+        """Related texts have higher similarity than unrelated texts."""
+        emb1 = encoder.encode("machine learning algorithms")
+        emb2 = encoder.encode("deep learning neural networks")
+        emb3 = encoder.encode("cooking recipes for dinner")
+
+        sim_related = np.dot(emb1, emb2)
+        sim_unrelated = np.dot(emb1, emb3)
+
+        assert sim_related > sim_unrelated
+        assert sim_related > 0.5  # Related texts should be similar
+        assert sim_unrelated < 0.5  # Unrelated texts should be dissimilar
+
+    @pytest.mark.unit
+    def test_real_model_dtype(self, encoder):
+        """Embeddings are float32."""
+        embedding = encoder.encode("Test dtype")
+        assert embedding.dtype == np.float32
+
+    @pytest.mark.unit
+    def test_real_model_deterministic(self, encoder):
+        """Same input produces same output."""
+        text = "Deterministic test input"
+        emb1 = encoder.encode(text)
+        emb2 = encoder.encode(text)
+
+        assert np.allclose(emb1, emb2, atol=1e-6)

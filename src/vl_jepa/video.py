@@ -3,14 +3,17 @@ SPEC: S001 - Video File Ingestion
 SPEC: S002 - Stream Ingestion
 
 Video input handling for files and live streams.
+
+IMPLEMENTS: v0.2.0 G3 - Working video pipeline
 """
 
 from __future__ import annotations
 
 import logging
 from collections.abc import Iterator
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
+from typing import Any
 
 import cv2
 import numpy as np
@@ -33,6 +36,33 @@ class Frame:
 
     data: np.ndarray
     timestamp: float  # seconds from video start
+
+
+@dataclass
+class VideoMetadata:
+    """Video file metadata.
+
+    IMPLEMENTS: v0.2.0 G3 - Video metadata extraction
+    """
+
+    path: str
+    width: int
+    height: int
+    fps: float
+    frame_count: int
+    duration: float  # seconds
+    codec: str = ""
+    extra: dict[str, Any] = field(default_factory=dict)
+
+    def __str__(self) -> str:
+        """Human-readable summary."""
+        return (
+            f"Video: {self.path}\n"
+            f"  Resolution: {self.width}x{self.height}\n"
+            f"  FPS: {self.fps:.2f}\n"
+            f"  Duration: {self.duration:.1f}s ({self.duration / 60:.1f} min)\n"
+            f"  Frames: {self.frame_count}"
+        )
 
 
 class VideoInput:
@@ -143,6 +173,37 @@ class VideoInput:
         """Get frame height."""
         return int(self._capture.get(cv2.CAP_PROP_FRAME_HEIGHT))
 
+    @property
+    def duration(self) -> float:
+        """Get video duration in seconds."""
+        if self.fps > 0:
+            return self.frame_count / self.fps
+        return 0.0
+
+    @property
+    def codec(self) -> str:
+        """Get video codec fourcc code."""
+        fourcc = int(self._capture.get(cv2.CAP_PROP_FOURCC))
+        return "".join([chr((fourcc >> 8 * i) & 0xFF) for i in range(4)])
+
+    def get_metadata(self) -> VideoMetadata:
+        """Get video metadata.
+
+        IMPLEMENTS: v0.2.0 G3
+
+        Returns:
+            VideoMetadata object with all video properties
+        """
+        return VideoMetadata(
+            path=self._source,
+            width=self.width,
+            height=self.height,
+            fps=self.fps,
+            frame_count=self.frame_count,
+            duration=self.duration,
+            codec=self.codec,
+        )
+
     def frames(self) -> Iterator[Frame]:
         """Iterate over video frames.
 
@@ -177,6 +238,79 @@ class VideoInput:
             data_rgb = cv2.cvtColor(data, cv2.COLOR_BGR2RGB)
 
             yield Frame(data=data_rgb, timestamp=timestamp)
+
+    def sample_frames(
+        self,
+        target_fps: float = 1.0,
+        max_frames: int | None = None,
+    ) -> Iterator[Frame]:
+        """Sample frames at a target frame rate.
+
+        IMPLEMENTS: v0.2.0 G3 - Extract frames at 1 FPS
+
+        Args:
+            target_fps: Target frames per second (default: 1.0)
+            max_frames: Maximum frames to extract (None = all)
+
+        Yields:
+            Frame objects sampled at target_fps
+
+        Example:
+            for frame in video.sample_frames(target_fps=1.0):
+                # Process one frame per second
+                embed = encoder.encode_single(frame.data)
+        """
+        if target_fps <= 0:
+            raise ValueError(f"target_fps must be positive, got {target_fps}")
+
+        video_fps = self.fps
+        if video_fps <= 0:
+            logger.warning("Unknown video FPS, sampling every frame")
+            video_fps = target_fps
+
+        # Calculate frame interval
+        frame_interval = video_fps / target_fps
+        next_frame_idx = 0.0
+        current_frame_idx = 0
+        frames_yielded = 0
+
+        logger.info(
+            "Sampling at %.2f FPS (interval: %.1f frames) from %.2f FPS video",
+            target_fps,
+            frame_interval,
+            video_fps,
+        )
+
+        while True:
+            ret, data = self._capture.read()
+
+            if not ret:
+                break
+
+            # Check if this frame should be sampled
+            if current_frame_idx >= next_frame_idx:
+                timestamp = self._capture.get(cv2.CAP_PROP_POS_MSEC) / 1000.0
+
+                # Convert BGR to RGB
+                data_rgb = cv2.cvtColor(data, cv2.COLOR_BGR2RGB)
+
+                yield Frame(data=data_rgb, timestamp=timestamp)
+
+                frames_yielded += 1
+                next_frame_idx += frame_interval
+
+                if max_frames is not None and frames_yielded >= max_frames:
+                    logger.info("Reached max_frames limit: %d", max_frames)
+                    break
+
+            current_frame_idx += 1
+
+        logger.info(
+            "Sampled %d frames from %d total (%.1f%% of video)",
+            frames_yielded,
+            current_frame_idx,
+            (frames_yielded / max(current_frame_idx, 1)) * 100,
+        )
 
     def close(self) -> None:
         """Release video capture resources."""

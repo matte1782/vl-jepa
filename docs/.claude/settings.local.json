@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python -c:*)"
+      "Bash(python -c:*)",
+      "Bash(\"C:\\\\Users\\\\matte\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" -c \"import faiss; print\\(f''FAISS version: {faiss.__version__}''\\)\")",
+      "Bash(pip install:*)",
+      "Bash(ruff format:*)",
+      "Bash(ruff check:*)",
+      "Bash(python -m mypy:*)"
     ]
   }
 }

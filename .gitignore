@@ -61,3 +61,4 @@ tests/lecture_ex/
 # OS
 .DS_Store
 Thumbs.db
+.claude-backup/

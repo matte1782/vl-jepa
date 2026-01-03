@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "vl-jepa"
+name = "lecture-mind"
 version = "0.1.0"
 description = "Event-aware lecture summarizer using V-JEPA"
 readme = "README.md"
@@ -45,15 +45,18 @@ ml = [
     "transformers>=4.35.0",
     "faiss-cpu>=1.7.4",
 ]
+audio = [
+    "faster-whisper>=1.0.0",
+]
 ui = [
     "gradio>=4.0.0",
 ]
 all = [
-    "vl-jepa[dev,ml,ui]",
+    "lecture-mind[dev,ml,audio,ui]",
 ]
 
 [project.scripts]
-vl-jepa = "vl_jepa.cli:main"
+lecture-mind = "vl_jepa.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/matte1782/lecture-mind"
@@ -103,6 +106,7 @@ module = [
     "torch.*",
     "gradio.*",
     "safetensors.*",
+    "faster_whisper.*",
 ]
 ignore_missing_imports = true
 

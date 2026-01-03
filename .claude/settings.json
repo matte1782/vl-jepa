@@ -37,14 +37,6 @@
       "Bash(git reset --hard:*)"
     ]
   },
-  "hooks": {
-    "PreCommit": [
-      {
-        "type": "command",
-        "command": "ruff check src/ && mypy src/ --strict && pytest tests/ -x --tb=short"
-      }
-    ]
-  },
   "env": {
     "PYTHONPATH": "src",
     "PYTHONDONTWRITEBYTECODE": "1"

@@ -8,7 +8,6 @@
       "Bash(python -m mypy:*)",
       "Bash(python -m pytest:*)",
       "Bash(grep:*)",
-      "Skill(hostile-review)",
       "Bash(cd:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",

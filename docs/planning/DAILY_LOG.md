@@ -211,13 +211,36 @@ Review: docs/reviews/HOSTILE_REVIEW_DAY3_2026-01-02.md
 
 **Total Planned**: 4h
 
+### Execution Log
+
+| Time | Task | Status | Notes |
+|------|------|--------|-------|
+| - | 4.1 Text encoder | ⚠️ ENV ISSUE | Code works, pytest Python has broken deps |
+| - | 4.2 Whisper integration | ✅ DONE | 380 segments from 31-min lecture |
+| - | 4.3 Audio-visual sync | ✅ DONE | Strategy doc already complete |
+
+### Environment Issue Found
+
+**Issue:** Two Python installations with different package states:
+- `C:\Users\matte\AppData\Local\Microsoft\WindowsApps\python.exe` - Works (sentence-transformers OK)
+- `C:\Users\matte\AppData\Local\Programs\Python\Python313\python.exe` - Broken (torchvision/pytorch mismatch)
+
+**Impact:** Real model tests skip in pytest, but code verified working manually
+**Fix Required:** Create venv or reinstall packages in pytest Python
+
 ### Hostile Reviewer Checkpoint
 
 ```
-Status: PENDING
-Issues Found: -
-Verdict: -
+Status: ✅ APPROVED
+Issues Found: 0 critical, 1 major, 1 minor
+Verdict: GO - Proceed to Day 5
+Review: docs/reviews/HOSTILE_REVIEW_DAY4_2026-01-03.md
 ```
+
+**Key Findings:**
+- Whisper integration: 380 segments from 31-min lecture
+- Environment issue: pytest Python has broken deps (documented)
+- Week 2 exit criteria: 8/9 met
 
 ---
 

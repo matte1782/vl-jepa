@@ -18,7 +18,8 @@
       "Bash(ruff check:*)",
       "Bash(cat:*)",
       "Bash(mkdir:*)",
-      "Bash(python -m ruff:*)"
+      "Bash(python -m ruff:*)",
+      "Bash(python:*)"
     ]
   }
 }

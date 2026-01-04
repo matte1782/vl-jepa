@@ -1,17 +1,23 @@
+av==16.0.1
 certifi==2026.1.4
 charset-normalizer==3.4.4
 colorama==0.4.6
+coloredlogs==15.0.1
 coverage==7.13.1
+ctranslate2==4.6.2
 faiss-cpu==1.13.2
+faster-whisper==1.2.1
 filelock==3.20.2
+flatbuffers==25.12.19
 fsspec==2025.12.0
 huggingface-hub==0.36.0
+humanfriendly==10.0
 hypothesis==6.148.11
 idna==3.11
 iniconfig==2.3.0
 Jinja2==3.1.6
 joblib==1.5.3
--e git+https://github.com/matte1782/lecture-mind.git@66ef614f728f776bb8db256f3bafb56f2d81dc6b#egg=lecture_mind
+-e git+https://github.com/matte1782/lecture-mind.git@9c984fb1a2130a09f8e37dde4cd5bc83111a60b9#egg=lecture_mind
 librt==0.7.7
 llvmlite==0.46.0
 MarkupSafe==3.0.3
@@ -22,14 +28,17 @@ mypy_extensions==1.1.0
 networkx==3.6.1
 numba==0.63.1
 numpy==2.2.6
+onnxruntime==1.23.2
 openai-whisper==20250625
 opencv-python==4.12.0.88
 packaging==25.0
 pathspec==0.12.1
 pillow==12.1.0
 pluggy==1.6.0
+protobuf==6.33.2
 py-cpuinfo==9.0.0
 Pygments==2.19.2
+pyreadline3==3.5.4
 pytest==9.0.2
 pytest-benchmark==5.2.3
 pytest-cov==7.0.0

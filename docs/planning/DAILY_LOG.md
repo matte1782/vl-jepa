@@ -8,12 +8,12 @@
 
 ## Progress Summary
 
-| Week | Mon | Tue | Wed | Thu | Fri | Status |
-|------|-----|-----|-----|-----|-----|--------|
-| Week 2 | Jan 2 | Jan 3 | Jan 4 | Jan 5 | Jan 6 | ⏳ In Progress |
-| Week 3 | Jan 9 | Jan 10 | Jan 11 | Jan 12 | Jan 13 | Blocked |
-| Week 4 | Jan 16 | Jan 17 | Jan 18 | Jan 19 | Jan 20 | Blocked |
-| Week 5 | Jan 23 | Jan 24 | Jan 25 | Jan 26 | Jan 27 | Blocked |
+| Week | Focus | Days | Status |
+|------|-------|------|--------|
+| Week 2 | Audio Module + DINOv2 | Jan 2-6 | ✅ Complete |
+| Week 3 | Video + Text Pipeline | Jan 4 | ✅ Complete |
+| Week 4 | Benchmarks + Polish | Next | ⏳ In Progress |
+| Week 5 | Release v0.2.0 | Blocked | Blocked by Week 4 |
 
 ---
 
@@ -725,6 +725,128 @@ eee5577 Week 3 Day 2: Real lecture video pipeline with performance baselines
 2. Performance documentation
 3. Coverage push to 75%+
 4. Prepare for v0.2.0 release
+
+---
+
+## Week 4: Benchmarks + Polish
+
+---
+
+## Week 4 Plan
+
+**Focus**: Formalize benchmarks, document performance, prepare for release
+**Duration**: 5 days
+**Goal**: Production-ready v0.2.0 package
+
+### Week 4 Objectives
+
+| Objective | Priority | Est. Hours | Deliverable |
+|-----------|----------|------------|-------------|
+| Implement benchmark suite | HIGH | 4h | Working benchmarks |
+| Create BENCHMARKS.md | HIGH | 2h | Performance docs |
+| Coverage polish (75%+) | MEDIUM | 3h | +4% coverage |
+| Pre-release verification | HIGH | 2h | Package ready |
+| Week wrap-up | LOW | 1h | Documentation |
+
+**Total Estimated**: 12h across 5 days
+
+### Coverage Strategy
+
+**Easy Wins (target first):**
+- `storage.py`: 64% → 80% (+16%)
+- `index.py`: 67% → 80% (+13%)
+- `decoder.py`: 61% → 75% (+14%)
+
+**Skip for now (require real models):**
+- `transcriber.py`: 18% (needs Whisper)
+- `dinov2.py`: 23% (needs DINOv2)
+
+### Daily Breakdown
+
+---
+
+## Day 1: Benchmark Implementation
+
+### Plan
+
+| # | Task | Hours | Deliverable | PASS Criteria |
+|---|------|-------|-------------|---------------|
+| 1 | Implement embedding index benchmark | 1h | Working test | Runs without skip |
+| 2 | Implement query pipeline benchmark | 1h | Working test | Measures latency |
+| 3 | Implement visual encoder benchmark | 1h | Working test | GPU/CPU timing |
+| 4 | Run and verify benchmarks | 1h | Results | All pass |
+
+**Total Planned**: 4h
+
+---
+
+## Day 2: Performance Documentation
+
+### Plan
+
+| # | Task | Hours | Deliverable | PASS Criteria |
+|---|------|-------|-------------|---------------|
+| 1 | Create BENCHMARKS.md | 1h | New file | Structure complete |
+| 2 | Document Week 3 baselines | 0.5h | Table | All metrics |
+| 3 | Add benchmark methodology | 0.5h | Section | Reproducible |
+
+**Total Planned**: 2h
+
+---
+
+## Day 3: Coverage Polish
+
+### Plan
+
+| # | Task | Hours | Deliverable | PASS Criteria |
+|---|------|-------|-------------|---------------|
+| 1 | Add storage.py tests | 1h | New tests | 64% → 75%+ |
+| 2 | Add index.py tests | 1h | New tests | 67% → 75%+ |
+| 3 | Add decoder.py tests | 1h | New tests | 61% → 70%+ |
+
+**Total Planned**: 3h
+
+---
+
+## Day 4: Pre-Release Verification
+
+### Plan
+
+| # | Task | Hours | Deliverable | PASS Criteria |
+|---|------|-------|-------------|---------------|
+| 1 | Verify pyproject.toml | 0.5h | Reviewed | All fields correct |
+| 2 | Test pip install -e . | 0.5h | Verified | Installs cleanly |
+| 3 | Check package structure | 0.5h | Verified | All modules import |
+| 4 | Update version to 0.2.0-rc1 | 0.5h | Version bump | Ready for release |
+
+**Total Planned**: 2h
+
+---
+
+## Day 5: Week Wrap-up
+
+### Plan
+
+| # | Task | Hours | Deliverable | PASS Criteria |
+|---|------|-------|-------------|---------------|
+| 1 | Run hostile reviewer | 0.5h | Review | GO decision |
+| 2 | Update ROADMAP | 0.25h | Updated | Week 4 complete |
+| 3 | Final commit | 0.25h | Commit | Clean history |
+
+**Total Planned**: 1h
+
+---
+
+## Week 4 Exit Criteria
+
+```
+[ ] Benchmark suite implemented (not stubs)
+[ ] BENCHMARKS.md created with measurements
+[ ] Coverage ≥ 73% (stretch: 75%)
+[ ] Package installs cleanly
+[ ] All tests pass
+[ ] Hostile review: GO
+```
 
 ---
 

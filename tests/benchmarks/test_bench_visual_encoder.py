@@ -23,7 +23,7 @@ class TestVisualEncoderBenchmarks:
         Then: Encoding completes in <200ms per frame
         """
         # Arrange
-        batch = np.random.uniform(-1.0, 1.0, (4, 3, 224, 224)).astype(np.float32)
+        np.random.uniform(-1.0, 1.0, (4, 3, 224, 224)).astype(np.float32)
 
         # Act
         # from vl_jepa.encoder import VisualEncoder

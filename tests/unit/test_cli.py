@@ -120,3 +120,93 @@ class TestCLI:
 
         setup_logging(verbose=False)
         assert root.level == logging.INFO
+
+    @pytest.mark.unit
+    def test_main_no_command(self, capsys):
+        """
+        SPEC: S012
+        TEST_ID: T012.3
+
+        Given: No command specified
+        When: main() is called
+        Then: Returns exit code 1 and prints help message
+        """
+        import sys
+        from unittest.mock import patch
+
+        from vl_jepa.cli import main
+
+        with patch.object(sys, "argv", ["vl-jepa"]):
+            exit_code = main()
+
+        assert exit_code == 1
+        captured = capsys.readouterr()
+        assert "No command specified" in captured.out
+
+    @pytest.mark.unit
+    def test_main_verbose_flag(self):
+        """
+        SPEC: S012
+        TEST_ID: T012.4
+
+        Given: --verbose flag with no command
+        When: main() is called
+        Then: Logging is set to DEBUG level
+        """
+        import logging
+        import sys
+        from unittest.mock import patch
+
+        from vl_jepa.cli import main
+
+        # Reset logging
+        root = logging.getLogger()
+        for handler in root.handlers[:]:
+            root.removeHandler(handler)
+
+        with patch.object(sys, "argv", ["vl-jepa", "--verbose"]):
+            main()
+
+        assert root.level == logging.DEBUG
+
+    @pytest.mark.unit
+    def test_cmd_demo_not_implemented(self):
+        """
+        SPEC: S012
+        TEST_ID: T012.5
+
+        Given: demo command
+        When: cmd_demo is called
+        Then: Returns exit code 1 (not implemented)
+        """
+        import argparse
+
+        from vl_jepa.cli import cmd_demo
+
+        args = argparse.Namespace(port=7860, share=False)
+        exit_code = cmd_demo(args)
+        assert exit_code == 1
+
+    @pytest.mark.unit
+    def test_parse_query_top_k(self):
+        """Parse query with custom top-k."""
+        from vl_jepa.cli import parse_args
+
+        args = parse_args(["query", "data/", "-q", "test", "-k", "10"])
+        assert args.top_k == 10
+
+    @pytest.mark.unit
+    def test_parse_process_custom_fps(self):
+        """Parse process with custom FPS."""
+        from vl_jepa.cli import parse_args
+
+        args = parse_args(["process", "video.mp4", "--fps", "2.0"])
+        assert args.fps == 2.0
+
+    @pytest.mark.unit
+    def test_parse_process_custom_threshold(self):
+        """Parse process with custom threshold."""
+        from vl_jepa.cli import parse_args
+
+        args = parse_args(["process", "video.mp4", "--threshold", "0.5"])
+        assert args.threshold == 0.5

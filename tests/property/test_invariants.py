@@ -56,7 +56,7 @@ class TestFrameSamplerProperties:
         Property: For ANY valid input resolution, output is exactly 224x224x3
         """
         # Arrange
-        input_frame = np.random.randint(0, 255, (height, width, 3), dtype=np.uint8)
+        np.random.randint(0, 255, (height, width, 3), dtype=np.uint8)
 
         # Act
         # from vl_jepa.frame import FrameSampler

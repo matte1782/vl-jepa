@@ -12,7 +12,10 @@ import pytest
 
 from vl_jepa.audio.chunker import TranscriptChunker
 from vl_jepa.audio.placeholder import PlaceholderTranscriber
-from vl_jepa.encoders.placeholder import PlaceholderTextEncoder, PlaceholderVisualEncoder
+from vl_jepa.encoders.placeholder import (
+    PlaceholderTextEncoder,
+    PlaceholderVisualEncoder,
+)
 from vl_jepa.multimodal_index import MultimodalIndex, RankingConfig
 
 

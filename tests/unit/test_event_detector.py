@@ -78,7 +78,7 @@ class TestEventDetector:
 
         # Add noise
         noisy_embeddings = []
-        for i in range(20):
+        for _ in range(20):
             noise = np.random.randn(768).astype(np.float32) * 0.1
             noisy = base + noise
             noisy = noisy / np.linalg.norm(noisy)

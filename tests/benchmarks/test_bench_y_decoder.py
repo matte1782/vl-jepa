@@ -23,11 +23,6 @@ class TestYDecoderBenchmarks:
         Then: Generation completes in <30s
         """
         # Arrange
-        context = {
-            "previous_summary": "Introduction to machine learning",
-            "ocr_text": "Supervised Learning: Classification vs Regression",
-            "timestamp": 120.5,
-        }
 
         # Act
         # from vl_jepa.decoder import YDecoder

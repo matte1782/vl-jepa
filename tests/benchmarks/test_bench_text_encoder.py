@@ -22,7 +22,6 @@ class TestTextEncoderBenchmarks:
         Then: Encoding completes in <50ms
         """
         # Arrange
-        query = "What is gradient descent and how does it work in neural networks?"
 
         # Act
         # from vl_jepa.text import TextEncoder

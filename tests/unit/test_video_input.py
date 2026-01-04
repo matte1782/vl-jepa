@@ -6,7 +6,6 @@ TEST_IDs: T001.1-T001.6, T002.1, T002.3
 IMPLEMENTS: v0.2.0 Week 3 - Video processing tests
 """
 
-import tempfile
 from pathlib import Path
 
 import cv2

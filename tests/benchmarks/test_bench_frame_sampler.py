@@ -23,7 +23,7 @@ class TestFrameSamplerBenchmarks:
         Then: Processing completes in <20ms
         """
         # Arrange
-        input_frame = np.random.randint(0, 255, (1080, 1920, 3), dtype=np.uint8)
+        np.random.randint(0, 255, (1080, 1920, 3), dtype=np.uint8)
 
         # Act
         # from vl_jepa.frame import FrameSampler

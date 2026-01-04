@@ -73,7 +73,7 @@ class TestVideoFrameExtraction:
         """Test that frame count matches expected for duration."""
         try:
             with VideoInput.open(sample_video_path) as video:
-                meta = video.get_metadata()
+                video.get_metadata()
 
                 # Sample a shorter segment
                 target_seconds = 30

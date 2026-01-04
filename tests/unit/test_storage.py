@@ -101,7 +101,7 @@ class TestStorage:
         np.save(temp_base, embeddings)
 
         # Act - initialize storage (should recover)
-        storage = Storage(temp_lecture_dir)
+        Storage(temp_lecture_dir)
 
         # Assert - final file should exist after recovery
         final_path = temp_lecture_dir / "embeddings.npy"
@@ -120,7 +120,7 @@ class TestStorage:
         Then: WAL mode is enabled
         """
         # Arrange & Act
-        storage = Storage(temp_db_path.parent)
+        Storage(temp_db_path.parent)
 
         # Assert - check WAL mode
         conn = sqlite3.connect(temp_db_path)

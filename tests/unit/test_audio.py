@@ -8,10 +8,10 @@ import pytest
 
 from vl_jepa.audio import (
     PlaceholderTranscriber,
+    TranscriberProtocol,
     TranscriptChunk,
     TranscriptChunker,
     TranscriptSegment,
-    TranscriberProtocol,
     check_ffmpeg_available,
     chunk_transcript,
     validate_segments,

@@ -17,7 +17,7 @@ import numpy as np
 import pytest
 
 if TYPE_CHECKING:
-    from vl_jepa.audio.base import TranscriptSegment
+    pass
 
 logger = logging.getLogger(__name__)
 
@@ -42,8 +42,8 @@ def _skip_if_no_ffmpeg() -> None:
 
 def _skip_if_no_models() -> None:
     """Skip test if ML models not available."""
-    from vl_jepa.encoders.dinov2 import check_dinov2_available
     from vl_jepa.audio.transcriber import check_whisper_available
+    from vl_jepa.encoders.dinov2 import check_dinov2_available
 
     if not check_dinov2_available():
         pytest.skip("DINOv2 dependencies not available")
@@ -183,8 +183,8 @@ class TestRealVideoDINOv2Encoding:
         When: Encoded with DINOv2
         Then: Produces 768-dim normalized embeddings
         """
-        from vl_jepa.video import VideoInput
         from vl_jepa.frame import FrameSampler
+        from vl_jepa.video import VideoInput
 
         sampler = FrameSampler(mode="center_crop")
         embeddings = []
@@ -234,8 +234,8 @@ class TestRealVideoDINOv2Encoding:
         When: Encoded with DINOv2
         Then: Adjacent frames are more similar than distant frames
         """
-        from vl_jepa.video import VideoInput
         from vl_jepa.frame import FrameSampler
+        from vl_jepa.video import VideoInput
 
         sampler = FrameSampler(mode="center_crop")
 
@@ -375,11 +375,11 @@ class TestFullRealPipeline:
         Then: Multimodal index is searchable with semantic queries
         """
         _skip_if_no_ffmpeg()
-        from vl_jepa.video import VideoInput
-        from vl_jepa.frame import FrameSampler
-        from vl_jepa.audio.extractor import extract_audio
         from vl_jepa.audio.chunker import TranscriptChunker
+        from vl_jepa.audio.extractor import extract_audio
+        from vl_jepa.frame import FrameSampler
         from vl_jepa.multimodal_index import MultimodalIndex, RankingConfig
+        from vl_jepa.video import VideoInput
 
         timings = {}
         index = MultimodalIndex(dimension=768)
@@ -506,11 +506,11 @@ class TestFullRealPipeline:
         Then: Visual and transcript entries are temporally aligned
         """
         _skip_if_no_ffmpeg()
-        from vl_jepa.video import VideoInput
-        from vl_jepa.frame import FrameSampler
-        from vl_jepa.audio.extractor import extract_audio
         from vl_jepa.audio.chunker import TranscriptChunker
+        from vl_jepa.audio.extractor import extract_audio
+        from vl_jepa.frame import FrameSampler
         from vl_jepa.multimodal_index import MultimodalIndex
+        from vl_jepa.video import VideoInput
 
         index = MultimodalIndex(dimension=768)
         sampler = FrameSampler(mode="center_crop")
@@ -533,7 +533,7 @@ class TestFullRealPipeline:
         segments = whisper_transcriber.transcribe(str(audio_path))
 
         chunker = TranscriptChunker(window_size=10.0, overlap=2.0)
-        for i, chunk in enumerate(chunker.chunk(segments)):
+        for _i, chunk in enumerate(chunker.chunk(segments)):
             embedding = text_encoder.encode(chunk.text)
             index.add_transcript(
                 embedding,

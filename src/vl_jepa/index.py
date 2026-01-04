@@ -120,16 +120,19 @@ class EmbeddingIndex:
 
         # Check if we need to transition to IVF
         new_size = self.size + len(embeddings)
+        transitioned_to_ivf = False
         if new_size >= self.IVF_THRESHOLD and not self._use_ivf:
             self._transition_to_ivf(embeddings)
+            transitioned_to_ivf = True
 
-        # Add to index
-        if self._index is not None:
-            self._index.add(embeddings)
-        else:
-            # Numpy fallback
-            for emb in embeddings:
-                self._embeddings.append(emb)
+        # Add to index (skip if just transitioned - IVF already has the embeddings)
+        if not transitioned_to_ivf:
+            if self._index is not None:
+                self._index.add(embeddings)
+            else:
+                # Numpy fallback
+                for emb in embeddings:
+                    self._embeddings.append(emb)
 
         # Update mappings
         self._id_map.extend(ids)

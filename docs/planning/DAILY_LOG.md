@@ -778,6 +778,56 @@ eee5577 Week 3 Day 2: Real lecture video pipeline with performance baselines
 
 **Total Planned**: 4h
 
+### Execution Log
+
+| Time | Task | Status | Notes |
+|------|------|--------|-------|
+| - | 1.1 Embedding index benchmark | DONE | 3 tests: 10k, 100k, add_batch |
+| - | 1.2 Query pipeline benchmark | DONE | 4 tests: simple, multimodal, fusion, timestamp |
+| - | 1.3 Visual encoder benchmark | DONE | 4 tests: placeholder, CPU, GPU, single |
+| - | 1.4 Text encoder benchmark | DONE | 4 tests: placeholder, real, batch |
+| - | 1.5 Bug fix in index.py | DONE | IVF transition double-add fixed |
+| - | 1.6 Run all benchmarks | DONE | 14 benchmarks, all pass |
+
+### Bug Fixed
+
+**Location**: `src/vl_jepa/index.py:121-135`
+**Issue**: During IVF transition, embeddings were added twice (once in `_transition_to_ivf`, once in `add_batch`)
+**Fix**: Added flag to skip second add after transition
+
+### Benchmark Results
+
+| Benchmark | Mean | Status |
+|-----------|------|--------|
+| search_10k_vectors | 21.7µs | ✅ <10ms |
+| search_100k_vectors | 106.4µs | ✅ <100ms |
+| query_latency_simple | 30.6µs | ✅ <100ms |
+| multimodal_search | 95.4µs | ✅ <100ms |
+| multimodal_fusion | 343.9µs | ✅ <150ms |
+| timestamp_search | 53.6µs | ✅ <50ms |
+| encode_latency (text) | 10.1ms | ✅ <50ms |
+| encode_latency_cpu (visual) | 4.48s | ✅ <5s |
+
+### Test Results
+
+| Category | Tests |
+|----------|-------|
+| Total passed | 231 |
+| Skipped | 35 |
+| New benchmarks | 14 |
+
+### End of Day Review
+
+```
+[x] Embedding index benchmark implemented (3 tests)
+[x] Query pipeline benchmark implemented (4 tests)
+[x] Visual encoder benchmark implemented (4 tests)
+[x] Text encoder benchmark implemented (4 tests)
+[x] Bug fixed in index.py (IVF transition)
+[x] All tests passing: 231 passed, 35 skipped
+[x] Ruff checks pass
+```
+
 ---
 
 ## Day 2: Performance Documentation

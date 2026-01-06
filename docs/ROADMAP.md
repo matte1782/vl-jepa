@@ -1,9 +1,9 @@
 # Lecture Mind — Product Roadmap v2.1
 
-> **Last Updated**: 2026-01-04
-> **Current Version**: v0.1.0
-> **Status**: Gate 0 COMPLETE - v0.2.0 IN PROGRESS (Week 3 Complete)
-> **Hostile Review**: Passed with conditions
+> **Last Updated**: 2026-01-06
+> **Current Version**: v0.2.0-rc1
+> **Status**: Gate 0 COMPLETE - v0.2.0 IN PROGRESS (Week 4 Complete)
+> **Hostile Review**: GO - Week 4 approved
 
 ---
 
@@ -98,11 +98,11 @@ Proceed to v0.2.0 implementation.
 | | Multimodal index | 6h | ✅ 98% coverage |
 | | Text encoder real model | 4h | ✅ `text.py` validated |
 | | Debug buffer | 4h | ✅ Used for fixes |
-| **Week 4** | **Benchmarks + Polish** | 20h | |
-| | Benchmark suite | 6h | `benchmarks/` |
-| | Performance docs | 4h | `BENCHMARKS.md` |
-| | Coverage to 70%+ | 6h | Additional tests |
-| | Debug buffer | 4h | - |
+| **Week 4** | **Benchmarks + Polish** | 20h | ✅ Complete |
+| | ~~Benchmark suite~~ | ~~6h~~ | ✅ `tests/benchmarks/` |
+| | ~~Performance docs~~ | ~~4h~~ | ✅ `BENCHMARKS.md` |
+| | ~~Coverage to 70%+~~ | ~~6h~~ | ✅ 74% achieved |
+| | ~~Debug buffer~~ | ~~4h~~ | ✅ Used for polish |
 | **Week 5** | **Release** | 20h | |
 | | PyPI packaging | 4h | `pyproject.toml` final |
 | | README + docs update | 4h | Documentation |
@@ -371,8 +371,8 @@ January 2026
 ├── Week 2-5 (Jan 8 - Feb 4): v0.2.0 - Real Models + Audio
 │   ├── Week 2: Audio module + DINOv2 integration ✅ COMPLETE
 │   ├── Week 3: Video + Text pipeline ✅ COMPLETE
-│   ├── Week 4: Benchmarks + Polish (NEXT)
-│   └── Week 5: Release prep + PyPI publish
+│   ├── Week 4: Benchmarks + Polish ✅ COMPLETE
+│   └── Week 5: Release prep + PyPI publish (NEXT)
 │
 February 2026
 ├── Week 6-9 (Feb 5 - Mar 4): v0.3.0 - User Experience
@@ -393,9 +393,9 @@ March 2026
 
 ## Next Actions
 
-1. **Now**: Week 4 - Benchmark suite implementation
-2. **Week 4**: Performance documentation, coverage push
-3. **Week 5**: Release v0.2.0 to PyPI
+1. **Now**: Week 5 - Release v0.2.0 to PyPI
+2. **Week 5**: README update, CI finalization, PyPI publish
+3. **Week 6**: Begin v0.3.0 - Gradio UI
 
 ---
 
@@ -403,6 +403,7 @@ March 2026
 
 | Version | Date | Changes |
 |---------|------|---------|
+| v2.3 | 2026-01-06 | Week 4 complete, 74% coverage, v0.2.0-rc1 ready |
 | v2.2 | 2026-01-04 | Week 3 complete, 7/8 v0.2.0 goals achieved, 71% coverage |
 | v2.1 | 2026-01-01 | Updated Gate 0 complete, audio module progress tracked |
 | v2.0 | 2026-01-01 | Added Gate 0, realistic estimates, acceptance criteria |

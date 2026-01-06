@@ -917,7 +917,7 @@ Review: docs/reviews/HOSTILE_REVIEW_WEEK4_DAY2_2026-01-05.md
 
 ---
 
-## Day 3: Coverage Polish
+## Day 3: Coverage Polish (Monday, January 6, 2026)
 
 ### Plan
 
@@ -928,6 +928,92 @@ Review: docs/reviews/HOSTILE_REVIEW_WEEK4_DAY2_2026-01-05.md
 | 3 | Add decoder.py tests | 1h | New tests | 61% → 70%+ |
 
 **Total Planned**: 3h
+
+### Execution Log
+
+| Time | Task | Status | Notes |
+|------|------|--------|-------|
+| - | 3.1 Analyze coverage | DONE | Identified storage, decoder, index as targets |
+| - | 3.2 Storage tests | DONE | 11 new tests, coverage 64%→98% |
+| - | 3.3 Decoder tests | DONE | 12 new tests, coverage 61%→74% |
+| - | 3.4 Index tests | DONE | 6 new tests, coverage 66%→68% |
+| - | 3.5 Full test suite | DONE | 225 passed, 9 skipped |
+
+### Coverage Improvement
+
+| Module | Before | After | Tests Added |
+|--------|--------|-------|-------------|
+| storage.py | 64% | **98%** | 11 tests |
+| decoder.py | 61% | **74%** | 12 tests |
+| index.py | 66% | **68%** | 6 tests |
+| **Overall** | 71% | **74%** | 29 tests |
+
+### New Tests Added
+
+**storage.py (11 tests):**
+- T009.6: load_embeddings returns None when missing
+- T009.7: append_embeddings to empty storage
+- T009.8: append_embeddings to existing
+- T009.9: save_event and get_events
+- T009.10: get_events returns empty list
+- T009.11: set_metadata and get_metadata
+- T009.12: get_metadata returns None for missing key
+- T009.13: recovery removes orphaned temp file
+- T009.14: recovery from backup file
+- T009.15: events ordered by timestamp
+- T009.16: metadata can be overwritten
+
+**decoder.py (12 tests):**
+- T008.1-T008.2: EventContext dataclass tests
+- T008.3-T008.5: Placeholder decoder generation
+- T008.6-T008.7: Dict input handling
+- T008.8-T008.9: Prompt building tests
+- T008.10: YDecoder.load returns placeholder
+- T008.11: OCR text truncation
+- T008.12: Decoder constants verification
+
+**index.py (6 tests):**
+- T007.7: Mismatched lengths raises error
+- T007.8: Add batch with list metadata
+- T007.9-T007.10: SearchResult dataclass
+- T007.11: Add batch with dict metadata
+- T007.12: Add single with metadata
+
+### Test Results
+
+| Category | Tests |
+|----------|-------|
+| Unit tests | 225 passed, 9 skipped |
+| Coverage | 74% (target ≥73% ✅) |
+| Ruff | All checks pass |
+
+### Hostile Reviewer Checkpoint
+
+```
+Status: ✅ APPROVED
+Issues Found: 0 critical, 0 major, 1 minor
+Verdict: GO - Proceed to Day 4
+Review: docs/reviews/HOSTILE_REVIEW_WEEK4_DAY3_2026-01-06.md
+```
+
+**Key Findings:**
+- storage.py coverage exceptional (+34% to 98%)
+- decoder.py coverage exceeds target (+13% to 74%)
+- index.py coverage partial (+2% to 68%)
+- Overall coverage target met (74% ≥ 73%)
+
+### End of Day Review
+
+```
+[x] Coverage analyzed
+[x] storage.py tests added (64%→98%)
+[x] decoder.py tests added (61%→74%)
+[x] index.py tests added (66%→68%)
+[x] Full test suite passing (225 tests)
+[x] Coverage target met (74% ≥ 73%)
+[x] Hostile review: APPROVED
+[x] Ready for Day 4 (Pre-Release Verification)
+```
 
 ---
 
@@ -965,9 +1051,9 @@ Review: docs/reviews/HOSTILE_REVIEW_WEEK4_DAY2_2026-01-05.md
 ```
 [x] Benchmark suite implemented (not stubs) - Day 1
 [x] BENCHMARKS.md created with measurements - Day 2
-[ ] Coverage ≥ 73% (stretch: 75%) - Day 3
+[x] Coverage ≥ 73% (stretch: 75%) - Day 3 (74% achieved)
 [ ] Package installs cleanly - Day 4
-[x] All tests pass - 196+ passed
+[x] All tests pass - 225 passed
 [ ] Hostile review: GO - Pending
 ```
 
@@ -1007,4 +1093,4 @@ mypy src/ --strict
 
 ---
 
-*Updated: 2026-01-05 (Week 4 Day 2 Complete)*
+*Updated: 2026-01-06 (Week 4 Day 3 Complete)*

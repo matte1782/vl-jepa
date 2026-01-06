@@ -190,3 +190,142 @@ class TestEmbeddingIndex:
 
         index = EmbeddingIndex(dimension=768)
         assert index._dimension == 768
+
+    # T007.7: Mismatched embeddings and ids raises error
+    @pytest.mark.unit
+    def test_add_batch_mismatched_lengths_raises(
+        self, sample_embedding_batch: np.ndarray
+    ):
+        """
+        SPEC: S007
+        TEST_ID: T007.7
+        Given: Embeddings and ids with different lengths
+        When: add_batch() is called
+        Then: Raises ValueError
+        """
+        from vl_jepa.index import EmbeddingIndex
+
+        index = EmbeddingIndex()
+        # 10 embeddings but only 5 ids
+        ids = list(range(5))
+
+        with pytest.raises(ValueError, match="same length"):
+            index.add_batch(sample_embedding_batch, ids=ids)
+
+    # T007.8: Add batch with list metadata
+    @pytest.mark.unit
+    def test_add_batch_with_list_metadata(self, sample_embedding_batch: np.ndarray):
+        """
+        SPEC: S007
+        TEST_ID: T007.8
+        Given: Embeddings with list of metadata dicts
+        When: add_batch() is called
+        Then: Metadata is stored correctly
+        """
+        from vl_jepa.index import EmbeddingIndex
+
+        index = EmbeddingIndex()
+        ids = list(range(10))
+        # List of metadata (with some None values)
+        metadata_list = [
+            {"timestamp": 0.0},
+            None,  # Should be skipped
+            {"timestamp": 20.0},
+            {"timestamp": 30.0},
+            None,
+            {"timestamp": 50.0},
+            {"timestamp": 60.0},
+            {"timestamp": 70.0},
+            {"timestamp": 80.0},
+            {"timestamp": 90.0},
+        ]
+
+        index.add_batch(sample_embedding_batch, ids=ids, metadata=metadata_list)
+
+        assert index.size == 10
+        # Check metadata was stored (excluding Nones)
+        assert 0 in index._metadata
+        assert 1 not in index._metadata  # Was None
+        assert 2 in index._metadata
+
+    # T007.9: Search result dataclass
+    @pytest.mark.unit
+    def test_search_result_dataclass(self):
+        """
+        SPEC: S007
+        TEST_ID: T007.9
+        Given: SearchResult dataclass
+        When: Created with values
+        Then: Has expected attributes
+        """
+        from vl_jepa.index import SearchResult
+
+        result = SearchResult(id=42, score=0.95, metadata={"key": "value"})
+
+        assert result.id == 42
+        assert result.score == 0.95
+        assert result.metadata == {"key": "value"}
+
+    # T007.10: Search result default metadata
+    @pytest.mark.unit
+    def test_search_result_default_metadata(self):
+        """
+        SPEC: S007
+        TEST_ID: T007.10
+        Given: SearchResult without metadata
+        When: Created
+        Then: Metadata is None
+        """
+        from vl_jepa.index import SearchResult
+
+        result = SearchResult(id=1, score=0.5)
+        assert result.metadata is None
+
+    # T007.11: Add with metadata dict
+    @pytest.mark.unit
+    def test_add_batch_with_dict_metadata(self, sample_embedding_batch: np.ndarray):
+        """
+        SPEC: S007
+        TEST_ID: T007.11
+        Given: Metadata as dict keyed by id
+        When: add_batch() is called
+        Then: Metadata is stored correctly
+        """
+        from vl_jepa.index import EmbeddingIndex
+
+        index = EmbeddingIndex()
+        ids = list(range(10))
+        # Dict keyed by id
+        metadata_dict: dict[int, dict] = {
+            0: {"timestamp": 0.0},
+            5: {"timestamp": 50.0},
+            9: {"timestamp": 90.0},
+        }
+
+        index.add_batch(sample_embedding_batch, ids=ids, metadata=metadata_dict)
+
+        assert index.size == 10
+        assert index._metadata.get(0) == {"timestamp": 0.0}
+        assert index._metadata.get(5) == {"timestamp": 50.0}
+        assert index._metadata.get(9) == {"timestamp": 90.0}
+        assert index._metadata.get(3) is None  # Not in dict
+
+    # T007.12: Add single with metadata
+    @pytest.mark.unit
+    def test_add_single_with_metadata(self, sample_embedding: np.ndarray):
+        """
+        SPEC: S007
+        TEST_ID: T007.12
+        Given: Single embedding with metadata
+        When: add() is called
+        Then: Metadata is stored
+        """
+        from vl_jepa.index import EmbeddingIndex
+
+        index = EmbeddingIndex()
+        metadata = {"timestamp": 120.5, "label": "intro"}
+
+        index.add(sample_embedding, id=42, metadata=metadata)
+
+        assert index.size == 1
+        assert index._metadata.get(42) == metadata

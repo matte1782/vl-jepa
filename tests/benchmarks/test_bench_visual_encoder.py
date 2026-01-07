@@ -3,12 +3,27 @@ Performance Benchmarks for Visual Encoder
 TEST_IDs: T004.9, T004.10
 
 IMPLEMENTS: Week 4 Day 1 - Benchmark Implementation
+
+Performance Targets (from CLAUDE.md):
+- GPU: <50ms per frame
+- CPU: <200ms per frame
+
+CI Environment Thresholds:
+- Placeholder tests use relaxed thresholds (50-100ms) because:
+  1. CI runners have variable performance
+  2. Placeholder encoders are not the production path
+  3. Real encoder tests (DINOv2) have proper GPU/CPU thresholds
 """
 
 import numpy as np
 import pytest
 
 from vl_jepa.encoders.placeholder import PlaceholderVisualEncoder
+
+# Performance target constants (from CLAUDE.md)
+GPU_TARGET_MS = 50  # <50ms per frame on GPU
+CPU_TARGET_MS = 200  # <200ms per frame on CPU
+CI_PLACEHOLDER_THRESHOLD_MS = 100  # Relaxed for CI placeholder tests
 
 
 def _has_torch() -> bool:
@@ -65,8 +80,8 @@ class TestVisualEncoderBenchmarks:
 
         # Assert
         assert result.shape == (4, 768)
-        # Relaxed threshold for CI environments (was 50ms, now 100ms)
-        assert benchmark.stats["mean"] < 0.100  # 100ms
+        # CI placeholder threshold (see module docstring for rationale)
+        assert benchmark.stats["mean"] < CI_PLACEHOLDER_THRESHOLD_MS / 1000
 
     # T004.9: Encode latency <200ms CPU
     @pytest.mark.skipif(not _has_torch(), reason="Requires torch")
@@ -113,9 +128,9 @@ class TestVisualEncoderBenchmarks:
         # Act
         result = benchmark(encoder.encode, sample_batch)
 
-        # Assert (50ms per frame = 200ms for batch of 4)
+        # Assert: GPU target is 50ms per frame = 200ms for batch of 4
         assert result.shape == (4, 768)
-        assert benchmark.stats["mean"] < 0.200  # 200ms
+        assert benchmark.stats["mean"] < (GPU_TARGET_MS * 4) / 1000
 
     def test_single_frame_encode(
         self,
@@ -136,5 +151,5 @@ class TestVisualEncoderBenchmarks:
 
         # Assert
         assert result.shape == (768,)
-        # Relaxed threshold for CI environments (was 20ms, now 50ms)
-        assert benchmark.stats["mean"] < 0.050  # 50ms
+        # CI placeholder threshold (GPU_TARGET_MS for single frame)
+        assert benchmark.stats["mean"] < GPU_TARGET_MS / 1000

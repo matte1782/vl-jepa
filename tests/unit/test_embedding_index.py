@@ -329,3 +329,151 @@ class TestEmbeddingIndex:
 
         assert index.size == 1
         assert index._metadata.get(42) == metadata
+
+
+class TestEmbeddingIndexIVFTransition:
+    """Tests for IVF transition behavior (HOSTILE_REVIEW M2).
+
+    These tests verify graceful degradation when FAISS is unavailable
+    and the IVF transition fails.
+    """
+
+    @pytest.mark.unit
+    def test_ivf_transition_returns_false_without_faiss(self):
+        """
+        SPEC: S007
+        TEST_ID: T007.IVF.1
+        EDGE_CASE: EC038
+        Given: An index with use_ivf enabled and FAISS unavailable
+        When: _transition_to_ivf() is called
+        Then: Returns False (transition fails gracefully)
+        """
+        from tests.conftest import HAS_FAISS
+        from vl_jepa.index import EmbeddingIndex
+
+        if HAS_FAISS:
+            pytest.skip("Test only relevant when FAISS unavailable")
+
+        index = EmbeddingIndex(dimension=768)
+        embeddings = np.random.randn(100, 768).astype(np.float32)
+        embeddings /= np.linalg.norm(embeddings, axis=1, keepdims=True)
+
+        # Attempt transition
+        result = index._transition_to_ivf(embeddings)
+
+        assert result is False
+        assert index._use_ivf is False
+
+    @pytest.mark.unit
+    def test_index_functions_after_failed_ivf_transition(self):
+        """
+        SPEC: S007
+        TEST_ID: T007.IVF.2
+        EDGE_CASE: EC038
+        Given: An index that attempted but failed IVF transition
+        When: Search is performed
+        Then: Search returns valid results using numpy fallback
+        """
+        from tests.conftest import HAS_FAISS
+        from vl_jepa.index import EmbeddingIndex
+
+        if HAS_FAISS:
+            pytest.skip("Test only relevant when FAISS unavailable")
+
+        index = EmbeddingIndex(dimension=768)
+
+        # Add embeddings that would trigger IVF transition (>= 1000)
+        embeddings = np.random.randn(1500, 768).astype(np.float32)
+        embeddings /= np.linalg.norm(embeddings, axis=1, keepdims=True)
+        ids = list(range(1500))
+
+        index.add_batch(embeddings, ids)
+
+        # Verify index is still functional
+        assert index.size == 1500
+        assert index._use_ivf is False  # Transition should have failed
+
+        # Search should work with numpy fallback
+        query = embeddings[0]
+        results = index.search(query, k=5)
+
+        assert len(results) == 5
+        # First result should be the query itself (score ~1.0)
+        assert results[0].score > 0.99
+
+    @pytest.mark.unit
+    def test_ivf_transition_success_with_faiss(self):
+        """
+        SPEC: S007
+        TEST_ID: T007.IVF.3
+        Given: An index with FAISS available
+        When: Enough embeddings are added to trigger IVF transition
+        Then: Transition succeeds and _use_ivf is True
+        """
+        from tests.conftest import HAS_FAISS
+        from vl_jepa.index import EmbeddingIndex
+
+        if not HAS_FAISS:
+            pytest.skip("Test requires FAISS")
+
+        index = EmbeddingIndex(dimension=768)
+
+        # Add embeddings that trigger IVF transition (>= 1000)
+        embeddings = np.random.randn(1500, 768).astype(np.float32)
+        embeddings /= np.linalg.norm(embeddings, axis=1, keepdims=True)
+        ids = list(range(1500))
+
+        index.add_batch(embeddings, ids)
+
+        # Verify transition occurred
+        assert index.size == 1500
+        assert index._use_ivf is True
+
+        # Search should still work
+        query = embeddings[0]
+        results = index.search(query, k=5)
+        assert len(results) == 5
+
+    @pytest.mark.unit
+    def test_numpy_fallback_save_load_roundtrip(self, tmp_path: Path):
+        """
+        SPEC: S007
+        TEST_ID: T007.IVF.4
+        Given: An index using numpy fallback (no FAISS)
+        When: Index is saved and loaded
+        Then: Loaded index has same data and search works
+        """
+        from tests.conftest import HAS_FAISS
+        from vl_jepa.index import EmbeddingIndex
+
+        if HAS_FAISS:
+            pytest.skip("Test only relevant when FAISS unavailable")
+
+        # Create and populate index
+        index = EmbeddingIndex(dimension=768)
+        embeddings = np.random.randn(100, 768).astype(np.float32)
+        embeddings /= np.linalg.norm(embeddings, axis=1, keepdims=True)
+        ids = list(range(100))
+        metadata = {i: {"timestamp": float(i)} for i in ids}
+
+        index.add_batch(embeddings, ids, metadata=metadata)
+
+        # Save
+        save_path = tmp_path / "test_index"
+        index.save(save_path)
+
+        # Verify .npy file created (not .faiss)
+        assert save_path.with_suffix(".npy").exists()
+        assert not save_path.with_suffix(".faiss").exists()
+
+        # Load
+        loaded = EmbeddingIndex.load(save_path)
+
+        # Verify data preserved
+        assert loaded.size == index.size
+        assert loaded._id_map == index._id_map
+
+        # Verify search works on loaded index
+        results = loaded.search(embeddings[0], k=5)
+        assert len(results) == 5
+        assert results[0].score > 0.99

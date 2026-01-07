@@ -131,6 +131,26 @@ def temp_db_path(temp_lecture_dir: Path) -> Path:
 
 
 # =============================================================================
+# FAISS Availability
+# =============================================================================
+
+
+def _has_faiss() -> bool:
+    """Check if FAISS is available."""
+    try:
+        import faiss  # noqa: F401
+
+        return True
+    except ImportError:
+        return False
+
+
+HAS_FAISS = _has_faiss()
+
+requires_faiss = pytest.mark.skipif(not HAS_FAISS, reason="Requires FAISS")
+
+
+# =============================================================================
 # Pytest Markers
 # =============================================================================
 
@@ -148,3 +168,4 @@ def pytest_configure(config):
     )
     config.addinivalue_line("markers", "gpu: Tests that require GPU")
     config.addinivalue_line("markers", "network: Tests that require network access")
+    config.addinivalue_line("markers", "requires_faiss: Tests that require FAISS")

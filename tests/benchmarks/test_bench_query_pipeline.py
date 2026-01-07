@@ -8,6 +8,7 @@ IMPLEMENTS: Week 4 Day 1 - Benchmark Implementation
 import numpy as np
 import pytest
 
+from tests.conftest import HAS_FAISS
 from vl_jepa.index import EmbeddingIndex
 from vl_jepa.multimodal_index import MultimodalIndex, RankingConfig
 
@@ -48,6 +49,7 @@ def populated_multimodal_index() -> MultimodalIndex:
     return index
 
 
+@pytest.mark.skipif(not HAS_FAISS, reason="Requires FAISS")
 @pytest.mark.benchmark
 class TestQueryPipelineBenchmarks:
     """Performance benchmarks for end-to-end query."""

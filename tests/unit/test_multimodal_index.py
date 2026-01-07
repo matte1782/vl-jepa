@@ -10,6 +10,7 @@ from pathlib import Path
 import numpy as np
 import pytest
 
+from tests.conftest import HAS_FAISS
 from vl_jepa.multimodal_index import (
     Modality,
     MultimodalEntry,
@@ -232,8 +233,11 @@ class TestMultimodalIndex:
             # Save
             populated_index.save(path)
 
-            # Verify files created
-            assert path.with_suffix(".faiss").exists()
+            # Verify files created (FAISS or npy depending on installation)
+            if HAS_FAISS:
+                assert path.with_suffix(".faiss").exists()
+            else:
+                assert path.with_suffix(".npy").exists()
             assert path.with_suffix(".json").exists()
             assert path.with_suffix(".multimodal.json").exists()
 

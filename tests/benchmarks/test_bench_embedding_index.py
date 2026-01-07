@@ -8,6 +8,7 @@ IMPLEMENTS: Week 4 Day 1 - Benchmark Implementation
 import numpy as np
 import pytest
 
+from tests.conftest import HAS_FAISS
 from vl_jepa.index import EmbeddingIndex
 
 
@@ -33,6 +34,7 @@ def index_100k() -> EmbeddingIndex:
     return index
 
 
+@pytest.mark.skipif(not HAS_FAISS, reason="Requires FAISS")
 @pytest.mark.benchmark
 class TestEmbeddingIndexBenchmarks:
     """Performance benchmarks for FAISS index operations."""

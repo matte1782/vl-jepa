@@ -192,7 +192,9 @@ def extract_audio_segment(
     out_file: str
     if output_path is None:
         # Use with_name since suffix must start with '.'
-        out_file = str(video.with_name(f"{video.stem}_{start_time:.0f}_{end_time:.0f}.wav"))
+        out_file = str(
+            video.with_name(f"{video.stem}_{start_time:.0f}_{end_time:.0f}.wav")
+        )
     else:
         out_file = output_path
 

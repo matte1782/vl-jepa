@@ -122,8 +122,7 @@ class EmbeddingIndex:
         new_size = self.size + len(embeddings)
         transitioned_to_ivf = False
         if new_size >= self.IVF_THRESHOLD and not self._use_ivf:
-            self._transition_to_ivf(embeddings)
-            transitioned_to_ivf = True
+            transitioned_to_ivf = self._transition_to_ivf(embeddings)
 
         # Add to index (skip if just transitioned - IVF already has the embeddings)
         if not transitioned_to_ivf:
@@ -151,10 +150,13 @@ class EmbeddingIndex:
 
         logger.debug(f"Added {len(embeddings)} embeddings, total={self.size}")
 
-    def _transition_to_ivf(self, new_embeddings: np.ndarray) -> None:
+    def _transition_to_ivf(self, new_embeddings: np.ndarray) -> bool:
         """Transition from flat to IVF index.
 
         EDGE_CASE: EC038
+
+        Returns:
+            True if transition succeeded, False otherwise
         """
         try:
             import faiss
@@ -179,9 +181,11 @@ class EmbeddingIndex:
 
             self._index = new_index
             self._use_ivf = True
+            return True
 
         except Exception as e:
             logger.error(f"IVF transition failed: {e}, keeping flat index")
+            return False
 
     def _reconstruct_all(self) -> np.ndarray:
         """Reconstruct all embeddings from index."""
@@ -263,6 +267,10 @@ class EmbeddingIndex:
             import faiss
 
             faiss.write_index(self._index, str(path.with_suffix(".faiss")))
+        elif hasattr(self, "_embeddings") and self._embeddings:
+            # Save numpy fallback embeddings
+            embeddings_array = np.stack(self._embeddings)
+            np.save(path.with_suffix(".npy"), embeddings_array)
 
         # Save mappings as JSON (safe serialization)
         mappings = {
@@ -287,12 +295,18 @@ class EmbeddingIndex:
         path = Path(path)
         index = cls()
 
-        # Load FAISS index
+        # Load FAISS index if available
         faiss_path = path.with_suffix(".faiss")
         if faiss_path.exists():
             import faiss
 
             index._index = faiss.read_index(str(faiss_path))
+        else:
+            # Load numpy fallback embeddings if available
+            npy_path = path.with_suffix(".npy")
+            if npy_path.exists():
+                embeddings_array = np.load(npy_path)
+                index._embeddings = list(embeddings_array)
 
         # Load mappings from JSON (safe deserialization)
         json_path = path.with_suffix(".json")

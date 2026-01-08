@@ -212,9 +212,7 @@ def _register_routes(app: FastAPI) -> None:
             raise HTTPException(status_code=404, detail="Job not found")
 
         if job["status"] != JobStatus.COMPLETED:
-            raise HTTPException(
-                status_code=400, detail="Processing not complete"
-            )
+            raise HTTPException(status_code=400, detail="Processing not complete")
 
         # Get the index and text encoder from job state
         index: MultimodalIndex | None = job.get("index")
@@ -234,6 +232,7 @@ def _register_routes(app: FastAPI) -> None:
 
                 # Search transcript modality
                 from vl_jepa.multimodal_index import Modality
+
                 search_results = index.search(
                     query_embedding,
                     k=request.top_k,
@@ -291,9 +290,7 @@ def _register_routes(app: FastAPI) -> None:
             raise HTTPException(status_code=404, detail="Job not found")
 
         if job["status"] != JobStatus.COMPLETED:
-            raise HTTPException(
-                status_code=400, detail="Processing not complete"
-            )
+            raise HTTPException(status_code=400, detail="Processing not complete")
 
         result = job.get("result")
         if not result:
@@ -323,7 +320,9 @@ def _register_routes(app: FastAPI) -> None:
                     },
                 )()
                 self.events = [
-                    type("E", (), {"timestamp": e.timestamp, "confidence": e.confidence})()
+                    type(
+                        "E", (), {"timestamp": e.timestamp, "confidence": e.confidence}
+                    )()
                     for e in r.events
                 ]
                 self.transcript_chunks = [
@@ -367,6 +366,7 @@ def _register_routes(app: FastAPI) -> None:
         temp_dir = job.get("temp_dir")
         if temp_dir:
             import shutil
+
             try:
                 shutil.rmtree(temp_dir)
             except Exception:
@@ -378,6 +378,7 @@ def _register_routes(app: FastAPI) -> None:
 def _format_timestamp(seconds: float) -> str:
     """Format seconds to MM:SS."""
     import math
+
     if not math.isfinite(seconds) or seconds < 0:
         return "0:00"
     total = int(seconds)
@@ -415,6 +416,7 @@ def _process_video(job_id: str) -> None:
         # Get video metadata
         try:
             from vl_jepa.video import VideoInput
+
             video = VideoInput.open(video_path)
             metadata = VideoMetadata(
                 filename=video_path.name,
@@ -454,7 +456,9 @@ def _process_video(job_id: str) -> None:
             logger.warning("Audio extraction failed: %s", e)
 
         # Stage 3: Transcribe with real Whisper
-        update_progress(ProcessingStage.TRANSCRIBING, 0.30, "Transcribing audio with Whisper...")
+        update_progress(
+            ProcessingStage.TRANSCRIBING, 0.30, "Transcribing audio with Whisper..."
+        )
 
         if audio_path:
             try:
@@ -513,9 +517,10 @@ def _process_video(job_id: str) -> None:
         frame_timestamps = []
         try:
             from vl_jepa.video import VideoInput
+
             video = VideoInput.open(video_path)
-            sampled = video.sample_frames(fps=1.0)
-            frames = [f.frame for f in sampled]
+            sampled = list(video.sample_frames(target_fps=1.0))
+            frames = [f.data for f in sampled]
             frame_timestamps = [f.timestamp for f in sampled]
             video.close()
             logger.info("Sampled %d frames at 1 FPS", len(frames))
@@ -529,10 +534,12 @@ def _process_video(job_id: str) -> None:
         frame_embeddings = []
         try:
             from vl_jepa.encoders.placeholder import PlaceholderVisualEncoder
+
             visual_encoder = PlaceholderVisualEncoder()
 
             # Encode frames (resize to 224x224 and normalize)
             import cv2
+
             for frame in frames:
                 # frame is typically (H, W, 3) BGR uint8
                 resized = cv2.resize(frame, (224, 224))
@@ -551,21 +558,24 @@ def _process_video(job_id: str) -> None:
         update_progress(ProcessingStage.ENCODING_TEXT, 0.65, "Encoding transcript...")
 
         # Initialize text encoder and multimodal index
-        text_encoder = None
-        multimodal_index = None
+        text_encoder: Any = None
+        multimodal_index: MultimodalIndex | None = None
         try:
             # Try real MiniLM encoder first
             try:
                 from vl_jepa.text import TextEncoder
+
                 text_encoder = TextEncoder.load()
                 logger.info("Loaded real TextEncoder (MiniLM)")
             except Exception:
                 from vl_jepa.encoders.placeholder import PlaceholderTextEncoder
+
                 text_encoder = PlaceholderTextEncoder()
                 logger.info("Using PlaceholderTextEncoder")
 
             # Build multimodal index
             from vl_jepa.multimodal_index import MultimodalIndex
+
             multimodal_index = MultimodalIndex()
 
             # Add transcript embeddings
@@ -598,21 +608,27 @@ def _process_video(job_id: str) -> None:
             )
 
             # Always add start event
-            events.append(EventItem(
-                timestamp=0.0,
-                timestamp_formatted="0:00",
-                confidence=1.0,
-            ))
+            events.append(
+                EventItem(
+                    timestamp=0.0,
+                    timestamp_formatted="0:00",
+                    confidence=1.0,
+                )
+            )
 
             # Process frame embeddings to detect events
-            for embedding, timestamp in zip(frame_embeddings, frame_timestamps, strict=False):
+            for embedding, timestamp in zip(
+                frame_embeddings, frame_timestamps, strict=False
+            ):
                 event = detector.process(embedding, timestamp)
                 if event:
-                    events.append(EventItem(
-                        timestamp=event.timestamp,
-                        timestamp_formatted=_format_timestamp(event.timestamp),
-                        confidence=event.confidence,
-                    ))
+                    events.append(
+                        EventItem(
+                            timestamp=event.timestamp,
+                            timestamp_formatted=_format_timestamp(event.timestamp),
+                            confidence=event.confidence,
+                        )
+                    )
 
             logger.info("Detected %d events (including start)", len(events))
 
@@ -624,34 +640,40 @@ def _process_video(job_id: str) -> None:
                 for chunk in transcript_chunks:
                     # Large gap suggests topic change
                     if chunk.start - prev_end > 20.0:
-                        events.append(EventItem(
-                            timestamp=chunk.start,
-                            timestamp_formatted=_format_timestamp(chunk.start),
-                            confidence=0.7,
-                        ))
+                        events.append(
+                            EventItem(
+                                timestamp=chunk.start,
+                                timestamp_formatted=_format_timestamp(chunk.start),
+                                confidence=0.7,
+                            )
+                        )
                     prev_end = chunk.end
 
                 # Ensure events are sorted and deduplicated
                 events = sorted(events, key=lambda e: e.timestamp)
                 seen = set()
                 unique_events = []
-                for e in events:
-                    key = round(e.timestamp / 10) * 10  # 10s buckets
+                for evt in events:
+                    key = round(evt.timestamp / 10) * 10  # 10s buckets
                     if key not in seen:
                         seen.add(key)
-                        unique_events.append(e)
+                        unique_events.append(evt)
                 events = unique_events[:10]  # Limit to 10 events
 
         except Exception as e:
             logger.warning("Event detection failed: %s, using single start event", e)
-            events = [EventItem(
-                timestamp=0.0,
-                timestamp_formatted="0:00",
-                confidence=1.0,
-            )]
+            events = [
+                EventItem(
+                    timestamp=0.0,
+                    timestamp_formatted="0:00",
+                    confidence=1.0,
+                )
+            ]
 
         # Stage 8: Build index
-        update_progress(ProcessingStage.BUILDING_INDEX, 0.95, "Building search index...")
+        update_progress(
+            ProcessingStage.BUILDING_INDEX, 0.95, "Building search index..."
+        )
 
         # Create result
         result = ProcessingResult(

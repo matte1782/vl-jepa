@@ -109,6 +109,11 @@ def _register_routes(app: FastAPI) -> None:
             content="<h1>Lecture Mind</h1><p>Frontend not found. Visit /api/docs for API.</p>"
         )
 
+    @app.get("/api/health")
+    async def health_check() -> dict[str, str]:
+        """Health check endpoint for deployment monitoring."""
+        return {"status": "healthy", "service": "lecture-mind"}
+
     @app.post("/api/upload", response_model=UploadResponse)
     async def upload_video(
         background_tasks: BackgroundTasks,

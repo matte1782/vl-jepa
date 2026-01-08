@@ -1,0 +1,17 @@
+# Render Blueprint for Lecture Mind
+# Deploy at: https://render.com/deploy
+
+services:
+  - type: web
+    name: lecture-mind
+    runtime: python
+    plan: free
+    buildCommand: pip install -e ".[api]"
+    startCommand: uvicorn vl_jepa.api.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
+      - key: PORT
+        value: "10000"
+    autoDeploy: true
+    healthCheckPath: /api/health

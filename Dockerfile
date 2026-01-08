@@ -66,8 +66,8 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 RUN apt-get update && apt-get install -y --no-install-recommends \
     # FFmpeg for audio extraction
     ffmpeg \
-    # OpenCV dependencies
-    libgl1-mesa-glx \
+    # OpenCV dependencies (libgl1 replaces libgl1-mesa-glx in newer Debian)
+    libgl1 \
     libglib2.0-0 \
     libsm6 \
     libxext6 \

@@ -47,7 +47,7 @@
   background: var(--particle-color, var(--primary));
   border-radius: 50%;
   opacity: 0;
-  will-change: transform, opacity;
+  /* Removed will-change - apply only during animation via JS */
   animation: particleFloat var(--particle-duration, 15s) var(--particle-delay, 0s) infinite;
 }
 
@@ -159,8 +159,9 @@
   border-radius: 50%;
   filter: blur(80px);
   opacity: 0.4;
-  will-change: transform;
+  /* Removed will-change - GPU memory optimization */
   animation: auroraFloat 20s ease-in-out infinite;
+  animation-play-state: running;
 }
 
 .aurora-blob--primary {
@@ -241,7 +242,7 @@
     transparent 100%
   );
   opacity: 0;
-  will-change: transform, opacity;
+  /* Removed will-change - performance optimization */
   animation: lightBeam 8s ease-in-out infinite;
 }
 
@@ -309,7 +310,7 @@
 .parallax-layer {
   position: absolute;
   inset: 0;
-  will-change: transform;
+  /* will-change applied via JS during scroll */
   pointer-events: none;
 }
 
@@ -381,7 +382,7 @@
     radial-gradient(ellipse at 80% 70%, rgba(139, 92, 246, 0.12) 0%, transparent 40%),
     radial-gradient(ellipse at 50% 50%, rgba(34, 197, 94, 0.08) 0%, transparent 50%);
   animation: morphBg 30s ease-in-out infinite;
-  will-change: transform;
+  /* Removed will-change - GPU memory optimization */
 }
 
 @keyframes morphBg {
@@ -444,26 +445,48 @@
 }
 
 /* ============================================
-   3D CARD TILT EFFECT
+   3D CARD TILT EFFECT - Enhanced with Spring Physics
    ============================================ */
 .tilt-card {
   transform-style: preserve-3d;
   perspective: 1000px;
-  transition: transform var(--duration-normal) var(--ease-out);
+  transition: transform var(--duration-medium, 400ms) var(--spring-smooth, cubic-bezier(0.22, 0.61, 0.36, 1));
 }
 
 .tilt-card:hover {
   /* JS will set --rotateX and --rotateY */
-  transform: rotateX(var(--rotateX, 0deg)) rotateY(var(--rotateY, 0deg));
+  transform: rotateX(var(--rotateX, 0deg)) rotateY(var(--rotateY, 0deg)) translateZ(10px);
 }
 
 .tilt-card .tilt-content {
   transform: translateZ(20px);
-  transition: transform var(--duration-normal) var(--ease-out);
+  transition: transform var(--duration-medium, 400ms) var(--spring-bounce-1, cubic-bezier(0.34, 1.56, 0.64, 1));
 }
 
 .tilt-card:hover .tilt-content {
   transform: translateZ(40px);
+}
+
+/* 3D Card shine effect */
+.tilt-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.05) 100%
+  );
+  opacity: 0;
+  transition: opacity var(--duration-small, 250ms) ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.tilt-card:hover::before {
+  opacity: 1;
 }
 
 /* ============================================
@@ -658,4 +681,221 @@
   .glow-ring:nth-child(n+2) {
     display: none;
   }
+}
+
+/* ============================================
+   LIQUID GRADIENT EFFECTS - Premium 2026
+   ============================================ */
+.liquid-gradient {
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-gradient::before,
+.liquid-gradient::after {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(
+    from var(--angle, 0deg),
+    var(--color-primary-500) 0deg,
+    var(--color-accent-500) 120deg,
+    var(--color-success-500) 240deg,
+    var(--color-primary-500) 360deg
+  );
+  animation: liquidRotate 15s linear infinite;
+  filter: blur(80px);
+  opacity: 0.4;
+}
+
+.liquid-gradient::after {
+  animation-delay: -7.5s;
+  animation-direction: reverse;
+  filter: blur(100px);
+  opacity: 0.25;
+}
+
+@keyframes liquidRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Blob morphing animation */
+.liquid-blob {
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  animation: blobMorph 8s ease-in-out infinite,
+             blobFloat 6s ease-in-out infinite;
+}
+
+@keyframes blobMorph {
+  0%, 100% {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  }
+  25% {
+    border-radius: 58% 42% 75% 25% / 76% 46% 54% 24%;
+  }
+  50% {
+    border-radius: 50% 50% 33% 67% / 55% 27% 73% 45%;
+  }
+  75% {
+    border-radius: 33% 67% 58% 42% / 63% 68% 32% 37%;
+  }
+}
+
+@keyframes blobFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(20px, -15px) scale(1.03);
+  }
+  66% {
+    transform: translate(-15px, 10px) scale(0.97);
+  }
+}
+
+/* ============================================
+   SCROLL-LINKED ANIMATIONS (CSS 2026)
+   ============================================ */
+@supports (animation-timeline: scroll()) {
+  .scroll-reveal {
+    animation: scrollFadeIn linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+
+  @keyframes scrollFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(40px) scale(0.95);
+      filter: blur(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+  }
+
+  /* Scroll progress indicator */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    transform-origin: left;
+    animation: scrollProgress linear;
+    animation-timeline: scroll(root);
+    z-index: var(--z-fixed);
+  }
+
+  @keyframes scrollProgress {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+}
+
+/* ============================================
+   SPRING-BASED STAGGER REVEALS
+   ============================================ */
+[data-stagger] {
+  --stagger-delay: 80ms;
+}
+
+[data-stagger] > * {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+}
+
+[data-stagger].visible > * {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition:
+    opacity var(--duration-medium, 400ms) var(--spring-smooth, cubic-bezier(0.22, 0.61, 0.36, 1)),
+    transform var(--duration-large, 600ms) var(--spring-bounce-1, cubic-bezier(0.34, 1.56, 0.64, 1));
+}
+
+[data-stagger].visible > *:nth-child(1) { transition-delay: calc(var(--stagger-delay) * 0); }
+[data-stagger].visible > *:nth-child(2) { transition-delay: calc(var(--stagger-delay) * 1); }
+[data-stagger].visible > *:nth-child(3) { transition-delay: calc(var(--stagger-delay) * 2); }
+[data-stagger].visible > *:nth-child(4) { transition-delay: calc(var(--stagger-delay) * 3); }
+[data-stagger].visible > *:nth-child(5) { transition-delay: calc(var(--stagger-delay) * 4); }
+[data-stagger].visible > *:nth-child(6) { transition-delay: calc(var(--stagger-delay) * 5); }
+[data-stagger].visible > *:nth-child(7) { transition-delay: calc(var(--stagger-delay) * 6); }
+[data-stagger].visible > *:nth-child(8) { transition-delay: calc(var(--stagger-delay) * 7); }
+
+/* ============================================
+   HAPTIC BUTTON FEEDBACK
+   ============================================ */
+.btn-haptic {
+  transition: transform var(--duration-micro, 150ms) var(--spring-snappy, cubic-bezier(0.17, 0.89, 0.32, 1.28));
+}
+
+.btn-haptic:active {
+  transform: scale(0.97);
+}
+
+/* ============================================
+   PREMIUM HOVER SHADOW TRANSITIONS
+   ============================================ */
+.hover-lift {
+  transition:
+    transform var(--duration-small, 250ms) var(--spring-bounce-1, cubic-bezier(0.34, 1.56, 0.64, 1)),
+    box-shadow var(--duration-small, 250ms) ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 10px 40px -10px rgba(6, 182, 212, 0.3),
+    0 0 0 1px rgba(6, 182, 212, 0.1);
+}
+
+.dark .hover-lift:hover {
+  box-shadow:
+    0 10px 40px -10px rgba(34, 211, 238, 0.4),
+    0 0 0 1px rgba(34, 211, 238, 0.15);
+}
+
+/* GPU-composited shadow hover (no paint) */
+.hover-shadow-gpu {
+  position: relative;
+}
+
+.hover-shadow-gpu::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 20px 50px -10px rgba(6, 182, 212, 0.35);
+  opacity: 0;
+  transition: opacity var(--duration-small, 250ms) ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.hover-shadow-gpu:hover::after {
+  opacity: 1;
+}
+
+/* ============================================
+   CONTAIN PROPERTY FOR PERFORMANCE
+   ============================================ */
+.contain-layout {
+  contain: layout;
+}
+
+.contain-paint {
+  contain: paint;
+}
+
+.contain-strict {
+  contain: layout style paint;
 }

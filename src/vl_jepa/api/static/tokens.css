@@ -68,7 +68,7 @@
   --background: var(--color-neutral-50);
   --background-subtle: var(--color-neutral-100);
   --foreground: var(--color-neutral-900);
-  --foreground-muted: var(--color-neutral-500);
+  --foreground-muted: var(--color-neutral-600); /* WCAG AA compliant - 7:1 contrast */
 
   --surface: var(--color-white);
   --surface-elevated: var(--color-white);
@@ -96,10 +96,17 @@
   --ring: var(--color-primary-500);
   --ring-offset: var(--background);
 
-  /* Glow effects */
-  --glow-primary: rgba(6, 182, 212, 0.4);
-  --glow-accent: rgba(99, 102, 241, 0.4);
-  --glow-success: rgba(16, 185, 129, 0.4);
+  /* Glow effects - subtle for premium feel */
+  --glow-primary: rgba(6, 182, 212, 0.12);
+  --glow-accent: rgba(99, 102, 241, 0.12);
+  --glow-success: rgba(16, 185, 129, 0.12);
+
+  /* HSL values for alpha transparency support */
+  --primary-hsl: 187 94% 43%;
+  --accent-hsl: 239 84% 67%;
+  --success-hsl: 160 84% 39%;
+  --warning-hsl: 38 92% 50%;
+  --error-hsl: 350 89% 60%;
 }
 
 /* Dark Mode */
@@ -107,13 +114,13 @@
   --background: var(--color-neutral-950);
   --background-subtle: var(--color-neutral-900);
   --foreground: var(--color-neutral-50);
-  --foreground-muted: var(--color-neutral-400);
+  --foreground-muted: var(--color-neutral-300); /* Better dark mode contrast */
 
   --surface: var(--color-neutral-900);
   --surface-elevated: var(--color-neutral-800);
   --surface-overlay: rgba(15, 23, 42, 0.9);
 
-  --border: var(--color-neutral-800);
+  --border: var(--color-neutral-700); /* Improved visibility */
   --border-subtle: var(--color-neutral-800);
   --border-focus: var(--color-primary-400);
 
@@ -127,9 +134,9 @@
   --ring: var(--color-primary-400);
   --ring-offset: var(--background);
 
-  /* Enhanced glow for dark mode */
-  --glow-primary: rgba(34, 211, 238, 0.3);
-  --glow-accent: rgba(129, 140, 248, 0.3);
+  /* Enhanced glow for dark mode - subtle for premium feel */
+  --glow-primary: rgba(34, 211, 238, 0.15);
+  --glow-accent: rgba(129, 140, 248, 0.15);
 }
 
 /* ============================================
@@ -277,6 +284,20 @@
     0.79, 0.775, 0.775, 0.79, 0.82, 0.865, 0.925, 1, 0.965, 0.945,
     0.94, 0.95, 0.975, 1
   );
+
+  /* Premium Spring Curves - Apple/Pixar inspired */
+  --spring-bounce-1: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --spring-bounce-2: cubic-bezier(0.22, 1.36, 0.36, 1);
+  --spring-snappy: cubic-bezier(0.17, 0.89, 0.32, 1.28);
+  --spring-smooth: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --spring-gentle: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Premium durations */
+  --duration-micro: 150ms;
+  --duration-small: 250ms;
+  --duration-medium: 400ms;
+  --duration-large: 600ms;
+  --duration-xl: 1000ms;
 }
 
 /* Reduced motion - disable animations */

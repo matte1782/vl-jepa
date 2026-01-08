@@ -27,6 +27,23 @@ let currentJobId = null;
 let processingResult = null;
 let pollInterval = null;
 let abortController = null;
+let videoUrl = null; // Blob URL for uploaded video
+
+// ============================================
+// CONFUSION VOTING STATE
+// ============================================
+const CONFUSION_STORAGE_KEY = 'lectureMind_confusionVotes';
+
+// ============================================
+// BOOKMARK STATE
+// ============================================
+const BOOKMARK_STORAGE_KEY = 'lectureMind_bookmarks';
+const BOOKMARK_TYPES = {
+  important: { icon: '\u2B50', label: 'Important', color: 'yellow', key: '1' },
+  question: { icon: '\u2753', label: 'Question', color: 'blue', key: '2' },
+  insight: { icon: '\uD83D\uDCA1', label: 'Insight', color: 'green', key: '3' },
+  todo: { icon: '\uD83D\uDCDD', label: 'Todo', color: 'orange', key: '4' },
+};
 
 // Check for reduced motion preference
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -41,6 +58,8 @@ const elements = {
   uploadZone: $('#upload-zone'),
   fileInput: $('#file-input'),
   uploadSection: $('#upload-section'),
+  videoPlayerSection: $('#video-player-section'),
+  videoPlayer: $('#video-player'),
   progressSection: $('#progress-section'),
   progressStage: $('#progress-stage'),
   progressMessage: $('#progress-message'),
@@ -53,8 +72,18 @@ const elements = {
   searchResults: $('#search-results'),
   transcriptContent: $('#transcript-content'),
   exportBtn: $('#export-btn'),
+  copyBtn: $('#copy-btn'),
   themeToggle: $('#theme-toggle'),
   toastContainer: $('#toast-container'),
+  confusionSection: $('#confusion-section'),
+  confusionList: $('#confusion-list'),
+  bookmarksSection: $('#bookmarks-section'),
+  bookmarksList: $('#bookmarks-list'),
+  bookmarksCount: $('#bookmarks-count'),
+  addBookmarkBtn: $('#add-bookmark-btn'),
+  markConfusionBtn: $('#mark-confusion-btn'),
+  studyNotesPreview: $('#study-notes-preview'),
+  studyNotesContent: $('#study-notes-content'),
 };
 
 // ============================================
@@ -70,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initSearch();
   initExport();
   initExportOptions();
+  initBookmarks();
 });
 
 // ============================================
@@ -86,6 +116,7 @@ function initAdvancedEffects() {
   initMagneticButtons();
   initSectionTransitions();
   initInteractiveParticles();
+  initVisibilityHandler(); // Pause animations when tab is hidden
 }
 
 // 1. ANIMATED STATS COUNTER
@@ -95,16 +126,20 @@ function initAnimatedCounters() {
 
   const observerOptions = { threshold: 0.5 };
 
-  const observer = new IntersectionObserver((entries) => {
+  const observer = new IntersectionObserver((entries, obs) => {
     entries.forEach(entry => {
       if (entry.isIntersecting && !entry.target.dataset.animated) {
         entry.target.dataset.animated = 'true';
         animateCounter(entry.target);
+        obs.unobserve(entry.target); // Unobserve after animation - memory optimization
       }
     });
   }, observerOptions);
 
   counters.forEach(counter => observer.observe(counter));
+
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', () => observer.disconnect());
 }
 
 function animateCounter(element) {
@@ -337,6 +372,21 @@ function initSectionTransitions() {
   }, { threshold: 0.3 });
 
   sections.forEach(section => observer.observe(section));
+
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', () => observer.disconnect());
+}
+
+// 9. PAUSE ANIMATIONS WHEN PAGE HIDDEN (Battery Optimization)
+function initVisibilityHandler() {
+  const animatedElements = document.querySelectorAll('.aurora-blob, .particle, .morph-bg, .light-beam');
+
+  document.addEventListener('visibilitychange', () => {
+    const state = document.hidden ? 'paused' : 'running';
+    animatedElements.forEach(el => {
+      el.style.animationPlayState = state;
+    });
+  });
 }
 
 // ============================================
@@ -576,7 +626,15 @@ async function uploadFile(file) {
     return;
   }
 
-  // Show progress section
+  // Store video blob URL for playback
+  if (videoUrl) {
+    URL.revokeObjectURL(videoUrl);
+  }
+  videoUrl = URL.createObjectURL(file);
+  elements.videoPlayer.src = videoUrl;
+
+  // Show video player and progress
+  showElement(elements.videoPlayerSection);
   showElement(elements.progressSection);
   hideElement(elements.uploadSection);
   updateProgress('Uploading', 'Preparing upload...', 0);
@@ -712,6 +770,18 @@ async function loadResults() {
 
     // Enable export
     elements.exportBtn.disabled = false;
+    if (elements.copyBtn) {
+      elements.copyBtn.disabled = false;
+    }
+
+    // Render bookmarks for this video
+    renderBookmarksList();
+
+    // Update export UI based on current selection
+    const selectedFormat = $('input[name="export-format"]:checked')?.value;
+    if (selectedFormat) {
+      updateExportUI(selectedFormat);
+    }
 
     // Update search placeholder
     updateSearchPlaceholder('Type to search transcript');
@@ -727,6 +797,36 @@ function formatDuration(seconds) {
   const mins = Math.floor(seconds / 60);
   const secs = Math.floor(seconds % 60);
   return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+/**
+ * Seek video to a specific timestamp
+ * @param {number} seconds - Time in seconds to seek to
+ */
+function seekVideo(seconds) {
+  if (!elements.videoPlayer || !videoUrl) {
+    showToast('warning', 'Video Not Available', 'No video loaded');
+    return;
+  }
+
+  // Scroll video player into view
+  elements.videoPlayerSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  // Seek to the timestamp
+  elements.videoPlayer.currentTime = seconds;
+
+  // Play the video
+  elements.videoPlayer.play().catch(() => {
+    // Autoplay blocked, just seek
+  });
+
+  // Visual feedback
+  if (!prefersReducedMotion.matches) {
+    elements.videoPlayerSection.animate([
+      { boxShadow: '0 0 0 3px var(--primary)' },
+      { boxShadow: '0 0 0 0 transparent' }
+    ], { duration: 600, easing: 'ease-out' });
+  }
 }
 
 // ============================================
@@ -758,13 +858,18 @@ function renderEvents(events) {
     const card = createElement('div', 'event-card animate-fadeInUp', {
       role: 'listitem',
       tabindex: '0',
+      'data-timestamp': event.timestamp,
+      'aria-label': `Event at ${event.timestamp_formatted}, click to jump to this moment`,
     });
     card.style.animationDelay = `${i * 50}ms`;
 
     const indexBox = createElement('div', 'event-card-index', { textContent: String(i + 1) });
 
     const content = createElement('div', 'event-card-content');
-    const timestamp = createElement('p', 'event-card-timestamp', { textContent: event.timestamp_formatted });
+    const timestamp = createElement('span', 'event-card-timestamp timestamp-link', {
+      textContent: event.timestamp_formatted,
+      title: 'Click to jump to this moment',
+    });
     const confidence = createElement('p', 'event-card-confidence', {
       textContent: `Confidence: ${Math.round(event.confidence * 100)}%`
     });
@@ -773,20 +878,34 @@ function renderEvents(events) {
 
     const arrow = createSvgIcon('M9 5l7 7-7 7', 'event-card-arrow');
 
+    // Add confusion button
+    const confusionBtn = createConfusionVoteButton(event.timestamp, event.timestamp_formatted);
+
     card.appendChild(indexBox);
     card.appendChild(content);
     card.appendChild(arrow);
+    card.appendChild(confusionBtn);
+
+    // Click to seek video
+    card.addEventListener('click', (e) => {
+      // Don't seek if clicking the confusion button
+      if (e.target.closest('.confusion-btn')) return;
+      seekVideo(event.timestamp);
+    });
 
     // Keyboard support
     card.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        // Could trigger video seek here
+        seekVideo(event.timestamp);
       }
     });
 
     elements.eventsList.appendChild(card);
   });
+
+  // Update confusion UI after rendering
+  updateConfusionMomentsUI();
 }
 
 function renderTranscript(transcript) {
@@ -803,18 +922,47 @@ function renderTranscript(transcript) {
   }
 
   transcript.forEach((chunk, i) => {
-    const card = createElement('div', 'transcript-chunk animate-fadeInUp');
+    const card = createElement('div', 'transcript-chunk animate-fadeInUp', {
+      'data-timestamp': chunk.start,
+      tabindex: '0',
+      role: 'button',
+      'aria-label': `Transcript at ${chunk.start_formatted}, click to jump`,
+    });
     card.style.animationDelay = `${i * 30}ms`;
 
-    const time = createElement('p', 'transcript-chunk-time', {
-      textContent: `${chunk.start_formatted} - ${chunk.end_formatted}`
+    const time = createElement('span', 'transcript-chunk-time timestamp-link', {
+      textContent: `${chunk.start_formatted} - ${chunk.end_formatted}`,
+      title: 'Click to jump to this moment',
     });
     const text = createElement('p', 'transcript-chunk-text', { textContent: chunk.text });
 
+    // Add confusion button
+    const confusionBtn = createConfusionVoteButton(chunk.start, chunk.start_formatted);
+
     card.appendChild(time);
     card.appendChild(text);
+    card.appendChild(confusionBtn);
+
+    // Click to seek video
+    card.addEventListener('click', (e) => {
+      // Don't seek if clicking the confusion button
+      if (e.target.closest('.confusion-btn')) return;
+      seekVideo(chunk.start);
+    });
+
+    // Keyboard support
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        seekVideo(chunk.start);
+      }
+    });
+
     elements.transcriptContent.appendChild(card);
   });
+
+  // Update confusion UI after rendering
+  updateConfusionMomentsUI();
 }
 
 function createSvgIcon(pathD, className = 'icon') {
@@ -930,12 +1078,18 @@ async function performSearch(query) {
     }
 
     data.results.forEach((result, i) => {
-      const card = createElement('div', 'search-result animate-fadeInUp');
+      const card = createElement('div', 'search-result animate-fadeInUp', {
+        'data-timestamp': result.timestamp,
+        tabindex: '0',
+        role: 'button',
+        'aria-label': `Search result at ${result.timestamp_formatted}, click to jump`,
+      });
       card.style.animationDelay = `${i * 50}ms`;
 
       const header = createElement('div', 'search-result-header');
-      const timeBadge = createElement('span', 'search-result-timestamp', {
-        textContent: result.timestamp_formatted
+      const timeBadge = createElement('span', 'search-result-timestamp timestamp-link', {
+        textContent: result.timestamp_formatted,
+        title: 'Click to jump to this moment',
       });
       const typeBadge = createElement('span', 'search-result-type', {
         textContent: result.result_type
@@ -948,6 +1102,20 @@ async function performSearch(query) {
 
       card.appendChild(header);
       card.appendChild(text);
+
+      // Click to seek video
+      card.addEventListener('click', () => {
+        seekVideo(result.timestamp);
+      });
+
+      // Keyboard support
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          seekVideo(result.timestamp);
+        }
+      });
+
       elements.searchResults.appendChild(card);
     });
 
@@ -990,6 +1158,9 @@ function escapeRegex(string) {
 // ============================================
 function initExport() {
   elements.exportBtn.addEventListener('click', handleExport);
+  if (elements.copyBtn) {
+    elements.copyBtn.addEventListener('click', handleCopyToClipboard);
+  }
 }
 
 function initExportOptions() {
@@ -999,8 +1170,176 @@ function initExportOptions() {
     radio.addEventListener('change', () => {
       options.forEach(o => o.removeAttribute('data-selected'));
       option.setAttribute('data-selected', 'true');
+
+      // Show/hide copy button and preview for study notes
+      const format = radio.value;
+      updateExportUI(format);
     });
   });
+}
+
+function updateExportUI(format) {
+  const copyBtn = elements.copyBtn;
+  const studyNotesPreview = elements.studyNotesPreview;
+
+  if (format === 'study-notes') {
+    if (copyBtn) {
+      copyBtn.style.display = 'flex';
+      copyBtn.disabled = !processingResult;
+    }
+    if (studyNotesPreview && processingResult) {
+      showElement(studyNotesPreview);
+      renderStudyNotesPreview();
+    }
+  } else {
+    if (copyBtn) {
+      copyBtn.style.display = 'none';
+    }
+    if (studyNotesPreview) {
+      hideElement(studyNotesPreview);
+    }
+  }
+}
+
+function generateStudyNotesMarkdown() {
+  if (!processingResult) return '';
+
+  const meta = processingResult.metadata;
+  const events = processingResult.events || [];
+  const transcript = processingResult.transcript || [];
+  const bookmarks = getBookmarks();
+  const confusionMarkers = getConfusionMarkers();
+
+  // Generate timestamp link format (e.g., [00:12:34](#t=754))
+  const formatTimestampLink = (seconds) => {
+    const formatted = formatDurationFull(seconds);
+    return `[${formatted}](#t=${Math.floor(seconds)})`;
+  };
+
+  let md = '';
+
+  // Header
+  md += `# Study Notes: ${meta.filename}\n\n`;
+  md += `> Generated on ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}\n\n`;
+
+  // Video Metadata
+  md += `## Video Information\n\n`;
+  md += `| Property | Value |\n`;
+  md += `|----------|-------|\n`;
+  md += `| **Filename** | ${meta.filename} |\n`;
+  md += `| **Duration** | ${formatDurationFull(meta.duration)} |\n`;
+  md += `| **Resolution** | ${meta.width}x${meta.height} |\n`;
+  md += `| **Frame Rate** | ${meta.fps.toFixed(1)} fps |\n\n`;
+
+  // Table of Contents (Events)
+  if (events.length > 0) {
+    md += `## Table of Contents\n\n`;
+    md += `*Detected events and slide changes:*\n\n`;
+    events.forEach((event, i) => {
+      const confidence = Math.round(event.confidence * 100);
+      md += `${i + 1}. ${formatTimestampLink(event.timestamp)} - Event (${confidence}% confidence)\n`;
+    });
+    md += `\n`;
+  }
+
+  // Bookmarks
+  if (bookmarks.length > 0) {
+    md += `## Your Bookmarks\n\n`;
+    const sortedBookmarks = [...bookmarks].sort((a, b) => a.timestamp - b.timestamp);
+    sortedBookmarks.forEach((bookmark) => {
+      const typeInfo = BOOKMARK_TYPES[bookmark.type] || BOOKMARK_TYPES.important;
+      md += `### ${typeInfo.icon} ${formatTimestampLink(bookmark.timestamp)} - ${typeInfo.label}\n\n`;
+      if (bookmark.note) {
+        md += `${bookmark.note}\n\n`;
+      }
+    });
+  }
+
+  // Confusion Markers
+  if (confusionMarkers.length > 0) {
+    md += `## Moments to Review\n\n`;
+    md += `*These sections were marked as confusing:*\n\n`;
+    const sortedConfusion = [...confusionMarkers].sort((a, b) => a.timestamp - b.timestamp);
+    sortedConfusion.forEach((marker) => {
+      md += `- ${formatTimestampLink(marker.timestamp)}`;
+      if (marker.note) {
+        md += ` - ${marker.note}`;
+      }
+      md += `\n`;
+    });
+    md += `\n`;
+  }
+
+  // Full Transcript
+  if (transcript.length > 0) {
+    md += `## Full Transcript\n\n`;
+    transcript.forEach((chunk) => {
+      md += `**${formatTimestampLink(chunk.start)}**\n\n`;
+      md += `${chunk.text}\n\n`;
+      md += `---\n\n`;
+    });
+  }
+
+  // Footer
+  md += `\n---\n\n`;
+  md += `*Generated by [Lecture Mind](https://github.com/matte1782/vl-jepa) - AI-powered lecture analysis*\n`;
+
+  return md;
+}
+
+function formatDurationFull(seconds) {
+  const hrs = Math.floor(seconds / 3600);
+  const mins = Math.floor((seconds % 3600) / 60);
+  const secs = Math.floor(seconds % 60);
+
+  if (hrs > 0) {
+    return `${hrs}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  }
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+function renderStudyNotesPreview() {
+  if (!elements.studyNotesContent) return;
+
+  const markdown = generateStudyNotesMarkdown();
+
+  // Show a truncated preview
+  const preview = markdown.substring(0, 1000) + (markdown.length > 1000 ? '\n\n...' : '');
+
+  clearElement(elements.studyNotesContent);
+  const pre = createElement('pre', 'study-notes-markdown');
+  pre.textContent = preview;
+  elements.studyNotesContent.appendChild(pre);
+}
+
+async function handleCopyToClipboard() {
+  if (!processingResult) {
+    showToast('warning', 'No Content', 'Process a video first to generate study notes');
+    return;
+  }
+
+  const btn = elements.copyBtn;
+  const originalText = btn.textContent;
+
+  try {
+    const markdown = generateStudyNotesMarkdown();
+    await navigator.clipboard.writeText(markdown);
+
+    btn.textContent = 'Copied!';
+    showToast('success', 'Copied!', 'Study notes copied to clipboard');
+
+  } catch (error) {
+    showToast('error', 'Copy Failed', 'Could not copy to clipboard');
+  } finally {
+    setTimeout(() => {
+      btn.innerHTML = `
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+        </svg>
+        Copy to Clipboard
+      `;
+    }, 2000);
+  }
 }
 
 async function handleExport() {
@@ -1013,21 +1352,34 @@ async function handleExport() {
     btn.disabled = true;
     btn.textContent = 'Exporting...';
 
-    const response = await fetchWithTimeout(`/api/export/${currentJobId}/${format}`);
-    const data = await response.json();
+    let content, filename;
+
+    if (format === 'study-notes') {
+      // Generate study notes locally
+      content = generateStudyNotesMarkdown();
+      const meta = processingResult?.metadata || {};
+      const baseName = (meta.filename || 'lecture').replace(/\.[^/.]+$/, '');
+      filename = `${baseName}_study_notes.md`;
+    } else {
+      // Use server export for other formats
+      const response = await fetchWithTimeout(`/api/export/${currentJobId}/${format}`);
+      const data = await response.json();
+      content = data.content;
+      filename = data.filename;
+    }
 
     // Create download
-    const blob = new Blob([data.content], { type: 'text/plain;charset=utf-8' });
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = data.filename;
+    a.download = filename;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    showToast('success', 'Export Complete', `Downloaded ${data.filename}`);
+    showToast('success', 'Export Complete', `Downloaded ${filename}`);
 
   } catch (error) {
     showToast('error', 'Export Failed', error.message);
@@ -1129,10 +1481,33 @@ function resetUpload() {
   hideElement(elements.progressSection);
   hideElement(elements.videoInfo);
   hideElement(elements.eventsSection);
+  hideElement(elements.videoPlayerSection);
+
+  // Clean up video
+  if (videoUrl) {
+    URL.revokeObjectURL(videoUrl);
+    videoUrl = null;
+  }
+  elements.videoPlayer.src = '';
+  elements.videoPlayer.load();
+
   elements.fileInput.value = '';
   currentJobId = null;
   processingResult = null;
   elements.exportBtn.disabled = true;
+  if (elements.copyBtn) {
+    elements.copyBtn.disabled = true;
+  }
+
+  // Reset bookmarks section
+  if (elements.bookmarksSection) {
+    hideElement(elements.bookmarksSection);
+  }
+
+  // Reset study notes preview
+  if (elements.studyNotesPreview) {
+    hideElement(elements.studyNotesPreview);
+  }
 
   // Reset search and transcript
   updateSearchPlaceholder('Upload a video to search through transcript and visual content');
@@ -1144,6 +1519,592 @@ function resetUpload() {
     'Upload a video to generate a transcript'
   );
   elements.transcriptContent.appendChild(emptyTranscript);
+}
+
+// ============================================
+// BOOKMARKS & CONFUSION MARKERS
+// ============================================
+let userBookmarks = [];
+let userConfusionMarkers = [];
+
+function initBookmarks() {
+  // Load from localStorage
+  loadBookmarksFromStorage();
+  loadConfusionFromStorage();
+
+  // Set up event listeners for bookmark buttons
+  if (elements.addBookmarkBtn) {
+    elements.addBookmarkBtn.addEventListener('click', showBookmarkTypeSelector);
+  }
+  if (elements.markConfusionBtn) {
+    elements.markConfusionBtn.addEventListener('click', handleMarkConfusion);
+  }
+
+  // Keyboard shortcuts (1-4) for quick bookmarks
+  document.addEventListener('keydown', handleBookmarkKeyboardShortcut);
+}
+
+/**
+ * Handle keyboard shortcuts for bookmarks (keys 1-4)
+ */
+function handleBookmarkKeyboardShortcut(e) {
+  // Only trigger if video is loaded and not typing in an input
+  if (!currentJobId || !videoUrl) return;
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+  // Map keys 1-4 to bookmark types
+  const keyMap = { '1': 'important', '2': 'question', '3': 'insight', '4': 'todo' };
+  const type = keyMap[e.key];
+
+  if (type) {
+    e.preventDefault();
+    addBookmarkWithType(type);
+  }
+}
+
+/**
+ * Show bookmark type selector modal
+ */
+function showBookmarkTypeSelector() {
+  if (!elements.videoPlayer || !currentJobId) {
+    showToast('warning', 'No Video', 'Please upload and process a video first');
+    return;
+  }
+
+  // Create overlay
+  const overlay = createElement('div', 'bookmark-type-overlay');
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.remove();
+  });
+
+  // Create selector
+  const selector = createElement('div', 'bookmark-type-selector');
+  const title = createElement('p', 'bookmark-type-title', {
+    textContent: 'Select bookmark type:'
+  });
+  selector.appendChild(title);
+
+  const options = createElement('div', 'bookmark-type-options');
+  Object.entries(BOOKMARK_TYPES).forEach(([type, info]) => {
+    const option = createElement('button', `bookmark-type-option bookmark-type-option--${info.color}`, {
+      'data-bookmark-type': type
+    });
+    const icon = createElement('span', 'bookmark-type-option-icon', { textContent: info.icon });
+    const label = createElement('span', 'bookmark-type-option-label', { textContent: info.label });
+    const key = createElement('kbd', 'bookmark-type-option-key', { textContent: info.key });
+    option.appendChild(icon);
+    option.appendChild(label);
+    option.appendChild(key);
+
+    option.addEventListener('click', () => {
+      overlay.remove();
+      addBookmarkWithType(type);
+    });
+
+    options.appendChild(option);
+  });
+
+  selector.appendChild(options);
+
+  // Keyboard hint
+  const hint = createElement('p', 'bookmark-type-hint text-muted', {
+    textContent: 'Tip: Press 1-4 while video plays to quickly bookmark'
+  });
+  selector.appendChild(hint);
+
+  overlay.appendChild(selector);
+  document.body.appendChild(overlay);
+
+  // Close on escape
+  const handleEscape = (e) => {
+    if (e.key === 'Escape') {
+      overlay.remove();
+      document.removeEventListener('keydown', handleEscape);
+    }
+  };
+  document.addEventListener('keydown', handleEscape);
+}
+
+/**
+ * Add a bookmark with a specific type
+ */
+function addBookmarkWithType(type) {
+  if (!elements.videoPlayer || !currentJobId) {
+    showToast('warning', 'No Video', 'Please upload and process a video first');
+    return;
+  }
+
+  const timestamp = elements.videoPlayer.currentTime;
+  showBookmarkNoteModal(type, timestamp);
+}
+
+/**
+ * Show modal to add note to bookmark
+ */
+function showBookmarkNoteModal(type, timestamp) {
+  const typeInfo = BOOKMARK_TYPES[type];
+
+  // Create modal overlay
+  const overlay = createElement('div', 'bookmark-modal-overlay');
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) {
+      overlay.remove();
+    }
+  });
+
+  // Create modal
+  const modal = createElement('div', 'bookmark-modal');
+
+  // Header
+  const header = createElement('div', 'bookmark-modal-header');
+  const iconSpan = createElement('span', `bookmark-icon bookmark-icon--${typeInfo.color}`, {
+    textContent: typeInfo.icon
+  });
+  const titleDiv = createElement('div', 'bookmark-modal-title-group');
+  const title = createElement('h3', 'bookmark-modal-title', {
+    textContent: `Add ${typeInfo.label} Bookmark`
+  });
+  const timestampText = createElement('span', 'bookmark-modal-timestamp', {
+    textContent: `at ${formatDurationFull(timestamp)}`
+  });
+  titleDiv.appendChild(title);
+  titleDiv.appendChild(timestampText);
+  header.appendChild(iconSpan);
+  header.appendChild(titleDiv);
+
+  // Note input
+  const noteGroup = createElement('div', 'bookmark-modal-note-group');
+  const noteLabel = createElement('label', 'bookmark-modal-label', {
+    textContent: 'Note (optional):'
+  });
+  const noteInput = createElement('textarea', 'bookmark-modal-textarea input', {
+    placeholder: 'Add a note about this moment...',
+    rows: '3'
+  });
+  noteGroup.appendChild(noteLabel);
+  noteGroup.appendChild(noteInput);
+
+  // Buttons
+  const buttons = createElement('div', 'bookmark-modal-buttons');
+  const cancelBtn = createElement('button', 'btn', { 'data-variant': 'secondary' });
+  cancelBtn.textContent = 'Cancel';
+  cancelBtn.addEventListener('click', () => overlay.remove());
+
+  const saveBtn = createElement('button', 'btn', { 'data-variant': 'primary' });
+  saveBtn.textContent = 'Save Bookmark';
+  saveBtn.addEventListener('click', () => {
+    saveBookmarkWithNote(type, timestamp, noteInput.value.trim());
+    overlay.remove();
+  });
+
+  buttons.appendChild(cancelBtn);
+  buttons.appendChild(saveBtn);
+
+  // Assemble modal
+  modal.appendChild(header);
+  modal.appendChild(noteGroup);
+  modal.appendChild(buttons);
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+
+  // Focus on textarea
+  noteInput.focus();
+
+  // Submit on Enter (with Ctrl/Cmd)
+  noteInput.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+      saveBookmarkWithNote(type, timestamp, noteInput.value.trim());
+      overlay.remove();
+    }
+  });
+
+  // Close on escape
+  const handleEscape = (e) => {
+    if (e.key === 'Escape') {
+      overlay.remove();
+      document.removeEventListener('keydown', handleEscape);
+    }
+  };
+  document.addEventListener('keydown', handleEscape);
+}
+
+/**
+ * Save bookmark with type and note
+ */
+function saveBookmarkWithNote(type, timestamp, note) {
+  const typeInfo = BOOKMARK_TYPES[type];
+
+  const bookmark = {
+    id: Date.now().toString(),
+    jobId: currentJobId,
+    timestamp: timestamp,
+    type: type,
+    note: note || '',
+    createdAt: new Date().toISOString(),
+  };
+
+  userBookmarks.push(bookmark);
+  saveBookmarksToStorage();
+  renderBookmarksList();
+
+  showToast('success', 'Bookmark Added', `${typeInfo.icon} ${typeInfo.label} at ${formatDurationFull(timestamp)}`);
+}
+
+function loadBookmarksFromStorage() {
+  try {
+    const stored = localStorage.getItem(BOOKMARK_STORAGE_KEY);
+    if (stored) {
+      userBookmarks = JSON.parse(stored);
+    }
+  } catch (e) {
+    console.warn('Failed to load bookmarks from storage:', e);
+    userBookmarks = [];
+  }
+}
+
+function saveBookmarksToStorage() {
+  try {
+    localStorage.setItem(BOOKMARK_STORAGE_KEY, JSON.stringify(userBookmarks));
+  } catch (e) {
+    console.warn('Failed to save bookmarks to storage:', e);
+  }
+}
+
+function loadConfusionFromStorage() {
+  try {
+    const stored = localStorage.getItem(CONFUSION_STORAGE_KEY);
+    if (stored) {
+      userConfusionMarkers = JSON.parse(stored);
+    }
+  } catch (e) {
+    console.warn('Failed to load confusion markers from storage:', e);
+    userConfusionMarkers = [];
+  }
+}
+
+function saveConfusionToStorage() {
+  try {
+    localStorage.setItem(CONFUSION_STORAGE_KEY, JSON.stringify(userConfusionMarkers));
+  } catch (e) {
+    console.warn('Failed to save confusion markers to storage:', e);
+  }
+}
+
+function getBookmarks() {
+  return userBookmarks.filter(b => b.jobId === currentJobId);
+}
+
+function getConfusionMarkers() {
+  return userConfusionMarkers.filter(c => c.jobId === currentJobId);
+}
+
+function handleMarkConfusion() {
+  if (!elements.videoPlayer || !currentJobId) {
+    showToast('warning', 'No Video', 'Please upload and process a video first');
+    return;
+  }
+
+  const timestamp = elements.videoPlayer.currentTime;
+  const note = prompt('What was confusing? (optional):');
+
+  // If user cancels the prompt, don't add marker
+  if (note === null) return;
+
+  const marker = {
+    id: Date.now().toString(),
+    jobId: currentJobId,
+    timestamp: timestamp,
+    note: note || '',
+    createdAt: new Date().toISOString(),
+  };
+
+  userConfusionMarkers.push(marker);
+  saveConfusionToStorage();
+
+  showToast('info', 'Marked for Review', `Confusion marker at ${formatDurationFull(timestamp)}`);
+}
+
+function renderBookmarksList() {
+  if (!elements.bookmarksList || !elements.bookmarksSection) return;
+
+  const bookmarks = getBookmarks();
+
+  if (bookmarks.length === 0) {
+    hideElement(elements.bookmarksSection);
+    return;
+  }
+
+  showElement(elements.bookmarksSection);
+  clearElement(elements.bookmarksList);
+
+  if (elements.bookmarksCount) {
+    elements.bookmarksCount.textContent = bookmarks.length.toString();
+  }
+
+  const sortedBookmarks = [...bookmarks].sort((a, b) => a.timestamp - b.timestamp);
+
+  sortedBookmarks.forEach((bookmark) => {
+    const typeInfo = BOOKMARK_TYPES[bookmark.type] || BOOKMARK_TYPES.important;
+
+    const item = createElement('div', `bookmark-item bookmark-item--${typeInfo.color}`, {
+      'data-timestamp': bookmark.timestamp,
+      tabindex: '0',
+      role: 'button',
+    });
+
+    // Type icon
+    const iconSpan = createElement('span', `bookmark-item-icon bookmark-icon--${typeInfo.color}`, {
+      textContent: typeInfo.icon,
+      title: typeInfo.label,
+    });
+
+    const timeSpan = createElement('span', 'bookmark-time timestamp-link', {
+      textContent: formatDurationFull(bookmark.timestamp),
+    });
+
+    const noteSpan = createElement('span', 'bookmark-note', {
+      textContent: bookmark.note || typeInfo.label,
+    });
+
+    const deleteBtn = createElement('button', 'bookmark-delete', {
+      'aria-label': 'Delete bookmark',
+      title: 'Delete',
+    });
+    deleteBtn.innerHTML = '&times;';
+    deleteBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      deleteBookmark(bookmark.id);
+    });
+
+    item.appendChild(iconSpan);
+    item.appendChild(timeSpan);
+    item.appendChild(noteSpan);
+    item.appendChild(deleteBtn);
+
+    item.addEventListener('click', () => {
+      seekVideo(bookmark.timestamp);
+    });
+
+    // Keyboard support
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        seekVideo(bookmark.timestamp);
+      }
+      if (e.key === 'Delete' || e.key === 'Backspace') {
+        e.preventDefault();
+        deleteBookmark(bookmark.id);
+      }
+    });
+
+    elements.bookmarksList.appendChild(item);
+  });
+}
+
+function deleteBookmark(id) {
+  userBookmarks = userBookmarks.filter(b => b.id !== id);
+  saveBookmarksToStorage();
+  renderBookmarksList();
+  showToast('info', 'Bookmark Removed', 'The bookmark has been deleted');
+}
+
+// ============================================
+// CONFUSION VOTING (1-CLICK ON TRANSCRIPT/EVENTS)
+// ============================================
+
+/**
+ * Get confusion votes from localStorage (different from confusion markers)
+ * This is for the 1-click voting feature on transcript chunks/events
+ */
+function getConfusionVotes() {
+  try {
+    const stored = localStorage.getItem('lectureMind_confusionVotes');
+    return stored ? JSON.parse(stored) : {};
+  } catch (e) {
+    console.error('Error reading confusion votes:', e);
+    return {};
+  }
+}
+
+/**
+ * Save confusion votes to localStorage
+ */
+function saveConfusionVotes(votes) {
+  try {
+    localStorage.setItem('lectureMind_confusionVotes', JSON.stringify(votes));
+  } catch (e) {
+    console.error('Error saving confusion votes:', e);
+  }
+}
+
+/**
+ * Get votes for current job
+ */
+function getCurrentJobConfusionVotes() {
+  if (!currentJobId) return {};
+  const allVotes = getConfusionVotes();
+  return allVotes[currentJobId] || {};
+}
+
+/**
+ * Toggle a confusion vote for a timestamp
+ */
+function toggleConfusionVote(timestamp, timestampFormatted) {
+  if (!currentJobId) return false;
+
+  const allVotes = getConfusionVotes();
+  if (!allVotes[currentJobId]) {
+    allVotes[currentJobId] = {};
+  }
+
+  const key = String(timestamp);
+  const isVoted = !!allVotes[currentJobId][key];
+
+  if (isVoted) {
+    // Remove vote
+    delete allVotes[currentJobId][key];
+    showToast('info', 'Vote Removed', `Confusion mark removed from ${timestampFormatted}`);
+  } else {
+    // Add vote
+    allVotes[currentJobId][key] = {
+      timestamp: timestamp,
+      timestampFormatted: timestampFormatted,
+      votedAt: Date.now()
+    };
+    showToast('info', 'Marked Confusing', `Moment at ${timestampFormatted} marked as confusing`);
+  }
+
+  saveConfusionVotes(allVotes);
+  updateConfusionMomentsUI();
+
+  return !isVoted;
+}
+
+/**
+ * Check if a timestamp is marked as confusing
+ */
+function isTimestampConfusing(timestamp) {
+  const votes = getCurrentJobConfusionVotes();
+  return !!votes[String(timestamp)];
+}
+
+/**
+ * Get top confusing moments sorted by most recent
+ */
+function getTopConfusingMoments(limit = 5) {
+  const votes = getCurrentJobConfusionVotes();
+  return Object.values(votes)
+    .sort((a, b) => b.votedAt - a.votedAt)
+    .slice(0, limit);
+}
+
+/**
+ * Create a confusion vote button for transcript/event items
+ */
+function createConfusionVoteButton(timestamp, timestampFormatted) {
+  const btn = createElement('button', 'confusion-btn', {
+    'aria-label': 'Mark as confusing',
+    title: 'Mark this moment as confusing',
+    'data-timestamp': timestamp,
+  });
+
+  btn.textContent = '?';
+
+  // Set initial state
+  if (isTimestampConfusing(timestamp)) {
+    btn.classList.add('voted');
+    btn.setAttribute('aria-pressed', 'true');
+  } else {
+    btn.setAttribute('aria-pressed', 'false');
+  }
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isNowVoted = toggleConfusionVote(timestamp, timestampFormatted);
+
+    if (isNowVoted) {
+      btn.classList.add('voted');
+      btn.setAttribute('aria-pressed', 'true');
+    } else {
+      btn.classList.remove('voted');
+      btn.setAttribute('aria-pressed', 'false');
+    }
+
+    // Animate button
+    if (!prefersReducedMotion.matches) {
+      btn.animate([
+        { transform: 'scale(1.2)' },
+        { transform: 'scale(1)' }
+      ], { duration: 200, easing: 'ease-out' });
+    }
+  });
+
+  return btn;
+}
+
+/**
+ * Update the "Most Confusing Moments" section UI
+ */
+function updateConfusionMomentsUI() {
+  if (!elements.confusionSection || !elements.confusionList) return;
+
+  const topMoments = getTopConfusingMoments(5);
+
+  if (topMoments.length === 0) {
+    hideElement(elements.confusionSection);
+    return;
+  }
+
+  showElement(elements.confusionSection);
+  clearElement(elements.confusionList);
+
+  topMoments.forEach((moment, i) => {
+    const item = createElement('div', 'confusion-item animate-fadeInUp', {
+      tabindex: '0',
+      role: 'button',
+      'aria-label': `Confusing moment at ${moment.timestampFormatted}, click to jump`,
+    });
+    item.style.animationDelay = `${i * 50}ms`;
+
+    const badge = createElement('span', 'confusion-item-badge', {
+      textContent: '?',
+    });
+
+    const time = createElement('span', 'confusion-item-time timestamp-link', {
+      textContent: moment.timestampFormatted,
+      title: 'Click to jump to this moment',
+    });
+
+    item.appendChild(badge);
+    item.appendChild(time);
+
+    // Click to seek video
+    item.addEventListener('click', () => {
+      seekVideo(moment.timestamp);
+    });
+
+    // Keyboard support
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        seekVideo(moment.timestamp);
+      }
+    });
+
+    elements.confusionList.appendChild(item);
+  });
+
+  // Sync all confusion buttons on the page
+  $$('.confusion-btn').forEach(btn => {
+    const timestamp = parseFloat(btn.getAttribute('data-timestamp'));
+    if (isTimestampConfusing(timestamp)) {
+      btn.classList.add('voted');
+      btn.setAttribute('aria-pressed', 'true');
+    } else {
+      btn.classList.remove('voted');
+      btn.setAttribute('aria-pressed', 'false');
+    }
+  });
 }
 
 // Add fadeOut keyframe dynamically
@@ -1160,6 +2121,154 @@ style.textContent = `
     align-items: center;
     gap: var(--space-3);
     padding: var(--space-8);
+  }
+
+  .video-toolbar {
+    display: flex;
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border-top: 1px solid var(--border);
+    background: var(--surface-1);
+  }
+
+  .btn-toolbar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  .bookmarks-section {
+    padding: var(--space-3);
+    border-top: 1px solid var(--border);
+    background: var(--surface-2);
+  }
+
+  .bookmarks-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-2);
+  }
+
+  .bookmarks-header h4 {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    background: var(--primary);
+    color: white;
+    border-radius: 10px;
+  }
+
+  .bookmarks-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .bookmark-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    background: var(--surface-1);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  .bookmark-item:hover {
+    background: var(--surface-3);
+  }
+
+  .bookmark-time {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--primary);
+    min-width: 50px;
+  }
+
+  .bookmark-note {
+    flex: 1;
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .bookmark-delete {
+    padding: 2px 6px;
+    font-size: var(--text-sm);
+    color: var(--text-muted);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+
+  .bookmark-delete:hover {
+    color: var(--error);
+    background: var(--error-surface);
+  }
+
+  .export-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+
+  .study-notes-preview {
+    margin-top: var(--space-4);
+    padding: var(--space-3);
+    background: var(--surface-2);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+  }
+
+  .study-notes-header h4 {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    margin: 0 0 var(--space-1) 0;
+  }
+
+  .study-notes-header p {
+    margin: 0 0 var(--space-2) 0;
+  }
+
+  .study-notes-content {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  .study-notes-markdown {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-break: break-word;
+    color: var(--text-secondary);
+    margin: 0;
+    padding: var(--space-2);
+    background: var(--surface-1);
+    border-radius: var(--radius-sm);
   }
 `;
 document.head.appendChild(style);

@@ -15,13 +15,13 @@ import uuid
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
+import numpy as np
 from fastapi import BackgroundTasks, FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, HTMLResponse
+from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 
 from vl_jepa.api.models import (
-    ErrorResponse,
     EventItem,
     ExportFormat,
     ExportResponse,
@@ -39,7 +39,7 @@ from vl_jepa.api.models import (
 )
 
 if TYPE_CHECKING:
-    pass
+    from vl_jepa.multimodal_index import MultimodalIndex
 
 logger = logging.getLogger(__name__)
 
@@ -112,7 +112,7 @@ def _register_routes(app: FastAPI) -> None:
     @app.post("/api/upload", response_model=UploadResponse)
     async def upload_video(
         background_tasks: BackgroundTasks,
-        file: UploadFile = File(...),
+        file: UploadFile = File(...),  # noqa: B008 - FastAPI pattern
     ) -> UploadResponse:
         """
         Upload a video file for processing.
@@ -160,7 +160,7 @@ def _register_routes(app: FastAPI) -> None:
 
         return UploadResponse(
             job_id=job_id,
-            message=f"Video uploaded. Processing started.",
+            message="Video uploaded. Processing started.",
         )
 
     @app.get("/api/status/{job_id}", response_model=ProgressResponse)
@@ -199,7 +199,7 @@ def _register_routes(app: FastAPI) -> None:
 
     @app.post("/api/search/{job_id}", response_model=SearchResponse)
     async def search(job_id: str, request: SearchRequest) -> SearchResponse:
-        """Search within processed video content."""
+        """Search within processed video content using semantic search."""
         with _job_lock:
             job = _jobs.get(job_id)
 
@@ -211,32 +211,64 @@ def _register_routes(app: FastAPI) -> None:
                 status_code=400, detail="Processing not complete"
             )
 
-        # Get the index from job state
-        index = job.get("index")
+        # Get the index and text encoder from job state
+        index: MultimodalIndex | None = job.get("index")
+        text_encoder = job.get("text_encoder")
         result = job.get("result")
 
         if not result:
             return SearchResponse(query=request.query, results=[], total=0)
 
-        # For now, do simple text matching on transcript
-        # In full implementation, use the multimodal index
         results: list[SearchResultItem] = []
-        query_lower = request.query.lower()
 
-        for chunk in result.transcript:
-            if query_lower in chunk.text.lower():
-                results.append(
-                    SearchResultItem(
-                        text=chunk.text,
-                        timestamp=chunk.start,
-                        timestamp_formatted=chunk.start_formatted,
-                        score=1.0,
-                        result_type="transcript",
-                    )
+        # Use semantic search if index is available
+        if index is not None and text_encoder is not None and index.size > 0:
+            try:
+                # Encode query
+                query_embedding = text_encoder.encode(request.query)
+
+                # Search transcript modality
+                from vl_jepa.multimodal_index import Modality
+                search_results = index.search(
+                    query_embedding,
+                    k=request.top_k,
+                    modality=Modality.TRANSCRIPT,
                 )
 
-        # Limit results
-        results = results[: request.top_k]
+                for sr in search_results:
+                    results.append(
+                        SearchResultItem(
+                            text=sr.text or "",
+                            timestamp=sr.timestamp,
+                            timestamp_formatted=_format_timestamp(sr.timestamp),
+                            score=float(sr.score),
+                            result_type="transcript",
+                        )
+                    )
+                logger.info(
+                    "Semantic search for '%s' found %d results",
+                    request.query,
+                    len(results),
+                )
+            except Exception as e:
+                logger.warning("Semantic search failed: %s, falling back to text", e)
+                # Fall through to text matching
+
+        # Fallback to text matching if semantic search not available or failed
+        if not results:
+            query_lower = request.query.lower()
+            for chunk in result.transcript:
+                if query_lower in chunk.text.lower():
+                    results.append(
+                        SearchResultItem(
+                            text=chunk.text,
+                            timestamp=chunk.start,
+                            timestamp_formatted=chunk.start_formatted,
+                            score=0.5,  # Lower score for text match
+                            result_type="transcript",
+                        )
+                    )
+            results = results[: request.top_k]
 
         return SearchResponse(
             query=request.query,
@@ -264,7 +296,6 @@ def _register_routes(app: FastAPI) -> None:
 
         # Generate export content
         from vl_jepa.ui.export import (
-            ExportFormat as UIExportFormat,
             export_json,
             export_markdown,
             export_srt,
@@ -352,7 +383,6 @@ def _format_timestamp(seconds: float) -> str:
 
 def _process_video(job_id: str) -> None:
     """Process video in background thread."""
-    import shutil
 
     def update_progress(
         stage: ProcessingStage,
@@ -372,7 +402,6 @@ def _process_video(job_id: str) -> None:
             if not job:
                 return
             video_path = Path(job["video_path"])
-            use_placeholders = job["use_placeholders"]
 
         # Stage 1: Loading video
         update_progress(ProcessingStage.LOADING, 0.05, "Loading video...")
@@ -404,75 +433,220 @@ def _process_video(job_id: str) -> None:
 
         # Stage 2: Extract audio
         update_progress(ProcessingStage.EXTRACTING_AUDIO, 0.15, "Extracting audio...")
-        time.sleep(0.3)
 
-        # Stage 3: Transcribe
-        update_progress(ProcessingStage.TRANSCRIBING, 0.30, "Transcribing audio...")
-        time.sleep(0.5)
+        audio_path = None
+        transcript_chunks = []
 
-        # Generate demo transcript
-        transcript_chunks = [
-            TranscriptChunk(
-                text="Welcome to today's lecture on machine learning fundamentals.",
-                start=0.0,
-                end=5.0,
-                start_formatted="0:00",
-                end_formatted="0:05",
-            ),
-            TranscriptChunk(
-                text="We'll cover neural networks, backpropagation, and optimization.",
-                start=5.0,
-                end=12.0,
-                start_formatted="0:05",
-                end_formatted="0:12",
-            ),
-            TranscriptChunk(
-                text="Let's start with the basics of how neurons work in artificial networks.",
-                start=12.0,
-                end=18.0,
-                start_formatted="0:12",
-                end_formatted="0:18",
-            ),
-        ]
+        try:
+            from vl_jepa.audio.extractor import check_ffmpeg_available, extract_audio
+
+            if check_ffmpeg_available():
+                audio_path = extract_audio(str(video_path))
+                logger.info("Audio extracted to: %s", audio_path)
+            else:
+                logger.warning("FFmpeg not available, skipping audio extraction")
+        except Exception as e:
+            logger.warning("Audio extraction failed: %s", e)
+
+        # Stage 3: Transcribe with real Whisper
+        update_progress(ProcessingStage.TRANSCRIBING, 0.30, "Transcribing audio with Whisper...")
+
+        if audio_path:
+            try:
+                from vl_jepa.audio.transcriber import (
+                    WhisperTranscriber,
+                    check_whisper_available,
+                )
+
+                if check_whisper_available():
+                    # Use base model for balance of speed/accuracy
+                    transcriber = WhisperTranscriber.load("base", device="auto")
+                    segments = transcriber.transcribe(audio_path)
+
+                    # Convert to API format
+                    for seg in segments:
+                        transcript_chunks.append(
+                            TranscriptChunk(
+                                text=seg.text,
+                                start=seg.start,
+                                end=seg.end,
+                                start_formatted=_format_timestamp(seg.start),
+                                end_formatted=_format_timestamp(seg.end),
+                            )
+                        )
+                    logger.info("Transcribed %d segments", len(transcript_chunks))
+                else:
+                    logger.warning("Whisper not available")
+            except Exception as e:
+                logger.warning("Transcription failed: %s", e)
+
+        # Fallback to demo transcript if real transcription failed
+        if not transcript_chunks:
+            logger.info("Using demo transcript (real transcription not available)")
+            transcript_chunks = [
+                TranscriptChunk(
+                    text="[Demo mode - Install faster-whisper for real transcription]",
+                    start=0.0,
+                    end=5.0,
+                    start_formatted="0:00",
+                    end_formatted="0:05",
+                ),
+                TranscriptChunk(
+                    text="Run: pip install faster-whisper",
+                    start=5.0,
+                    end=10.0,
+                    start_formatted="0:05",
+                    end_formatted="0:10",
+                ),
+            ]
 
         # Stage 4: Sample frames
         update_progress(ProcessingStage.SAMPLING_FRAMES, 0.45, "Sampling frames...")
-        time.sleep(0.3)
+
+        # Sample frames from video (1 FPS for event detection)
+        frames = []
+        frame_timestamps = []
+        try:
+            from vl_jepa.video import VideoInput
+            video = VideoInput.open(video_path)
+            sampled = video.sample_frames(fps=1.0)
+            frames = [f.frame for f in sampled]
+            frame_timestamps = [f.timestamp for f in sampled]
+            video.close()
+            logger.info("Sampled %d frames at 1 FPS", len(frames))
+        except Exception as e:
+            logger.warning("Frame sampling failed: %s", e)
 
         # Stage 5: Encode frames
-        update_progress(ProcessingStage.ENCODING_FRAMES, 0.60, "Encoding frames...")
-        time.sleep(0.5)
+        update_progress(ProcessingStage.ENCODING_FRAMES, 0.55, "Encoding frames...")
+
+        # Initialize visual encoder
+        frame_embeddings = []
+        try:
+            from vl_jepa.encoders.placeholder import PlaceholderVisualEncoder
+            visual_encoder = PlaceholderVisualEncoder()
+
+            # Encode frames (resize to 224x224 and normalize)
+            import cv2
+            for frame in frames:
+                # frame is typically (H, W, 3) BGR uint8
+                resized = cv2.resize(frame, (224, 224))
+                # Convert BGR to RGB and normalize to [-1, 1]
+                rgb = cv2.cvtColor(resized, cv2.COLOR_BGR2RGB)
+                normalized = (rgb.astype(np.float32) / 127.5) - 1.0
+                # Transpose to (C, H, W)
+                chw = normalized.transpose(2, 0, 1)
+                embedding = visual_encoder.encode_single(chw)
+                frame_embeddings.append(embedding)
+            logger.info("Encoded %d frames", len(frame_embeddings))
+        except Exception as e:
+            logger.warning("Frame encoding failed: %s", e)
 
         # Stage 6: Encode text
-        update_progress(ProcessingStage.ENCODING_TEXT, 0.75, "Encoding transcript...")
-        time.sleep(0.3)
+        update_progress(ProcessingStage.ENCODING_TEXT, 0.65, "Encoding transcript...")
+
+        # Initialize text encoder and multimodal index
+        text_encoder = None
+        multimodal_index = None
+        try:
+            # Try real MiniLM encoder first
+            try:
+                from vl_jepa.text import TextEncoder
+                text_encoder = TextEncoder.load()
+                logger.info("Loaded real TextEncoder (MiniLM)")
+            except Exception:
+                from vl_jepa.encoders.placeholder import PlaceholderTextEncoder
+                text_encoder = PlaceholderTextEncoder()
+                logger.info("Using PlaceholderTextEncoder")
+
+            # Build multimodal index
+            from vl_jepa.multimodal_index import MultimodalIndex
+            multimodal_index = MultimodalIndex()
+
+            # Add transcript embeddings
+            for i, chunk in enumerate(transcript_chunks):
+                text_embedding = text_encoder.encode(chunk.text)
+                multimodal_index.add_transcript(
+                    embedding=text_embedding,
+                    start_time=chunk.start,
+                    end_time=chunk.end,
+                    text=chunk.text,
+                    segment_id=i,
+                )
+            logger.info("Added %d transcript chunks to index", len(transcript_chunks))
+
+        except Exception as e:
+            logger.warning("Text encoding/indexing failed: %s", e)
 
         # Stage 7: Detect events
-        update_progress(ProcessingStage.DETECTING_EVENTS, 0.85, "Detecting events...")
-        time.sleep(0.3)
+        update_progress(ProcessingStage.DETECTING_EVENTS, 0.80, "Detecting events...")
 
-        # Generate demo events
-        events = [
-            EventItem(
+        events = []
+        try:
+            from vl_jepa.detector import EventDetector
+
+            # Initialize event detector
+            detector = EventDetector(
+                threshold=0.25,  # Slightly lower for more sensitivity
+                min_event_gap=30.0,  # Minimum 30s between events
+                smoothing_window=3,
+            )
+
+            # Always add start event
+            events.append(EventItem(
                 timestamp=0.0,
                 timestamp_formatted="0:00",
                 confidence=1.0,
-            ),
-            EventItem(
-                timestamp=30.0,
-                timestamp_formatted="0:30",
-                confidence=0.87,
-            ),
-            EventItem(
-                timestamp=45.0,
-                timestamp_formatted="0:45",
-                confidence=0.92,
-            ),
-        ]
+            ))
+
+            # Process frame embeddings to detect events
+            for embedding, timestamp in zip(frame_embeddings, frame_timestamps, strict=False):
+                event = detector.process(embedding, timestamp)
+                if event:
+                    events.append(EventItem(
+                        timestamp=event.timestamp,
+                        timestamp_formatted=_format_timestamp(event.timestamp),
+                        confidence=event.confidence,
+                    ))
+
+            logger.info("Detected %d events (including start)", len(events))
+
+            # If no events detected beyond start, try transcript-based detection
+            if len(events) < 2 and len(transcript_chunks) > 2:
+                logger.info("Using transcript-based event detection as fallback")
+                # Create events based on transcript gaps or topic changes
+                prev_end = 0.0
+                for chunk in transcript_chunks:
+                    # Large gap suggests topic change
+                    if chunk.start - prev_end > 20.0:
+                        events.append(EventItem(
+                            timestamp=chunk.start,
+                            timestamp_formatted=_format_timestamp(chunk.start),
+                            confidence=0.7,
+                        ))
+                    prev_end = chunk.end
+
+                # Ensure events are sorted and deduplicated
+                events = sorted(events, key=lambda e: e.timestamp)
+                seen = set()
+                unique_events = []
+                for e in events:
+                    key = round(e.timestamp / 10) * 10  # 10s buckets
+                    if key not in seen:
+                        seen.add(key)
+                        unique_events.append(e)
+                events = unique_events[:10]  # Limit to 10 events
+
+        except Exception as e:
+            logger.warning("Event detection failed: %s, using single start event", e)
+            events = [EventItem(
+                timestamp=0.0,
+                timestamp_formatted="0:00",
+                confidence=1.0,
+            )]
 
         # Stage 8: Build index
         update_progress(ProcessingStage.BUILDING_INDEX, 0.95, "Building search index...")
-        time.sleep(0.3)
 
         # Create result
         result = ProcessingResult(
@@ -490,10 +664,18 @@ def _process_video(job_id: str) -> None:
                 _jobs[job_id]["progress"] = 1.0
                 _jobs[job_id]["message"] = "Processing complete"
                 _jobs[job_id]["result"] = result
+                _jobs[job_id]["index"] = multimodal_index
+                _jobs[job_id]["text_encoder"] = text_encoder
 
-        logger.info("Job %s completed successfully", job_id)
+        logger.info(
+            "Job %s completed: %d events, %d transcript chunks, index size %d",
+            job_id,
+            len(events),
+            len(transcript_chunks),
+            multimodal_index.size if multimodal_index else 0,
+        )
 
-    except Exception as e:
+    except Exception:
         logger.exception("Job %s failed", job_id)
         with _job_lock:
             if job_id in _jobs:

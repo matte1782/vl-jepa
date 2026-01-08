@@ -1,8 +1,8 @@
 # Lecture Mind — Product Roadmap v2.1
 
-> **Last Updated**: 2026-01-07
+> **Last Updated**: 2026-01-08
 > **Current Version**: v0.2.0
-> **Status**: v0.2.0 RELEASED
+> **Status**: v0.3.0 IN PROGRESS (Week 6-7 complete)
 > **Hostile Review**: GO - Ready for PyPI publication
 
 ---
@@ -13,9 +13,9 @@
 |---------|-------|-------|----------|--------|
 | v0.1.0 | Foundation | - | DONE | ✅ Released |
 | Gate 0 | Technical Validation | 12h | Week 1 | ✅ Complete |
-| **v0.2.0** | **Real Models + Audio** | **80h** | **Weeks 2-6** | ⏳ In Progress |
-| v0.3.0 | User Experience | 80h | Weeks 7-10 | Blocked by v0.2.0 |
-| v1.0.0 | Production | 80h | Weeks 11-14 | Blocked by v0.3.0 |
+| **v0.2.0** | **Real Models + Audio** | **80h** | **Weeks 2-5** | ✅ Released |
+| **v0.3.0** | **User Experience** | **80h** | **Weeks 6-9** | ⏳ In Progress |
+| v1.0.0 | Production | 80h | Weeks 10-13 | Blocked by v0.3.0 |
 
 **Assumptions:**
 - Work velocity: 20 hours/week
@@ -183,23 +183,23 @@ v0.2.0/
 
 ### Task Breakdown
 
-| Week | Task | Hours | Deliverable |
-|------|------|-------|-------------|
-| **Week 6** | | 20h | |
-| | Gradio app skeleton | 8h | `src/vl_jepa/ui/app.py` |
-| | Video upload + progress | 8h | Working upload with progress bar |
-| | Debug buffer | 4h | - |
-| **Week 7** | | 20h | |
-| | Event timeline display | 6h | Visual timeline component |
-| | Query interface | 6h | Text input + results display |
-| | Export to Markdown | 4h | Download button |
-| | Debug buffer | 4h | - |
-| **Week 8** | | 20h | |
+| Week | Task | Hours | Status |
+|------|------|-------|--------|
+| **Week 6** | **Gradio UI Foundation** | 20h | ✅ Complete |
+| | ~~Gradio app skeleton~~ | ~~8h~~ | ✅ `src/vl_jepa/ui/app.py` |
+| | ~~Video upload + progress~~ | ~~8h~~ | ✅ 8-stage pipeline with callbacks |
+| | ~~Premium CSS styling~~ | ~~4h~~ | ✅ Light/Dark themes |
+| **Week 7** | **UI Features** | 20h | ✅ Complete |
+| | ~~Event timeline display~~ | ~~6h~~ | ✅ Interactive timeline component |
+| | ~~Query interface~~ | ~~6h~~ | ✅ Multimodal search with highlighting |
+| | ~~Export to Markdown/JSON/SRT~~ | ~~4h~~ | ✅ All 3 formats |
+| | ~~Integration tests~~ | ~~4h~~ | ✅ 68 tests passing |
+| **Week 8** | **Docker** | 20h | ⏳ Next |
 | | Dockerfile creation | 8h | Multi-stage, optimized |
 | | Docker testing | 4h | Test on different platforms |
 | | docker-compose setup | 4h | Easy local deployment |
 | | Debug buffer | 4h | - |
-| **Week 9** | | 20h | |
+| **Week 9** | **Docs + Release** | 20h | Blocked |
 | | mkdocs setup | 4h | Documentation framework |
 | | API documentation | 6h | All public APIs documented |
 | | User tutorials | 4h | Getting started guide |
@@ -368,17 +368,17 @@ January 2026
 ├── Week 1 (Jan 1-7): Gate 0 - Technical Validation ✅ COMPLETE
 │   └── Spike, test data, interface design, audio module started
 │
-├── Week 2-5 (Jan 8 - Feb 4): v0.2.0 - Real Models + Audio
+├── Week 2-5 (Jan 8 - Feb 4): v0.2.0 - Real Models + Audio ✅ RELEASED
 │   ├── Week 2: Audio module + DINOv2 integration ✅ COMPLETE
 │   ├── Week 3: Video + Text pipeline ✅ COMPLETE
 │   ├── Week 4: Benchmarks + Polish ✅ COMPLETE
-│   └── Week 5: Release prep + PyPI publish (NEXT)
+│   └── Week 5: Release prep + PyPI publish ✅ COMPLETE
 │
 February 2026
-├── Week 6-9 (Feb 5 - Mar 4): v0.3.0 - User Experience
-│   ├── Week 6: Gradio skeleton
-│   ├── Week 7: UI features
-│   ├── Week 8: Docker
+├── Week 6-9 (Feb 5 - Mar 4): v0.3.0 - User Experience ⏳ IN PROGRESS
+│   ├── Week 6: Gradio UI Foundation ✅ COMPLETE
+│   ├── Week 7: UI Features ✅ COMPLETE (68 tests)
+│   ├── Week 8: Docker ← CURRENT
 │   └── Week 9: Docs + release
 │
 March 2026
@@ -393,9 +393,9 @@ March 2026
 
 ## Next Actions
 
-1. **Now**: Week 5 - Release v0.2.0 to PyPI
-2. **Week 5**: README update, CI finalization, PyPI publish
-3. **Week 6**: Begin v0.3.0 - Gradio UI
+1. **Complete**: Week 6-7 - Gradio UI ✅ (68 tests, premium design)
+2. **Now**: Week 8 - Docker containerization
+3. **Next**: Week 9 - Documentation + v0.3.0 release
 
 ---
 
@@ -403,6 +403,7 @@ March 2026
 
 | Version | Date | Changes |
 |---------|------|---------|
+| v2.5 | 2026-01-08 | Week 6-7 complete: Premium Gradio UI with 68 tests, light/dark themes |
 | v2.4 | 2026-01-07 | v0.2.0 release ready, README comprehensive, PyPI metadata complete |
 | v2.3 | 2026-01-06 | Week 4 complete, 74% coverage, v0.2.0-rc1 ready |
 | v2.2 | 2026-01-04 | Week 3 complete, 7/8 v0.2.0 goals achieved, 71% coverage |

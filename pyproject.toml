@@ -51,6 +51,11 @@ audio = [
 ui = [
     "gradio>=4.0.0",
 ]
+api = [
+    "fastapi>=0.109.0",
+    "uvicorn[standard]>=0.27.0",
+    "python-multipart>=0.0.6",
+]
 all = [
     "lecture-mind[dev,ml,audio,ui]",
 ]

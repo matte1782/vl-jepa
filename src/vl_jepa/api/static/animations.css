@@ -1,0 +1,661 @@
+/**
+ * Lecture Mind - Premium Background Animations
+ *
+ * Lightweight, GPU-friendly animations:
+ * - Animated noise texture
+ * - Floating particles
+ * - Aurora/gradient effects
+ * - Parallax support
+ *
+ * All animations use transform/opacity for GPU acceleration.
+ * Respects prefers-reduced-motion.
+ */
+
+/* ============================================
+   ANIMATED NOISE TEXTURE
+   ============================================ */
+.noise-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+.dark .noise-overlay {
+  opacity: 0.05;
+}
+
+/* ============================================
+   FLOATING PARTICLES
+   ============================================ */
+.particles-container {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: var(--particle-size, 4px);
+  height: var(--particle-size, 4px);
+  background: var(--particle-color, var(--primary));
+  border-radius: 50%;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: particleFloat var(--particle-duration, 15s) var(--particle-delay, 0s) infinite;
+}
+
+@keyframes particleFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(100vh) scale(0);
+  }
+  10% {
+    opacity: var(--particle-opacity, 0.6);
+    transform: translateY(90vh) scale(1);
+  }
+  90% {
+    opacity: var(--particle-opacity, 0.6);
+    transform: translateY(10vh) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0) scale(0);
+  }
+}
+
+/* Particle variations */
+.particle:nth-child(1) {
+  left: 5%;
+  --particle-size: 3px;
+  --particle-duration: 20s;
+  --particle-delay: 0s;
+  --particle-opacity: 0.4;
+  --particle-color: var(--primary);
+}
+
+.particle:nth-child(2) {
+  left: 15%;
+  --particle-size: 5px;
+  --particle-duration: 18s;
+  --particle-delay: 2s;
+  --particle-opacity: 0.5;
+  --particle-color: var(--accent);
+}
+
+.particle:nth-child(3) {
+  left: 25%;
+  --particle-size: 2px;
+  --particle-duration: 22s;
+  --particle-delay: 4s;
+  --particle-opacity: 0.3;
+  --particle-color: var(--primary);
+}
+
+.particle:nth-child(4) {
+  left: 40%;
+  --particle-size: 4px;
+  --particle-duration: 16s;
+  --particle-delay: 1s;
+  --particle-opacity: 0.6;
+  --particle-color: var(--accent);
+}
+
+.particle:nth-child(5) {
+  left: 55%;
+  --particle-size: 3px;
+  --particle-duration: 24s;
+  --particle-delay: 3s;
+  --particle-opacity: 0.4;
+  --particle-color: var(--primary);
+}
+
+.particle:nth-child(6) {
+  left: 70%;
+  --particle-size: 6px;
+  --particle-duration: 19s;
+  --particle-delay: 5s;
+  --particle-opacity: 0.5;
+  --particle-color: var(--accent);
+}
+
+.particle:nth-child(7) {
+  left: 80%;
+  --particle-size: 2px;
+  --particle-duration: 21s;
+  --particle-delay: 2.5s;
+  --particle-opacity: 0.3;
+  --particle-color: var(--primary);
+}
+
+.particle:nth-child(8) {
+  left: 92%;
+  --particle-size: 4px;
+  --particle-duration: 17s;
+  --particle-delay: 4.5s;
+  --particle-opacity: 0.5;
+  --particle-color: var(--accent);
+}
+
+/* ============================================
+   AURORA / GRADIENT BLOBS
+   ============================================ */
+.aurora-container {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  will-change: transform;
+  animation: auroraFloat 20s ease-in-out infinite;
+}
+
+.aurora-blob--primary {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
+  top: -10%;
+  left: -10%;
+  animation-delay: 0s;
+}
+
+.aurora-blob--accent {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  bottom: -5%;
+  right: -5%;
+  animation-delay: -10s;
+  animation-duration: 25s;
+}
+
+.aurora-blob--tertiary {
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--success) 0%, transparent 70%);
+  top: 40%;
+  left: 60%;
+  animation-delay: -5s;
+  animation-duration: 22s;
+  opacity: 0.2;
+}
+
+@keyframes auroraFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(30px, -20px) scale(1.05);
+  }
+  50% {
+    transform: translate(-20px, 30px) scale(0.95);
+  }
+  75% {
+    transform: translate(20px, 20px) scale(1.02);
+  }
+}
+
+/* Dark mode aurora adjustments */
+.dark .aurora-blob {
+  opacity: 0.3;
+  filter: blur(100px);
+}
+
+.dark .aurora-blob--primary {
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.6) 0%, transparent 70%);
+}
+
+.dark .aurora-blob--accent {
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.5) 0%, transparent 70%);
+}
+
+.dark .aurora-blob--tertiary {
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.4) 0%, transparent 70%);
+}
+
+/* ============================================
+   LIGHT BEAMS
+   ============================================ */
+.light-beam {
+  position: absolute;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--primary) 30%,
+    var(--accent) 70%,
+    transparent 100%
+  );
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: lightBeam 8s ease-in-out infinite;
+}
+
+.light-beam:nth-child(1) {
+  left: 20%;
+  animation-delay: 0s;
+}
+
+.light-beam:nth-child(2) {
+  left: 50%;
+  animation-delay: 2.5s;
+}
+
+.light-beam:nth-child(3) {
+  left: 80%;
+  animation-delay: 5s;
+}
+
+@keyframes lightBeam {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(-100%) scaleY(0.5);
+  }
+  30% {
+    opacity: 0.15;
+    transform: translateY(0) scaleY(1);
+  }
+  70% {
+    opacity: 0.15;
+    transform: translateY(0) scaleY(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%) scaleY(0.5);
+  }
+}
+
+.dark .light-beam {
+  opacity: 0;
+  animation-name: lightBeamDark;
+}
+
+@keyframes lightBeamDark {
+  0%, 100% {
+    opacity: 0;
+    transform: translateY(-100%) scaleY(0.5);
+  }
+  30% {
+    opacity: 0.1;
+    transform: translateY(0) scaleY(1);
+  }
+  70% {
+    opacity: 0.1;
+    transform: translateY(0) scaleY(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%) scaleY(0.5);
+  }
+}
+
+/* ============================================
+   PARALLAX LAYERS
+   ============================================ */
+.parallax-layer {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.parallax-layer--slow {
+  /* Moves at 0.3x scroll speed - set via JS */
+}
+
+.parallax-layer--medium {
+  /* Moves at 0.5x scroll speed - set via JS */
+}
+
+.parallax-layer--fast {
+  /* Moves at 0.7x scroll speed - set via JS */
+}
+
+/* ============================================
+   GLOW EFFECTS
+   ============================================ */
+.glow-ring {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  border: 1px solid var(--primary);
+  opacity: 0.1;
+  animation: glowPulse 4s ease-in-out infinite;
+}
+
+.glow-ring:nth-child(1) {
+  top: -200px;
+  left: -200px;
+}
+
+.glow-ring:nth-child(2) {
+  animation-delay: 1s;
+  width: 700px;
+  height: 700px;
+  top: -250px;
+  left: -250px;
+}
+
+.glow-ring:nth-child(3) {
+  animation-delay: 2s;
+  width: 800px;
+  height: 800px;
+  top: -300px;
+  left: -300px;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.2;
+  }
+}
+
+/* ============================================
+   MORPHING GRADIENT BACKGROUND
+   ============================================ */
+.morph-bg {
+  position: absolute;
+  inset: -50%;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(6, 182, 212, 0.15) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 70%, rgba(139, 92, 246, 0.12) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 50%, rgba(34, 197, 94, 0.08) 0%, transparent 50%);
+  animation: morphBg 30s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes morphBg {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  33% {
+    transform: rotate(5deg) scale(1.05);
+  }
+  66% {
+    transform: rotate(-3deg) scale(0.98);
+  }
+}
+
+.dark .morph-bg {
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(6, 182, 212, 0.2) 0%, transparent 40%),
+    radial-gradient(ellipse at 80% 70%, rgba(139, 92, 246, 0.18) 0%, transparent 40%),
+    radial-gradient(ellipse at 50% 50%, rgba(34, 197, 94, 0.1) 0%, transparent 50%);
+}
+
+/* ============================================
+   HERO ENHANCED BACKGROUND
+   ============================================ */
+.hero-bg-enhanced {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+/* ============================================
+   PREFERS REDUCED MOTION
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .particle,
+  .aurora-blob,
+  .light-beam,
+  .glow-ring,
+  .morph-bg {
+    animation: none !important;
+  }
+
+  .particle {
+    opacity: 0.3;
+    transform: none;
+  }
+
+  .aurora-blob {
+    opacity: 0.2;
+  }
+
+  .light-beam {
+    display: none;
+  }
+
+  .morph-bg {
+    transform: none;
+  }
+}
+
+/* ============================================
+   3D CARD TILT EFFECT
+   ============================================ */
+.tilt-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.tilt-card:hover {
+  /* JS will set --rotateX and --rotateY */
+  transform: rotateX(var(--rotateX, 0deg)) rotateY(var(--rotateY, 0deg));
+}
+
+.tilt-card .tilt-content {
+  transform: translateZ(20px);
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.tilt-card:hover .tilt-content {
+  transform: translateZ(40px);
+}
+
+/* ============================================
+   BUTTON RIPPLE EFFECT
+   ============================================ */
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(0);
+  animation: rippleEffect 0.6s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes rippleEffect {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   CURSOR GLOW TRAIL
+   ============================================ */
+.cursor-glow {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(6, 182, 212, 0.15) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+  opacity: 0;
+  mix-blend-mode: screen;
+}
+
+.cursor-glow.active {
+  opacity: 1;
+}
+
+.dark .cursor-glow {
+  background: radial-gradient(
+    circle,
+    rgba(6, 182, 212, 0.25) 0%,
+    transparent 70%
+  );
+}
+
+/* ============================================
+   MAGNETIC BUTTON EFFECT
+   ============================================ */
+.magnetic-btn {
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+/* ============================================
+   ANIMATED COUNTER
+   ============================================ */
+.counter-value {
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================
+   TYPEWRITER EFFECT
+   ============================================ */
+.typewriter {
+  display: inline;
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1em;
+  background: var(--primary);
+  margin-left: 2px;
+  animation: typewriterBlink 0.8s infinite;
+  vertical-align: text-bottom;
+}
+
+@keyframes typewriterBlink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* ============================================
+   SECTION COLOR TRANSITIONS
+   ============================================ */
+.section-gradient-bg {
+  position: relative;
+}
+
+.section-gradient-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.features-section::before {
+  background: linear-gradient(180deg, transparent 0%, rgba(6, 182, 212, 0.03) 50%, transparent 100%);
+}
+
+.how-it-works-section::before {
+  background: linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.03) 50%, transparent 100%);
+}
+
+.tech-section::before {
+  background: linear-gradient(180deg, transparent 0%, rgba(34, 197, 94, 0.03) 50%, transparent 100%);
+}
+
+.section-gradient-bg.in-view::before {
+  opacity: 1;
+}
+
+.dark .features-section::before {
+  background: linear-gradient(180deg, transparent 0%, rgba(6, 182, 212, 0.05) 50%, transparent 100%);
+}
+
+.dark .how-it-works-section::before {
+  background: linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.05) 50%, transparent 100%);
+}
+
+.dark .tech-section::before {
+  background: linear-gradient(180deg, transparent 0%, rgba(34, 197, 94, 0.05) 50%, transparent 100%);
+}
+
+/* ============================================
+   INTERACTIVE PARTICLES
+   ============================================ */
+.particle.interactive {
+  transition: transform 0.3s ease-out;
+}
+
+/* ============================================
+   MOBILE OPTIMIZATIONS
+   ============================================ */
+@media (max-width: 767px) {
+  /* Disable cursor effects on mobile */
+  .cursor-glow {
+    display: none;
+  }
+
+  /* Disable tilt on mobile */
+  .tilt-card:hover {
+    transform: none;
+  }
+
+  /* Disable magnetic on mobile */
+  .magnetic-btn {
+    transform: none !important;
+  }
+  /* Reduce particle count on mobile */
+  .particle:nth-child(n+5) {
+    display: none;
+  }
+
+  /* Simplify aurora on mobile */
+  .aurora-blob {
+    filter: blur(60px);
+  }
+
+  .aurora-blob--tertiary {
+    display: none;
+  }
+
+  /* Hide light beams on mobile */
+  .light-beam {
+    display: none;
+  }
+
+  /* Reduce morph bg animation */
+  .morph-bg {
+    animation-duration: 45s;
+  }
+
+  /* Reduce glow rings */
+  .glow-ring:nth-child(n+2) {
+    display: none;
+  }
+}

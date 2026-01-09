@@ -57,8 +57,12 @@ api = [
     "python-multipart>=0.0.6",
     "httpx>=0.24.0",  # Required for TestClient
 ]
+docs = [
+    "mkdocs>=1.5.0",
+    "mkdocs-material>=9.5.0",
+]
 all = [
-    "lecture-mind[dev,ml,audio,ui]",
+    "lecture-mind[dev,ml,audio,ui,docs]",
 ]
 
 [project.scripts]

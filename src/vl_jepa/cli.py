@@ -24,8 +24,8 @@ def parse_args(args: list[str] | None = None) -> argparse.Namespace:
         Parsed arguments namespace
     """
     parser = argparse.ArgumentParser(
-        prog="vl-jepa",
-        description="VL-JEPA Lecture Summarizer - Event-aware video summarization",
+        prog="lecture-mind",
+        description="Lecture Mind - Event-aware video summarization using V-JEPA",
     )
 
     parser.add_argument(

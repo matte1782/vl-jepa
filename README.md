@@ -7,6 +7,15 @@
 
 Event-aware lecture summarizer using V-JEPA visual encoder for real-time, context-aware summaries and retrieval.
 
+## Try It Now
+
+| Option | Description | Link |
+|--------|-------------|------|
+| **Cloud Demo** | Try instantly in your browser (no install) | [lecture-mind.onrender.com](https://lecture-mind.onrender.com) |
+| **Local Setup** | Full features on your machine | [Local Setup Guide](docs/local-setup.md) |
+
+> **Note:** The cloud demo runs in demo mode with placeholder processing. For full functionality with real AI models, use the local installation.
+
 ## Features
 
 - **Visual Encoding**: DINOv2 ViT-L/16 for 768-dim frame embeddings
@@ -184,7 +193,8 @@ pytest tests/benchmarks/ -v --benchmark-only
 
 - [x] **v0.1.0**: Foundation (placeholder encoders, basic pipeline)
 - [x] **v0.2.0**: Real Models + Audio (DINOv2, Whisper, multimodal search)
-- [ ] **v0.3.0**: User Experience (Gradio web UI, Docker)
+- [ ] **v0.3.0**: Web UI + Cloud Demo (FastAPI, Docker, security hardening) - *In Progress*
+- [ ] **v0.4.0**: Student Playground (flashcards, multi-lecture library, offline mode)
 - [ ] **v1.0.0**: Production (optimization, real decoder, deployment)
 
 ## License

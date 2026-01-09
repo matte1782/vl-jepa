@@ -3,6 +3,11 @@
 > **Version**: v0.3.0
 > **Image Size Target**: <3GB
 
+!!! note "Port Information"
+    The Docker image runs the **Gradio UI** on port **7860**.
+    For the **FastAPI backend** (documented in [API Reference](guide/api.md)), run locally with `uvicorn` on port **8000**.
+    See [Local Setup](local-setup.md) for FastAPI instructions.
+
 ---
 
 ## Quick Start
@@ -264,4 +269,4 @@ docker push username/lecture-mind:v0.3.0
 
 ---
 
-*For more information, see the main [README](../README.md).*
+*For more information, see the [Home](index.md) page or [Local Setup Guide](local-setup.md).*

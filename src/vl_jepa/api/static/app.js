@@ -133,7 +133,76 @@ document.addEventListener('DOMContentLoaded', () => {
   initBookmarks();
   initBeforeUnloadWarning();
   initFocusTrapManagement();
+  checkDemoMode();
 });
+
+// ============================================
+// DEMO MODE BANNER
+// Shows when running in cloud demo mode (placeholder models)
+// ============================================
+async function checkDemoMode() {
+  try {
+    const response = await fetch('/api/config');
+    if (!response.ok) return;
+    const config = await response.json();
+
+    if (config.demo_mode) {
+      showDemoBanner(config.local_setup_url);
+    }
+  } catch (error) {
+    // Silently ignore - banner is optional
+    console.debug('Could not check demo mode:', error);
+  }
+}
+
+function showDemoBanner(setupUrl) {
+  // Don't show if already exists
+  if ($('#demo-banner')) return;
+
+  const banner = createElement('div', 'demo-banner', {
+    id: 'demo-banner',
+    role: 'alert',
+  });
+
+  // Build banner content safely (no innerHTML with dynamic content)
+  const icon = createElement('span', 'demo-banner-icon', { textContent: '🎓' });
+
+  const textSpan = createElement('span', 'demo-banner-text');
+  const strong = createElement('strong', null, { textContent: 'Demo Mode' });
+  const text = document.createTextNode(' — Running with lightweight processing. ');
+  const link = createElement('a', null, {
+    href: setupUrl,
+    target: '_blank',
+    rel: 'noopener',
+    textContent: 'Run locally',
+  });
+  const text2 = document.createTextNode(' for full AI features!');
+  textSpan.appendChild(strong);
+  textSpan.appendChild(text);
+  textSpan.appendChild(link);
+  textSpan.appendChild(text2);
+
+  const closeBtn = createElement('button', 'demo-banner-close', {
+    'aria-label': 'Dismiss banner',
+    textContent: '×',
+  });
+
+  banner.appendChild(icon);
+  banner.appendChild(textSpan);
+  banner.appendChild(closeBtn);
+
+  // Insert at top of body
+  document.body.insertBefore(banner, document.body.firstChild);
+
+  // Animate in
+  requestAnimationFrame(() => banner.classList.add('visible'));
+
+  // Close button
+  closeBtn.addEventListener('click', () => {
+    banner.classList.remove('visible');
+    setTimeout(() => banner.remove(), 300);
+  });
+}
 
 // ============================================
 // P0 FIX: BEFOREUNLOAD WARNING

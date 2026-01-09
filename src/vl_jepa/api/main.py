@@ -143,6 +143,20 @@ def _register_routes(app: FastAPI) -> None:
         """Health check endpoint for deployment monitoring."""
         return {"status": "healthy", "service": "lecture-mind"}
 
+    @app.get("/api/config")
+    async def get_config() -> dict[str, Any]:
+        """Get application configuration (demo mode status, etc.)."""
+        return {
+            "demo_mode": app.state.use_placeholders,
+            "version": "0.3.0",
+            "features": {
+                "transcription": not app.state.use_placeholders,
+                "real_embeddings": not app.state.use_placeholders,
+                "semantic_search": True,  # Works in both modes
+            },
+            "local_setup_url": "https://github.com/matte1782/lecture-mind#local-installation",
+        }
+
     @app.post("/api/upload", response_model=UploadResponse)
     async def upload_video(
         background_tasks: BackgroundTasks,
@@ -484,12 +498,21 @@ def _process_video(job_id: str) -> None:
         except Exception as e:
             logger.warning("Audio extraction failed: %s", e)
 
-        # Stage 3: Transcribe with real Whisper
-        update_progress(
-            ProcessingStage.TRANSCRIBING, 0.30, "Transcribing audio with Whisper..."
-        )
+        # Stage 3: Transcribe audio
+        # Check if we should use placeholder mode (skip heavy model loading)
+        use_placeholders = job.get("use_placeholders", True)
 
-        if audio_path:
+        if use_placeholders:
+            update_progress(
+                ProcessingStage.TRANSCRIBING,
+                0.30,
+                "Demo mode - skipping transcription...",
+            )
+            logger.info("Placeholder mode: skipping Whisper model loading")
+        elif audio_path:
+            update_progress(
+                ProcessingStage.TRANSCRIBING, 0.30, "Transcribing audio with Whisper..."
+            )
             try:
                 from vl_jepa.audio.transcriber import (
                     WhisperTranscriber,
@@ -523,18 +546,25 @@ def _process_video(job_id: str) -> None:
             logger.info("Using demo transcript (real transcription not available)")
             transcript_chunks = [
                 TranscriptChunk(
-                    text="[Demo mode - Install faster-whisper for real transcription]",
+                    text="🎓 Demo Mode - This cloud version uses lightweight processing.",
                     start=0.0,
                     end=5.0,
                     start_formatted="0:00",
                     end_formatted="0:05",
                 ),
                 TranscriptChunk(
-                    text="Run: pip install faster-whisper",
+                    text="For full AI transcription and embeddings, run locally!",
                     start=5.0,
                     end=10.0,
                     start_formatted="0:05",
                     end_formatted="0:10",
+                ),
+                TranscriptChunk(
+                    text="Visit GitHub for setup: github.com/matte1782/lecture-mind",
+                    start=10.0,
+                    end=15.0,
+                    start_formatted="0:10",
+                    end_formatted="0:15",
                 ),
             ]
 

@@ -10,6 +10,10 @@ import io
 from unittest.mock import MagicMock, patch
 
 import pytest
+
+# Skip all tests if FastAPI is not installed
+fastapi = pytest.importorskip("fastapi")
+
 from fastapi.testclient import TestClient
 
 from vl_jepa.api.main import create_app, _jobs, _job_lock

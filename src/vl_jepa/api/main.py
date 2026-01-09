@@ -50,7 +50,7 @@ except ImportError as e:
     _startup_logger.error(f"Failed to import fastapi: {e}")
     raise
 
-from vl_jepa.api.models import (
+from vl_jepa.api.models import (  # noqa: E402
     EventItem,
     ExportFormat,
     ExportResponse,

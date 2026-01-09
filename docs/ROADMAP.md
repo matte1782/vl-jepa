@@ -1,9 +1,10 @@
 # Lecture Mind — Product Roadmap v2.1
 
-> **Last Updated**: 2026-01-08
+> **Last Updated**: 2026-01-09
 > **Current Version**: v0.2.0
-> **Status**: v0.3.0 IN PROGRESS (Week 6-7 complete)
+> **Status**: v0.3.0 IN PROGRESS (Week 6-8 in progress)
 > **Hostile Review**: GO - Ready for PyPI publication
+> **Architecture**: FastAPI + Premium Vanilla JS (deployed on Render)
 
 ---
 
@@ -174,32 +175,32 @@ v0.2.0/
 
 | ID | Goal | PASS Criteria | FAIL Criteria |
 |----|------|---------------|---------------|
-| G1 | Gradio web UI | Upload video, see events, execute query in browser | Crashes, no output |
-| G2 | Progress indication | Progress bar updates during processing | Freezes without feedback |
-| G3 | Export functionality | Download results as Markdown/JSON | No export option |
-| G4 | Docker image | `docker run` starts working app, <3GB image | Build fails, >5GB |
-| G5 | API documentation | Hosted docs with examples | No docs |
-| G6 | Test coverage 80%+ | pytest --cov reports ≥80% | Below 80% |
+| G1 | Web UI | Upload video, see events, execute query in browser | Crashes, no output | ✅ FastAPI + Vanilla JS |
+| G2 | Progress indication | Progress bar updates during processing | Freezes without feedback | ✅ 8-stage polling |
+| G3 | Export functionality | Download results as Markdown/JSON/SRT | No export option | ✅ 4 formats |
+| G4 | Docker image | `docker run` starts working app, <3GB image | Build fails, >5GB | ✅ Dockerfile ready |
+| G5 | API documentation | Hosted docs with examples | No docs | ⏳ OpenAPI auto-generated |
+| G6 | Test coverage 80%+ | pytest --cov reports ≥80% | Below 80% | ⏳ 74% current |
 
 ### Task Breakdown
 
 | Week | Task | Hours | Status |
 |------|------|-------|--------|
-| **Week 6** | **Gradio UI Foundation** | 20h | ✅ Complete |
-| | ~~Gradio app skeleton~~ | ~~8h~~ | ✅ `src/vl_jepa/ui/app.py` |
-| | ~~Video upload + progress~~ | ~~8h~~ | ✅ 8-stage pipeline with callbacks |
-| | ~~Premium CSS styling~~ | ~~4h~~ | ✅ Light/Dark themes |
+| **Week 6** | **FastAPI + Frontend Foundation** | 20h | ✅ Complete |
+| | ~~FastAPI backend~~ | ~~8h~~ | ✅ `src/vl_jepa/api/main.py` |
+| | ~~Video upload + progress~~ | ~~8h~~ | ✅ 8-stage pipeline with polling |
+| | ~~Premium CSS styling~~ | ~~4h~~ | ✅ Light/Dark themes, animations |
 | **Week 7** | **UI Features** | 20h | ✅ Complete |
 | | ~~Event timeline display~~ | ~~6h~~ | ✅ Interactive timeline component |
 | | ~~Query interface~~ | ~~6h~~ | ✅ Multimodal search with highlighting |
-| | ~~Export to Markdown/JSON/SRT~~ | ~~4h~~ | ✅ All 3 formats |
-| | ~~Integration tests~~ | ~~4h~~ | ✅ 68 tests passing |
-| **Week 8** | **Docker** | 20h | ⏳ Next |
-| | Dockerfile creation | 8h | Multi-stage, optimized |
-| | Docker testing | 4h | Test on different platforms |
+| | ~~Export to Markdown/JSON/SRT~~ | ~~4h~~ | ✅ 4 formats (+ Study Notes) |
+| | ~~Study Tools (bookmarks, notes)~~ | ~~4h~~ | ✅ Confusion voting, bookmarks |
+| **Week 8** | **Docker + Deploy** | 20h | ⏳ In Progress |
+| | ~~Dockerfile creation~~ | ~~8h~~ | ✅ Multi-stage, optimized |
+| | ~~Render deployment~~ | ~~4h~~ | ✅ lecture-mind.onrender.com |
+| | ~~P0/P1 bug fixes~~ | ~~4h~~ | ✅ Memory leaks, focus trap |
 | | docker-compose setup | 4h | Easy local deployment |
-| | Debug buffer | 4h | - |
-| **Week 9** | **Docs + Release** | 20h | Blocked |
+| **Week 9** | **Docs + Release** | 20h | Next |
 | | mkdocs setup | 4h | Documentation framework |
 | | API documentation | 6h | All public APIs documented |
 | | User tutorials | 4h | Getting started guide |
@@ -211,23 +212,28 @@ v0.2.0/
 ```
 v0.3.0/
 ├── src/vl_jepa/
-│   └── ui/
+│   └── api/                     # FastAPI backend (replaces Gradio)
 │       ├── __init__.py
-│       ├── app.py           # Main Gradio app
-│       ├── components.py    # Reusable components
-│       └── export.py        # Export functionality
-├── Dockerfile               # Optimized, multi-stage
-├── docker-compose.yml       # Local deployment
+│       ├── main.py              # ✅ FastAPI app with endpoints
+│       ├── models.py            # ✅ Pydantic schemas
+│       ├── processing.py        # ✅ Video processing pipeline
+│       └── static/              # ✅ Premium frontend
+│           ├── index.html       # ✅ Landing page + app
+│           ├── app.js           # ✅ Client-side logic (2000+ LOC)
+│           ├── components.css   # ✅ Premium components
+│           └── animations.css   # ✅ Cutting-edge animations
+├── Dockerfile                   # ✅ Optimized, multi-stage
+├── docker-compose.yml           # ⏳ Local deployment
 ├── docs/
-│   ├── index.md             # mkdocs home
-│   ├── getting-started.md   # Tutorial
-│   ├── api/                 # Generated API docs
+│   ├── index.md                 # mkdocs home
+│   ├── getting-started.md       # Tutorial
+│   ├── api/                     # Generated API docs
 │   └── assets/
-│       └── demo.gif         # README demo
-├── mkdocs.yml               # Documentation config
+│       └── demo.gif             # README demo
+├── mkdocs.yml                   # Documentation config
 └── tests/
     └── integration/
-        └── test_ui.py       # UI tests
+        └── test_api.py          # ✅ API tests
 ```
 
 ### Scope Limitations
@@ -376,9 +382,9 @@ January 2026
 │
 February 2026
 ├── Week 6-9 (Feb 5 - Mar 4): v0.3.0 - User Experience ⏳ IN PROGRESS
-│   ├── Week 6: Gradio UI Foundation ✅ COMPLETE
-│   ├── Week 7: UI Features ✅ COMPLETE (68 tests)
-│   ├── Week 8: Docker ← CURRENT
+│   ├── Week 6: FastAPI + Frontend Foundation ✅ COMPLETE
+│   ├── Week 7: UI Features ✅ COMPLETE (Study Tools, Export)
+│   ├── Week 8: Docker + Deploy ← CURRENT (Render live, P0/P1 fixed)
 │   └── Week 9: Docs + release
 │
 March 2026
@@ -393,9 +399,10 @@ March 2026
 
 ## Next Actions
 
-1. **Complete**: Week 6-7 - Gradio UI ✅ (68 tests, premium design)
-2. **Now**: Week 8 - Docker containerization
-3. **Next**: Week 9 - Documentation + v0.3.0 release
+1. **Complete**: Week 6-7 - FastAPI + Premium Frontend ✅ (Study Tools, Export, Animations)
+2. **Complete**: Week 8 - Dockerfile ✅, Render deployment ✅, P0/P1 bug fixes ✅
+3. **Now**: Week 8 - docker-compose setup (4h remaining)
+4. **Next**: Week 9 - Documentation + v0.3.0 release
 
 ---
 
@@ -403,7 +410,8 @@ March 2026
 
 | Version | Date | Changes |
 |---------|------|---------|
-| v2.5 | 2026-01-08 | Week 6-7 complete: Premium Gradio UI with 68 tests, light/dark themes |
+| v2.6 | 2026-01-09 | Week 8: Dockerfile, Render deploy, P0/P1 bug fixes (memory leaks, focus trap) |
+| v2.5 | 2026-01-08 | Week 6-7 complete: FastAPI + Premium Vanilla JS, Study Tools, 4 export formats |
 | v2.4 | 2026-01-07 | v0.2.0 release ready, README comprehensive, PyPI metadata complete |
 | v2.3 | 2026-01-06 | Week 4 complete, 74% coverage, v0.2.0-rc1 ready |
 | v2.2 | 2026-01-04 | Week 3 complete, 7/8 v0.2.0 goals achieved, 71% coverage |

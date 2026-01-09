@@ -5,6 +5,6 @@ IMPLEMENTS: S014 - REST API Interface
 Provides a modern web API with static frontend.
 """
 
-from vl_jepa.api.main import create_app
+from vl_jepa.api.main import app, create_app
 
-__all__ = ["create_app"]
+__all__ = ["app", "create_app"]

@@ -711,12 +711,15 @@ def _process_video(job_id: str) -> None:
                 _jobs[job_id]["message"] = "Failed"
 
 
+# Module-level app instance for uvicorn (used by Render deployment)
+app = create_app(use_placeholders=True, debug=False)
+
+
 # CLI entry point
 def main() -> None:
     """Run the API server."""
     import uvicorn
 
-    app = create_app(use_placeholders=True, debug=True)
     uvicorn.run(app, host="127.0.0.1", port=8000)
 
 

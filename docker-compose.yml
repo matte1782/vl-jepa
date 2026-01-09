@@ -6,6 +6,9 @@
 #   docker-compose up -d     # Start in background
 #   docker-compose down      # Stop the application
 #   docker-compose logs -f   # View logs
+#   docker-compose build     # Rebuild the image
+#
+# Access: http://localhost:8000
 
 services:
   lecture-mind:
@@ -17,20 +20,24 @@ services:
 
     # Port mapping: host:container
     ports:
-      - "7860:7860"
+      - "8000:8000"
 
     # Environment variables
     environment:
-      - GRADIO_SERVER_NAME=0.0.0.0
-      - GRADIO_SERVER_PORT=7860
-      - GRADIO_ANALYTICS_ENABLED=false
+      - HOST=0.0.0.0
+      - PORT=8000
+      # Model cache directories
+      - HF_HOME=/app/cache/huggingface
+      - TORCH_HOME=/app/cache/torch
       # Uncomment to use GPU (requires nvidia-docker)
       # - NVIDIA_VISIBLE_DEVICES=all
 
     # Volume mounts for persistence
     volumes:
-      # Model cache (persist downloaded models)
+      # Model cache (persist downloaded models between restarts)
       - lecture-mind-cache:/app/cache
+      # Upload directory for processed videos
+      - lecture-mind-uploads:/app/uploads
       # Optional: mount local videos for processing
       # - ./videos:/app/videos:ro
 
@@ -45,15 +52,17 @@ services:
     # Restart policy
     restart: unless-stopped
 
-    # Health check
+    # Health check (FastAPI endpoint)
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:7860/')"]
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 60s
+      start_period: 120s
 
 # Named volumes for data persistence
 volumes:
   lecture-mind-cache:
+    driver: local
+  lecture-mind-uploads:
     driver: local

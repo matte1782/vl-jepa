@@ -27,6 +27,7 @@ _startup_logger = logging.getLogger("vl_jepa.api.startup")
 _startup_logger.info("Starting Lecture Mind API module import...")
 _startup_logger.info(f"Python version: {sys.version}")
 _startup_logger.info(f"Working directory: {os.getcwd()}")
+_startup_logger.info(f"PORT env variable: {os.environ.get('PORT', 'not set (will use 8000)')}")
 
 try:
     import numpy as np

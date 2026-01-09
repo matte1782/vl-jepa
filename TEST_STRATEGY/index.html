@@ -1,0 +1,3264 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Event-aware lecture summarizer using V-JEPA">
+      
+      
+      
+        <link rel="canonical" href="https://matte1782.github.io/lecture-mind/TEST_STRATEGY/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>VL-JEPA Lecture Summarizer — Test Strategy v1.1 - Lecture Mind</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#vl-jepa-lecture-summarizer-test-strategy-v11" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Lecture Mind" class="md-header__button md-logo" aria-label="Lecture Mind" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Lecture Mind
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              VL-JEPA Lecture Summarizer — Test Strategy v1.1
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/matte1782/lecture-mind" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    matte1782/lecture-mind
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../quickstart/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../guide/web-ui/" class="md-tabs__link">
+          
+  
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../ARCHITECTURE/" class="md-tabs__link">
+          
+  
+  
+  Development
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Lecture Mind" class="md-nav__button md-logo" aria-label="Lecture Mind" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Lecture Mind
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/matte1782/lecture-mind" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    matte1782/lecture-mind
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../local-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cloud-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud Demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guide/web-ui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guide/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../CONTRIBUTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DOCKER/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-executive-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Executive Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-testing-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Testing Principles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Testing Principles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-core-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Core Principles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-testing-pyramid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Testing Pyramid
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-test-requirement-traceability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Test Requirement Traceability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Test Requirement Traceability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-complete-test-requirement-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Complete Test Requirement Matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-test-docstring-format-mandatory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Test Docstring Format (MANDATORY)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-test-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Test Categories
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Test Categories">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-unit-tests-48-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Unit Tests (48 tests)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-property-tests-14-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Property Tests (14 tests)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-integration-tests-10-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Integration Tests (10 tests)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-benchmark-tests-11-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Benchmark Tests (11 tests)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-invariant-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Invariant Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Invariant Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-complete-invariant-coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Complete Invariant Coverage
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-security-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Security Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Security Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-security-test-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Security Test Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-security-test-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Security Test Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-input-validation-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Input Validation Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-failure-mode-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Failure Mode Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Failure Mode Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-failure-mode-coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Failure Mode Coverage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-failure-mode-test-implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Failure Mode Test Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-ml-reproducibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. ML Reproducibility
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. ML Reproducibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-reproducibility-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Reproducibility Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-reproducibility-fixture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Reproducibility Fixture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-cpugpu-equivalence-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 CPU/GPU Equivalence Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-test-infrastructure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Test Infrastructure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Test Infrastructure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-fixtures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Fixtures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-test-markers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Test Markers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93-test-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 Test Isolation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-test-data-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Test Data Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Test Data Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-test-data-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 Test Data Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102-video-test-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 Video Test Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#103-test-data-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 Test Data Generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-gpu-testing-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. GPU Testing Strategy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. GPU Testing Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111-gpu-test-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 GPU Test Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112-gpu-test-markers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 GPU Test Markers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#113-gpu-fallback-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 GPU Fallback Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-regression-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Regression Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Regression Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-regression-test-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.1 Regression Test Protocol
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-performance-regression-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.2 Performance Regression Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-regression-investigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12.3 Regression Investigation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-cicd-pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. CI/CD Pipeline
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. CI/CD Pipeline">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-pipeline-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 Pipeline Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-artifact-retention" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.2 Artifact Retention
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-quality-gates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Quality Gates
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. Quality Gates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141-gate-definitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 Gate Definitions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142-coverage-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 Coverage Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#143-benchmark-regression-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 Benchmark Regression Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-test-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Test Execution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="15. Test Execution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151-local-development" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.1 Local Development
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152-pre-commit-checks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.2 Pre-Commit Checks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#153-test-prioritization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.3 Test Prioritization
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-approval-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. Approval Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-revision-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. Revision History
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="vl-jepa-lecture-summarizer-test-strategy-v11">VL-JEPA Lecture Summarizer — Test Strategy v1.1</h1>
+<p><strong>Date:</strong> 2024-12-31
+<strong>Author:</strong> QA_LEAD
+<strong>Status:</strong> PROPOSED
+<strong>Prerequisites:</strong> SPECIFICATION.md v1.0 (APPROVED), TEST_MATRIX.md v1.0</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol>
+<li><a href="#1-executive-summary">Executive Summary</a></li>
+<li><a href="#2-testing-principles">Testing Principles</a></li>
+<li><a href="#3-test-requirement-traceability">Test Requirement Traceability</a></li>
+<li><a href="#4-test-categories">Test Categories</a></li>
+<li><a href="#5-invariant-testing">Invariant Testing</a></li>
+<li><a href="#6-security-testing">Security Testing</a></li>
+<li><a href="#7-failure-mode-testing">Failure Mode Testing</a></li>
+<li><a href="#8-ml-reproducibility">ML Reproducibility</a></li>
+<li><a href="#9-test-infrastructure">Test Infrastructure</a></li>
+<li><a href="#10-test-data-management">Test Data Management</a></li>
+<li><a href="#11-gpu-testing-strategy">GPU Testing Strategy</a></li>
+<li><a href="#12-regression-testing">Regression Testing</a></li>
+<li><a href="#13-cicd-pipeline">CI/CD Pipeline</a></li>
+<li><a href="#14-quality-gates">Quality Gates</a></li>
+<li><a href="#15-test-execution">Test Execution</a></li>
+<li><a href="#16-approval-status">Approval Status</a></li>
+</ol>
+<hr />
+<h2 id="1-executive-summary">1. Executive Summary</h2>
+<p>This document defines the comprehensive testing strategy for the VL-JEPA Lecture Summarizer. It establishes testing principles, methodologies, infrastructure requirements, and quality gates that ensure the system meets all 74 test requirements from SPECIFICATION.md and validates all 17 invariants from ARCHITECTURE.md.</p>
+<p><strong>Test Totals:</strong>
+- Unit Tests: 48
+- Property Tests: 14
+- Integration Tests: 10
+- Benchmark Tests: 11
+- <strong>Total: 83 tests</strong></p>
+<hr />
+<h2 id="2-testing-principles">2. Testing Principles</h2>
+<h3 id="21-core-principles">2.1 Core Principles</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Principle</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Enforcement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Test-First</strong></td>
+<td style="text-align: left;">Tests written before implementation</td>
+<td style="text-align: left;">Code review gate</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Specification Traceability</strong></td>
+<td style="text-align: left;">Every test maps to SPEC_ID via <code>IMPLEMENTS</code> comment</td>
+<td style="text-align: left;">Test docstrings</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Invariant Coverage</strong></td>
+<td style="text-align: left;">All 17 invariants have property tests</td>
+<td style="text-align: left;">TEST_MATRIX.md verification</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Fail Fast</strong></td>
+<td style="text-align: left;">Critical paths tested first</td>
+<td style="text-align: left;">Priority ordering</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Reproducibility</strong></td>
+<td style="text-align: left;">All tests deterministic with seeding</td>
+<td style="text-align: left;"><code>RANDOM_SEED=42</code> fixture</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>ML Determinism</strong></td>
+<td style="text-align: left;">Seed everything, log configs</td>
+<td style="text-align: left;"><code>torch.manual_seed</code>, config capture</td>
+</tr>
+</tbody>
+</table>
+<h3 id="22-testing-pyramid">2.2 Testing Pyramid</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>                    ┌─────────────────┐
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>                    │   E2E Tests     │  3 tests (Gradio app)
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>                    │   (Manual)      │
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>                    ├─────────────────┤
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>                    │  Integration    │  10 tests
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>                    │    Tests        │
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>              ┌─────┴─────────────────┴─────┐
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>              │       Property Tests         │  14 tests
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>              │     (Hypothesis-based)       │
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        ┌─────┴───────────────────────────────┴─────┐
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        │              Unit Tests                    │  48 tests
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        │         (Fast, Isolated)                   │
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        └───────────────────────────────────────────────┘
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        ┌───────────────────────────────────────────────┐
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        │           Benchmark Tests                      │  11 tests
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        │        (Performance validation)                │
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        └───────────────────────────────────────────────┘
+</code></pre></div>
+<hr />
+<h2 id="3-test-requirement-traceability">3. Test Requirement Traceability</h2>
+<h3 id="31-complete-test-requirement-matrix">3.1 Complete Test Requirement Matrix</h3>
+<p>All 74 test requirements from SPECIFICATION.md are covered:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">SPEC</th>
+<th style="text-align: left;">Component</th>
+<th style="text-align: left;">Test IDs</th>
+<th style="text-align: left;">Count</th>
+<th style="text-align: left;">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">S001</td>
+<td style="text-align: left;">Video File</td>
+<td style="text-align: left;">T001.1-T001.8</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">STUBS</td>
+</tr>
+<tr>
+<td style="text-align: left;">S002</td>
+<td style="text-align: left;">Stream</td>
+<td style="text-align: left;">T002.1-T002.3</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">STUBS</td>
+</tr>
+<tr>
+<td style="text-align: left;">S003</td>
+<td style="text-align: left;">Frame Sampler</td>
+<td style="text-align: left;">T003.1-T003.8</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">STUBS</td>
+</tr>
+<tr>
+<td style="text-align: left;">S004</td>
+<td style="text-align: left;">Visual Encoder</td>
+<td style="text-align: left;">T004.1-T004.10</td>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">STUBS</td>
+</tr>
+<tr>
+<td style="text-align: left;">S005</td>
+<td style="text-align: left;">Event Detector</td>
+<td style="text-align: left;">T005.1-T005.8</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">STUBS</td>
+</tr>
+<tr>
+<td style="text-align: left;">S006</td>
+<td style="text-align: left;">Text Encoder</td>
+<td style="text-align: left;">T006.1-T006.8</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">STUBS</td>
+</tr>
+<tr>
+<td style="text-align: left;">S007</td>
+<td style="text-align: left;">Embedding Index</td>
+<td style="text-align: left;">T007.1-T007.10</td>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">STUBS</td>
+</tr>
+<tr>
+<td style="text-align: left;">S008</td>
+<td style="text-align: left;">Y-Decoder</td>
+<td style="text-align: left;">T008.1-T008.6</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">STUBS</td>
+</tr>
+<tr>
+<td style="text-align: left;">S009</td>
+<td style="text-align: left;">Storage</td>
+<td style="text-align: left;">T009.1-T009.6</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">STUBS</td>
+</tr>
+<tr>
+<td style="text-align: left;">S010</td>
+<td style="text-align: left;">Batch Processing</td>
+<td style="text-align: left;">T010.1-T010.4</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">STUBS</td>
+</tr>
+<tr>
+<td style="text-align: left;">S011</td>
+<td style="text-align: left;">Query Pipeline</td>
+<td style="text-align: left;">T011.1-T011.3</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">STUBS</td>
+</tr>
+<tr>
+<td style="text-align: left;">S012</td>
+<td style="text-align: left;">CLI</td>
+<td style="text-align: left;">T012.1-T012.3</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">STUBS</td>
+</tr>
+<tr>
+<td style="text-align: left;">S013</td>
+<td style="text-align: left;">Gradio</td>
+<td style="text-align: left;">T013.1-T013.3</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">STUBS</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>TOTAL</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><strong>80</strong></td>
+<td style="text-align: left;"><strong>STUBS</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="32-test-docstring-format-mandatory">3.2 Test Docstring Format (MANDATORY)</h3>
+<p>Every test MUST include traceability comments:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_visual_encoder_batch_normalization</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="sd">    Verify that visual encoder outputs are L2-normalized.</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="sd">    IMPLEMENTS: S004</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="sd">    TEST_ID: T004.2</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="sd">    INVARIANT: INV006</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="sd">    Given:</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="sd">        - Batch of random frames (B, 3, 224, 224)</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="sd">    When:</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="sd">        - Encoder processes the batch</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="sd">    Then:</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="sd">        - All output embeddings have L2 norm ≈ 1.0</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="sd">    Edge cases:</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="sd">        - Single frame batch</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="sd">        - Maximum batch size (16)</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>    <span class="c1"># Test implementation</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>    <span class="n">encoder</span> <span class="o">=</span> <span class="n">create_mock_encoder</span><span class="p">()</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>    <span class="n">frames</span> <span class="o">=</span> <span class="n">create_sample_frames</span><span class="p">(</span><span class="n">batch_size</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>    <span class="n">embeddings</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">emb</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">embeddings</span><span class="p">):</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>        <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">emb</span><span class="p">)</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>        <span class="k">assert</span> <span class="mf">0.99</span> <span class="o">&lt;</span> <span class="n">norm</span> <span class="o">&lt;</span> <span class="mf">1.01</span><span class="p">,</span> \
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>            <span class="sa">f</span><span class="s2">&quot;Embedding </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2"> L2 norm </span><span class="si">{</span><span class="n">norm</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> not in [0.99, 1.01]&quot;</span>
+</code></pre></div>
+<hr />
+<h2 id="4-test-categories">4. Test Categories</h2>
+<h3 id="41-unit-tests-48-tests">4.1 Unit Tests (48 tests)</h3>
+<p><strong>Purpose:</strong> Verify individual components in isolation.</p>
+<p><strong>Characteristics:</strong>
+- Fast execution (&lt;100ms per test)
+- No external dependencies (mocked)
+- No GPU required
+- No network access</p>
+<p><strong>Mocking Strategy:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Component</th>
+<th style="text-align: left;">Mock Strategy</th>
+<th style="text-align: left;">Library</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">V-JEPA Encoder</td>
+<td style="text-align: left;"><code>MockVisualEncoder</code> returning seeded L2-normalized vectors</td>
+<td style="text-align: left;"><code>unittest.mock</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">MiniLM Encoder</td>
+<td style="text-align: left;"><code>MockTextEncoder</code> returning seeded L2-normalized vectors</td>
+<td style="text-align: left;"><code>unittest.mock</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Gemma-2B</td>
+<td style="text-align: left;"><code>MockDecoder</code> returning fixed template strings</td>
+<td style="text-align: left;"><code>unittest.mock</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Video Files</td>
+<td style="text-align: left;">Synthetic numpy arrays via <code>conftest.py</code> fixtures</td>
+<td style="text-align: left;">Native</td>
+</tr>
+<tr>
+<td style="text-align: left;">FAISS Index</td>
+<td style="text-align: left;">Real FAISS (lightweight, fast)</td>
+<td style="text-align: left;">Real</td>
+</tr>
+<tr>
+<td style="text-align: left;">SQLite</td>
+<td style="text-align: left;">In-memory <code>:memory:</code> database</td>
+<td style="text-align: left;">Real</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Mock Boundary Rules:</strong>
+- Models are ALWAYS mocked in unit tests
+- Storage is real but in-memory
+- Video I/O is mocked with synthetic frames
+- Mock verification required: <code>assert mock.called</code> or <code>assert_called_with()</code></p>
+<p><strong>Coverage Targets (aligned with TEST_MATRIX.md):</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Metric</th>
+<th style="text-align: left;">Target</th>
+<th style="text-align: left;">Measurement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Line Coverage</td>
+<td style="text-align: left;">&gt;90%</td>
+<td style="text-align: left;"><code>pytest-cov</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Branch Coverage</td>
+<td style="text-align: left;">&gt;85%</td>
+<td style="text-align: left;"><code>pytest-cov</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Function Coverage</td>
+<td style="text-align: left;">100%</td>
+<td style="text-align: left;"><code>pytest-cov</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-property-tests-14-tests">4.2 Property Tests (14 tests)</h3>
+<p><strong>Purpose:</strong> Verify system invariants hold across all possible inputs.</p>
+<p><strong>Framework:</strong> Hypothesis 6.0+</p>
+<p><strong>Properties Tested:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Test</th>
+<th style="text-align: left;">Property</th>
+<th style="text-align: left;">Hypothesis Strategy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>test_inv001_timestamps</code></td>
+<td style="text-align: left;">Timestamps monotonically increasing</td>
+<td style="text-align: left;"><code>@given(lists(floats(min_value=0)))</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>test_inv002_buffer</code></td>
+<td style="text-align: left;">Frame buffer ≤ 10</td>
+<td style="text-align: left;"><code>@given(integers(1, 100))</code> FPS values</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>test_inv003_frame_size</code></td>
+<td style="text-align: left;">Frame size 224x224x3</td>
+<td style="text-align: left;"><code>@given(arrays(np.uint8, (st.integers(1,4000), st.integers(1,4000), 3)))</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>test_inv004_pixel_range</code></td>
+<td style="text-align: left;">Pixels in [-1, 1]</td>
+<td style="text-align: left;"><code>@given(arrays(np.float32, (224,224,3)))</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>test_inv005_embedding_dim</code></td>
+<td style="text-align: left;">Embedding dim = 768</td>
+<td style="text-align: left;"><code>@given(integers(1, 64))</code> batch sizes</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>test_inv006_l2_norm</code></td>
+<td style="text-align: left;">L2-normalized embeddings</td>
+<td style="text-align: left;"><code>@given(arrays())</code> + norm check</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>test_inv007_events_nonoverlapping</code></td>
+<td style="text-align: left;">Events non-overlapping</td>
+<td style="text-align: left;"><code>@given(lists(floats()))</code> timestamps</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>test_inv008_confidence_bounds</code></td>
+<td style="text-align: left;">Confidence in [0, 1]</td>
+<td style="text-align: left;"><code>@given(floats(0, 2))</code> raw values</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>test_inv009_query_dim</code></td>
+<td style="text-align: left;">Query dim = 768</td>
+<td style="text-align: left;"><code>@given(text())</code> queries</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>test_inv010_query_l2_norm</code></td>
+<td style="text-align: left;">Query L2-normalized</td>
+<td style="text-align: left;"><code>@given(text())</code> + norm check</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>test_inv011_index_contains_all</code></td>
+<td style="text-align: left;">Index contains all embeddings</td>
+<td style="text-align: left;"><code>@given(lists(arrays()))</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>test_inv012_search_returns_k</code></td>
+<td style="text-align: left;">Search returns ≤ k</td>
+<td style="text-align: left;"><code>@given(integers(1, 1000))</code> k values</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>test_inv013_output_length</code></td>
+<td style="text-align: left;">Output ≤ 150 tokens</td>
+<td style="text-align: left;"><code>@given(text())</code> prompts</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>test_inv014_timeout</code></td>
+<td style="text-align: left;">Generation within timeout</td>
+<td style="text-align: left;">Mock time</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>test_inv015_atomic_writes</code></td>
+<td style="text-align: left;">Writes are atomic</td>
+<td style="text-align: left;">Crash simulation</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>test_inv016_crash_survival</code></td>
+<td style="text-align: left;">Data survives crash</td>
+<td style="text-align: left;">Signal injection</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>test_inv017_batch_memory</code></td>
+<td style="text-align: left;">Batch size ≤ memory</td>
+<td style="text-align: left;"><code>@given(integers())</code> memory</td>
+</tr>
+</tbody>
+</table>
+<h3 id="43-integration-tests-10-tests">4.3 Integration Tests (10 tests)</h3>
+<p><strong>Purpose:</strong> Verify component interactions and external interfaces.</p>
+<p><strong>Environment:</strong>
+- Docker container for isolation
+- Mock models (real weights too large for CI)
+- Real FAISS, SQLite, file I/O
+- No network access</p>
+<p><strong>Mocking Boundaries:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Component</th>
+<th style="text-align: left;">Status</th>
+<th style="text-align: left;">Justification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">V-JEPA weights</td>
+<td style="text-align: left;">MOCKED</td>
+<td style="text-align: left;">1.2GB too large for CI</td>
+</tr>
+<tr>
+<td style="text-align: left;">MiniLM weights</td>
+<td style="text-align: left;">REAL</td>
+<td style="text-align: left;">90MB acceptable</td>
+</tr>
+<tr>
+<td style="text-align: left;">Gemma-2B weights</td>
+<td style="text-align: left;">MOCKED</td>
+<td style="text-align: left;">2GB too large</td>
+</tr>
+<tr>
+<td style="text-align: left;">Video decode</td>
+<td style="text-align: left;">REAL</td>
+<td style="text-align: left;">OpenCV is fast</td>
+</tr>
+<tr>
+<td style="text-align: left;">FAISS</td>
+<td style="text-align: left;">REAL</td>
+<td style="text-align: left;">Required for search</td>
+</tr>
+<tr>
+<td style="text-align: left;">SQLite</td>
+<td style="text-align: left;">REAL</td>
+<td style="text-align: left;">Required for storage</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Test Categories:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Category</th>
+<th style="text-align: left;">Tests</th>
+<th style="text-align: left;">Requirements</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Video Processing</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Sample video files (tests/data/videos/)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Storage Recovery</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Crash simulation via signal</td>
+</tr>
+<tr>
+<td style="text-align: left;">Query Pipeline</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Full flow with mock encoders</td>
+</tr>
+<tr>
+<td style="text-align: left;">CLI E2E</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Subprocess testing</td>
+</tr>
+<tr>
+<td style="text-align: left;">Gradio App</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Selenium/Playwright</td>
+</tr>
+</tbody>
+</table>
+<h3 id="44-benchmark-tests-11-tests">4.4 Benchmark Tests (11 tests)</h3>
+<p><strong>Purpose:</strong> Validate performance meets ARCHITECTURE.md budgets.</p>
+<p><strong>Performance Budgets (EXACT MATCH with ARCHITECTURE.md):</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Component</th>
+<th style="text-align: left;">Metric</th>
+<th style="text-align: left;">CPU Target</th>
+<th style="text-align: left;">GPU Target</th>
+<th style="text-align: left;">TEST_ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Frame Sampler</td>
+<td style="text-align: left;">Resize latency</td>
+<td style="text-align: left;">&lt;20ms</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">T003.8</td>
+</tr>
+<tr>
+<td style="text-align: left;">Visual Encoder</td>
+<td style="text-align: left;">Encode latency</td>
+<td style="text-align: left;">&lt;200ms</td>
+<td style="text-align: left;">&lt;50ms</td>
+<td style="text-align: left;">T004.9, T004.10</td>
+</tr>
+<tr>
+<td style="text-align: left;">Event Detector</td>
+<td style="text-align: left;">Detection latency</td>
+<td style="text-align: left;">&lt;10ms</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">T005.8</td>
+</tr>
+<tr>
+<td style="text-align: left;">Text Encoder</td>
+<td style="text-align: left;">Encode latency</td>
+<td style="text-align: left;">&lt;50ms</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">T006.8</td>
+</tr>
+<tr>
+<td style="text-align: left;">Embedding Index</td>
+<td style="text-align: left;">Search 10k</td>
+<td style="text-align: left;">&lt;10ms</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">T007.9</td>
+</tr>
+<tr>
+<td style="text-align: left;">Embedding Index</td>
+<td style="text-align: left;">Search 100k</td>
+<td style="text-align: left;">&lt;100ms</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">T007.10</td>
+</tr>
+<tr>
+<td style="text-align: left;">Y-Decoder</td>
+<td style="text-align: left;">Generation</td>
+<td style="text-align: left;">&lt;30s</td>
+<td style="text-align: left;">&lt;5s</td>
+<td style="text-align: left;">T008.5, T008.6</td>
+</tr>
+<tr>
+<td style="text-align: left;">Query Pipeline</td>
+<td style="text-align: left;">E2E latency</td>
+<td style="text-align: left;">&lt;100ms</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">T011.3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Memory</td>
+<td style="text-align: left;">2hr lecture</td>
+<td style="text-align: left;">&lt;4GB</td>
+<td style="text-align: left;">&lt;4GB</td>
+<td style="text-align: left;">(implicit)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-invariant-testing">5. Invariant Testing</h2>
+<h3 id="51-complete-invariant-coverage">5.1 Complete Invariant Coverage</h3>
+<p>All 17 invariants from ARCHITECTURE.md have explicit tests:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">INV_ID</th>
+<th style="text-align: left;">Statement</th>
+<th style="text-align: left;">Property Test</th>
+<th style="text-align: left;">Unit Test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">INV001</td>
+<td style="text-align: left;">Timestamps monotonically increasing</td>
+<td style="text-align: left;"><code>test_inv001_timestamps</code></td>
+<td style="text-align: left;">T001.5</td>
+</tr>
+<tr>
+<td style="text-align: left;">INV002</td>
+<td style="text-align: left;">Frame buffer ≤ 10</td>
+<td style="text-align: left;"><code>test_inv002_buffer</code></td>
+<td style="text-align: left;">T001.6</td>
+</tr>
+<tr>
+<td style="text-align: left;">INV003</td>
+<td style="text-align: left;">Frame size 224x224x3</td>
+<td style="text-align: left;"><code>test_inv003_frame_size</code></td>
+<td style="text-align: left;">T003.1</td>
+</tr>
+<tr>
+<td style="text-align: left;">INV004</td>
+<td style="text-align: left;">Pixels in [-1, 1]</td>
+<td style="text-align: left;"><code>test_inv004_pixel_range</code></td>
+<td style="text-align: left;">T003.2</td>
+</tr>
+<tr>
+<td style="text-align: left;">INV005</td>
+<td style="text-align: left;">Embedding dim = 768</td>
+<td style="text-align: left;"><code>test_inv005_embedding_dim</code></td>
+<td style="text-align: left;">T004.1</td>
+</tr>
+<tr>
+<td style="text-align: left;">INV006</td>
+<td style="text-align: left;">L2-normalized embeddings</td>
+<td style="text-align: left;"><code>test_inv006_l2_norm</code></td>
+<td style="text-align: left;">T004.2</td>
+</tr>
+<tr>
+<td style="text-align: left;">INV007</td>
+<td style="text-align: left;">Events non-overlapping</td>
+<td style="text-align: left;"><code>test_inv007_events_nonoverlapping</code></td>
+<td style="text-align: left;">T005.4</td>
+</tr>
+<tr>
+<td style="text-align: left;">INV008</td>
+<td style="text-align: left;">Confidence in [0, 1]</td>
+<td style="text-align: left;"><code>test_inv008_confidence_bounds</code></td>
+<td style="text-align: left;">T005.5</td>
+</tr>
+<tr>
+<td style="text-align: left;">INV009</td>
+<td style="text-align: left;">Query dim = 768</td>
+<td style="text-align: left;"><code>test_inv009_query_dim</code></td>
+<td style="text-align: left;">T006.1</td>
+</tr>
+<tr>
+<td style="text-align: left;">INV010</td>
+<td style="text-align: left;">Query L2-normalized</td>
+<td style="text-align: left;"><code>test_inv010_query_l2_norm</code></td>
+<td style="text-align: left;">T006.2</td>
+</tr>
+<tr>
+<td style="text-align: left;">INV011</td>
+<td style="text-align: left;">Index contains all embeddings</td>
+<td style="text-align: left;"><code>test_inv011_index_contains_all</code></td>
+<td style="text-align: left;">T007.1-T007.2</td>
+</tr>
+<tr>
+<td style="text-align: left;">INV012</td>
+<td style="text-align: left;">Search returns ≤ k</td>
+<td style="text-align: left;"><code>test_inv012_search_returns_k</code></td>
+<td style="text-align: left;">T007.3</td>
+</tr>
+<tr>
+<td style="text-align: left;">INV013</td>
+<td style="text-align: left;">Output ≤ 150 tokens</td>
+<td style="text-align: left;"><code>test_inv013_output_length</code></td>
+<td style="text-align: left;">T008.3</td>
+</tr>
+<tr>
+<td style="text-align: left;">INV014</td>
+<td style="text-align: left;">Generation within timeout</td>
+<td style="text-align: left;"><code>test_inv014_timeout</code></td>
+<td style="text-align: left;">T008.4</td>
+</tr>
+<tr>
+<td style="text-align: left;">INV015</td>
+<td style="text-align: left;">Atomic writes</td>
+<td style="text-align: left;"><code>test_inv015_atomic_writes</code></td>
+<td style="text-align: left;">T009.1-T009.2</td>
+</tr>
+<tr>
+<td style="text-align: left;">INV016</td>
+<td style="text-align: left;">Crash survival</td>
+<td style="text-align: left;"><code>test_inv016_crash_survival</code></td>
+<td style="text-align: left;">T009.4-T009.6</td>
+</tr>
+<tr>
+<td style="text-align: left;">INV017</td>
+<td style="text-align: left;">Batch size ≤ memory</td>
+<td style="text-align: left;"><code>test_inv017_batch_memory</code></td>
+<td style="text-align: left;">T010.1</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-security-testing">6. Security Testing</h2>
+<h3 id="61-security-test-requirements">6.1 Security Test Requirements</h3>
+<p>Per ARCHITECTURE.md Section 7 (Security Considerations):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Security Requirement</th>
+<th style="text-align: left;">Test Type</th>
+<th style="text-align: left;">Test Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Local-only processing</td>
+<td style="text-align: left;">Integration</td>
+<td style="text-align: left;">Verify no network calls during processing</td>
+</tr>
+<tr>
+<td style="text-align: left;">No telemetry</td>
+<td style="text-align: left;">Unit</td>
+<td style="text-align: left;">Mock socket, verify no outbound connections</td>
+</tr>
+<tr>
+<td style="text-align: left;">User data isolation</td>
+<td style="text-align: left;">Unit</td>
+<td style="text-align: left;">Verify temp files cleaned on exit</td>
+</tr>
+<tr>
+<td style="text-align: left;">Model integrity</td>
+<td style="text-align: left;">Unit</td>
+<td style="text-align: left;">Verify checksum validation of model weights</td>
+</tr>
+<tr>
+<td style="text-align: left;">Input validation</td>
+<td style="text-align: left;">Unit</td>
+<td style="text-align: left;">Path traversal attacks blocked</td>
+</tr>
+<tr>
+<td style="text-align: left;">Query sanitization</td>
+<td style="text-align: left;">Unit</td>
+<td style="text-align: left;">Max length enforced, injection prevented</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62-security-test-implementation">6.2 Security Test Implementation</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># tests/security/test_network_isolation.py</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">socket</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">unittest.mock</span><span class="w"> </span><span class="kn">import</span> <span class="n">patch</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_no_network_calls_during_processing</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="sd">    SECURITY: Verify no network calls are made during video processing.</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="sd">    IMPLEMENTS: Security Requirement - Local-only processing</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>    <span class="n">original_socket</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="n">network_calls</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">tracking_socket</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>        <span class="n">sock</span> <span class="o">=</span> <span class="n">original_socket</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>        <span class="n">original_connect</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">connect</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>        <span class="k">def</span><span class="w"> </span><span class="nf">tracking_connect</span><span class="p">(</span><span class="n">address</span><span class="p">):</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>            <span class="n">network_calls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>            <span class="k">return</span> <span class="n">original_connect</span><span class="p">(</span><span class="n">address</span><span class="p">)</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>        <span class="n">sock</span><span class="o">.</span><span class="n">connect</span> <span class="o">=</span> <span class="n">tracking_connect</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>        <span class="k">return</span> <span class="n">sock</span>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>    <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s1">&#39;socket.socket&#39;</span><span class="p">,</span> <span class="n">tracking_socket</span><span class="p">):</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>        <span class="c1"># Process a video</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>        <span class="kn">from</span><span class="w"> </span><span class="nn">vl_jepa</span><span class="w"> </span><span class="kn">import</span> <span class="n">process_video</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>        <span class="n">process_video</span><span class="p">(</span><span class="s2">&quot;tests/data/videos/sample_30s.mp4&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a>    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">network_calls</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> \
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>        <span class="sa">f</span><span class="s2">&quot;Unexpected network calls: </span><span class="si">{</span><span class="n">network_calls</span><span class="si">}</span><span class="s2">&quot;</span>
+</code></pre></div>
+<h3 id="63-input-validation-tests">6.3 Input Validation Tests</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># tests/security/test_input_validation.py</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_path_traversal_blocked</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="sd">    SECURITY: Verify path traversal attacks are blocked.</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="sd">    IMPLEMENTS: Security Requirement - Input validation</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">vl_jepa.video</span><span class="w"> </span><span class="kn">import</span> <span class="n">VideoInput</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>    <span class="n">malicious_paths</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>        <span class="s2">&quot;../../../etc/passwd&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>        <span class="s2">&quot;..</span><span class="se">\\</span><span class="s2">..</span><span class="se">\\</span><span class="s2">windows</span><span class="se">\\</span><span class="s2">system32&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>        <span class="s2">&quot;/dev/null&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>        <span class="s2">&quot;file:///etc/passwd&quot;</span><span class="p">,</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>    <span class="p">]</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>    <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">malicious_paths</span><span class="p">:</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>        <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="s2">&quot;Invalid path&quot;</span><span class="p">):</span>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>            <span class="n">VideoInput</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_query_length_enforced</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a><span class="sd">    SECURITY: Verify query length limits are enforced.</span>
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a><span class="sd">    IMPLEMENTS: Security Requirement - Query sanitization</span>
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">vl_jepa.retrieval</span><span class="w"> </span><span class="kn">import</span> <span class="n">QueryEncoder</span>
+<a id="__codelineno-3-31" name="__codelineno-3-31" href="#__codelineno-3-31"></a>
+<a id="__codelineno-3-32" name="__codelineno-3-32" href="#__codelineno-3-32"></a>    <span class="n">encoder</span> <span class="o">=</span> <span class="n">QueryEncoder</span><span class="p">()</span>
+<a id="__codelineno-3-33" name="__codelineno-3-33" href="#__codelineno-3-33"></a>    <span class="n">long_query</span> <span class="o">=</span> <span class="s2">&quot;a&quot;</span> <span class="o">*</span> <span class="mi">10000</span>  <span class="c1"># Exceeds 256 token limit</span>
+<a id="__codelineno-3-34" name="__codelineno-3-34" href="#__codelineno-3-34"></a>
+<a id="__codelineno-3-35" name="__codelineno-3-35" href="#__codelineno-3-35"></a>    <span class="c1"># Should truncate, not crash</span>
+<a id="__codelineno-3-36" name="__codelineno-3-36" href="#__codelineno-3-36"></a>    <span class="n">embedding</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">long_query</span><span class="p">)</span>
+<a id="__codelineno-3-37" name="__codelineno-3-37" href="#__codelineno-3-37"></a>    <span class="k">assert</span> <span class="n">embedding</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">768</span><span class="p">,)</span>
+</code></pre></div>
+<hr />
+<h2 id="7-failure-mode-testing">7. Failure Mode Testing</h2>
+<h3 id="71-failure-mode-coverage">7.1 Failure Mode Coverage</h3>
+<p>Per ARCHITECTURE.md Section 6 (Failure Modes):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Failure Mode</th>
+<th style="text-align: left;">Test</th>
+<th style="text-align: left;">Expected Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">GPU not available</td>
+<td style="text-align: left;"><code>test_fm_gpu_fallback</code></td>
+<td style="text-align: left;">Fall back to CPU</td>
+</tr>
+<tr>
+<td style="text-align: left;">Model file missing</td>
+<td style="text-align: left;"><code>test_fm_model_missing</code></td>
+<td style="text-align: left;">Raise <code>ModelLoadError</code> with download URL</td>
+</tr>
+<tr>
+<td style="text-align: left;">Out of memory</td>
+<td style="text-align: left;"><code>test_fm_oom_recovery</code></td>
+<td style="text-align: left;">Reduce batch size, retry</td>
+</tr>
+<tr>
+<td style="text-align: left;">Video decode fails</td>
+<td style="text-align: left;"><code>test_fm_video_decode_error</code></td>
+<td style="text-align: left;">Skip frame, continue, log warning</td>
+</tr>
+<tr>
+<td style="text-align: left;">Index corrupted</td>
+<td style="text-align: left;"><code>test_fm_index_corruption</code></td>
+<td style="text-align: left;">Rebuild from embeddings</td>
+</tr>
+<tr>
+<td style="text-align: left;">Storage full</td>
+<td style="text-align: left;"><code>test_fm_storage_full</code></td>
+<td style="text-align: left;">Alert user, stop ingestion gracefully</td>
+</tr>
+</tbody>
+</table>
+<h3 id="72-failure-mode-test-implementation">7.2 Failure Mode Test Implementation</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># tests/failure_modes/test_graceful_degradation.py</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">unittest.mock</span><span class="w"> </span><span class="kn">import</span> <span class="n">patch</span><span class="p">,</span> <span class="n">MagicMock</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_fm_gpu_fallback</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="sd">    FAILURE_MODE: GPU not available -&gt; Fall back to CPU.</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="sd">    IMPLEMENTS: FM001</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s1">&#39;torch.cuda.is_available&#39;</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        <span class="kn">from</span><span class="w"> </span><span class="nn">vl_jepa.encoder</span><span class="w"> </span><span class="kn">import</span> <span class="n">VisualEncoder</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>        <span class="n">encoder</span> <span class="o">=</span> <span class="n">VisualEncoder</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>        <span class="c1"># Should detect no GPU and use CPU</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>        <span class="k">assert</span> <span class="n">encoder</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;cpu&quot;</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_fm_model_missing</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="sd">    FAILURE_MODE: Model file missing -&gt; Raise with download URL.</span>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a><span class="sd">    IMPLEMENTS: FM002</span>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">vl_jepa.encoder</span><span class="w"> </span><span class="kn">import</span> <span class="n">VisualEncoder</span>
+<a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">vl_jepa.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelLoadError</span>
+<a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>
+<a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="n">ModelLoadError</span><span class="p">)</span> <span class="k">as</span> <span class="n">exc_info</span><span class="p">:</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a>        <span class="n">VisualEncoder</span><span class="p">(</span><span class="n">checkpoint_path</span><span class="o">=</span><span class="s2">&quot;/nonexistent/model.safetensors&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31" href="#__codelineno-4-31"></a>
+<a id="__codelineno-4-32" name="__codelineno-4-32" href="#__codelineno-4-32"></a>    <span class="k">assert</span> <span class="s2">&quot;download&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">exc_info</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33" href="#__codelineno-4-33"></a>    <span class="k">assert</span> <span class="s2">&quot;https://&quot;</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">exc_info</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34" href="#__codelineno-4-34"></a>
+<a id="__codelineno-4-35" name="__codelineno-4-35" href="#__codelineno-4-35"></a>
+<a id="__codelineno-4-36" name="__codelineno-4-36" href="#__codelineno-4-36"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_fm_oom_recovery</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37" href="#__codelineno-4-37"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38" href="#__codelineno-4-38"></a><span class="sd">    FAILURE_MODE: Out of memory -&gt; Reduce batch size and retry.</span>
+<a id="__codelineno-4-39" name="__codelineno-4-39" href="#__codelineno-4-39"></a>
+<a id="__codelineno-4-40" name="__codelineno-4-40" href="#__codelineno-4-40"></a><span class="sd">    IMPLEMENTS: FM003</span>
+<a id="__codelineno-4-41" name="__codelineno-4-41" href="#__codelineno-4-41"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-4-42" name="__codelineno-4-42" href="#__codelineno-4-42"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">vl_jepa.batch</span><span class="w"> </span><span class="kn">import</span> <span class="n">BatchProcessor</span>
+<a id="__codelineno-4-43" name="__codelineno-4-43" href="#__codelineno-4-43"></a>
+<a id="__codelineno-4-44" name="__codelineno-4-44" href="#__codelineno-4-44"></a>    <span class="n">processor</span> <span class="o">=</span> <span class="n">BatchProcessor</span><span class="p">(</span><span class="n">initial_batch_size</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<a id="__codelineno-4-45" name="__codelineno-4-45" href="#__codelineno-4-45"></a>
+<a id="__codelineno-4-46" name="__codelineno-4-46" href="#__codelineno-4-46"></a>    <span class="c1"># Simulate OOM on first attempt</span>
+<a id="__codelineno-4-47" name="__codelineno-4-47" href="#__codelineno-4-47"></a>    <span class="k">with</span> <span class="n">patch</span><span class="o">.</span><span class="n">object</span><span class="p">(</span><span class="n">processor</span><span class="p">,</span> <span class="s1">&#39;_process_batch&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mock_process</span><span class="p">:</span>
+<a id="__codelineno-4-48" name="__codelineno-4-48" href="#__codelineno-4-48"></a>        <span class="n">mock_process</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-4-49" name="__codelineno-4-49" href="#__codelineno-4-49"></a>            <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;CUDA out of memory&quot;</span><span class="p">),</span>  <span class="c1"># First attempt fails</span>
+<a id="__codelineno-4-50" name="__codelineno-4-50" href="#__codelineno-4-50"></a>            <span class="kc">None</span><span class="p">,</span>  <span class="c1"># Retry with smaller batch succeeds</span>
+<a id="__codelineno-4-51" name="__codelineno-4-51" href="#__codelineno-4-51"></a>        <span class="p">]</span>
+<a id="__codelineno-4-52" name="__codelineno-4-52" href="#__codelineno-4-52"></a>
+<a id="__codelineno-4-53" name="__codelineno-4-53" href="#__codelineno-4-53"></a>        <span class="n">processor</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">frames</span><span class="o">=</span><span class="p">[</span><span class="o">...</span><span class="p">])</span>
+<a id="__codelineno-4-54" name="__codelineno-4-54" href="#__codelineno-4-54"></a>
+<a id="__codelineno-4-55" name="__codelineno-4-55" href="#__codelineno-4-55"></a>        <span class="c1"># Should have retried with smaller batch</span>
+<a id="__codelineno-4-56" name="__codelineno-4-56" href="#__codelineno-4-56"></a>        <span class="k">assert</span> <span class="n">mock_process</span><span class="o">.</span><span class="n">call_count</span> <span class="o">==</span> <span class="mi">2</span>
+<a id="__codelineno-4-57" name="__codelineno-4-57" href="#__codelineno-4-57"></a>        <span class="n">second_call_batch</span> <span class="o">=</span> <span class="n">mock_process</span><span class="o">.</span><span class="n">call_args_list</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-4-58" name="__codelineno-4-58" href="#__codelineno-4-58"></a>        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">second_call_batch</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">16</span>
+</code></pre></div>
+<hr />
+<h2 id="8-ml-reproducibility">8. ML Reproducibility</h2>
+<h3 id="81-reproducibility-requirements">8.1 Reproducibility Requirements</h3>
+<p>Per CLAUDE.md: "Reproducibility: Seed everything, log configs"</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Requirement</th>
+<th style="text-align: left;">Implementation</th>
+<th style="text-align: left;">Verification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Random seeds</td>
+<td style="text-align: left;"><code>RANDOM_SEED=42</code> constant</td>
+<td style="text-align: left;">Fixture in conftest.py</td>
+</tr>
+<tr>
+<td style="text-align: left;">PyTorch seeds</td>
+<td style="text-align: left;"><code>torch.manual_seed(42)</code></td>
+<td style="text-align: left;">Before every test</td>
+</tr>
+<tr>
+<td style="text-align: left;">NumPy seeds</td>
+<td style="text-align: left;"><code>np.random.seed(42)</code></td>
+<td style="text-align: left;">Before every test</td>
+</tr>
+<tr>
+<td style="text-align: left;">Config logging</td>
+<td style="text-align: left;">JSON config written to <code>test_outputs/</code></td>
+<td style="text-align: left;">Assertion in teardown</td>
+</tr>
+<tr>
+<td style="text-align: left;">Deterministic ordering</td>
+<td style="text-align: left;"><code>pytest --randomly-seed=42</code></td>
+<td style="text-align: left;">CI flag</td>
+</tr>
+</tbody>
+</table>
+<h3 id="82-reproducibility-fixture">8.2 Reproducibility Fixture</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># conftest.py</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">RANDOM_SEED</span> <span class="o">=</span> <span class="mi">42</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">autouse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="k">def</span><span class="w"> </span><span class="nf">seed_everything</span><span class="p">():</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Ensure reproducible tests by seeding all random sources.&quot;&quot;&quot;</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">RANDOM_SEED</span><span class="p">)</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="n">RANDOM_SEED</span><span class="p">)</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>    <span class="n">torch</span><span class="o">.</span><span class="n">manual_seed</span><span class="p">(</span><span class="n">RANDOM_SEED</span><span class="p">)</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>    <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a>        <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">manual_seed_all</span><span class="p">(</span><span class="n">RANDOM_SEED</span><span class="p">)</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>        <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">deterministic</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>        <span class="n">torch</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">cudnn</span><span class="o">.</span><span class="n">benchmark</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>    <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PYTHONHASHSEED&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">RANDOM_SEED</span><span class="p">)</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a>    <span class="k">yield</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="k">def</span><span class="w"> </span><span class="nf">config_logger</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">):</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Log test configuration for reproducibility.&quot;&quot;&quot;</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a>
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a>    <span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a>        <span class="s2">&quot;random_seed&quot;</span><span class="p">:</span> <span class="n">RANDOM_SEED</span><span class="p">,</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a>        <span class="s2">&quot;torch_version&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a>        <span class="s2">&quot;numpy_version&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">__version__</span><span class="p">,</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a>        <span class="s2">&quot;cuda_available&quot;</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">(),</span>
+<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a>    <span class="p">}</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a>
+<a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a>    <span class="n">config_path</span> <span class="o">=</span> <span class="n">tmp_path</span> <span class="o">/</span> <span class="s2">&quot;test_config.json&quot;</span>
+<a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">config_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a>        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a>
+<a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a>    <span class="k">yield</span> <span class="n">config</span>
+<a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a>
+<a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a>    <span class="c1"># Verify config was logged</span>
+<a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a>    <span class="k">assert</span> <span class="n">config_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+</code></pre></div>
+<h3 id="83-cpugpu-equivalence-testing">8.3 CPU/GPU Equivalence Testing</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># tests/ml/test_cpu_gpu_equivalence.py</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">gpu</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_encoder_cpu_gpu_equivalence</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="sd">    ML_REPRODUCIBILITY: Verify CPU and GPU produce equivalent results.</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="sd">    Note: Floating point differences expected, tolerance is 1e-5.</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>        <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;GPU not available&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">vl_jepa.encoder</span><span class="w"> </span><span class="kn">import</span> <span class="n">VisualEncoder</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>    <span class="c1"># Same input</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>    <span class="n">frames</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">)</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>    <span class="c1"># CPU inference</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>    <span class="n">encoder_cpu</span> <span class="o">=</span> <span class="n">VisualEncoder</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="s2">&quot;cpu&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>    <span class="n">embeddings_cpu</span> <span class="o">=</span> <span class="n">encoder_cpu</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">frames</span><span class="p">)</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>    <span class="c1"># GPU inference</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>    <span class="n">encoder_gpu</span> <span class="o">=</span> <span class="n">VisualEncoder</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="s2">&quot;cuda&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a>    <span class="n">embeddings_gpu</span> <span class="o">=</span> <span class="n">encoder_gpu</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">frames</span><span class="o">.</span><span class="n">cuda</span><span class="p">())</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>
+<a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a>    <span class="c1"># Compare</span>
+<a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a>    <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span>
+<a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a>        <span class="n">embeddings_cpu</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+<a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a>        <span class="n">embeddings_gpu</span><span class="o">.</span><span class="n">numpy</span><span class="p">(),</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a>        <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
+<a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a>        <span class="n">atol</span><span class="o">=</span><span class="mf">1e-5</span><span class="p">,</span>
+<a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a>        <span class="n">err_msg</span><span class="o">=</span><span class="s2">&quot;CPU and GPU embeddings differ beyond tolerance&quot;</span>
+<a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a>    <span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="9-test-infrastructure">9. Test Infrastructure</h2>
+<h3 id="91-fixtures">9.1 Fixtures</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># conftest.py</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Generator</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">RANDOM_SEED</span> <span class="o">=</span> <span class="mi">42</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">scope</span><span class="o">=</span><span class="s2">&quot;session&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="k">def</span><span class="w"> </span><span class="nf">random_generator</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">:</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Reproducible random generator.&quot;&quot;&quot;</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">RANDOM_SEED</span><span class="p">)</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="k">def</span><span class="w"> </span><span class="nf">sample_frame</span><span class="p">(</span><span class="n">random_generator</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a synthetic 224x224 RGB frame.&quot;&quot;&quot;</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>    <span class="k">return</span> <span class="n">random_generator</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">224</span><span class="p">,</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="k">def</span><span class="w"> </span><span class="nf">sample_embedding</span><span class="p">(</span><span class="n">random_generator</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">Generator</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate a random L2-normalized 768-dim embedding.&quot;&quot;&quot;</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>    <span class="n">vec</span> <span class="o">=</span> <span class="n">random_generator</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">768</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>    <span class="k">return</span> <span class="n">vec</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="k">def</span><span class="w"> </span><span class="nf">mock_visual_encoder</span><span class="p">():</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Mock V-JEPA encoder returning deterministic embeddings.&quot;&quot;&quot;</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>    <span class="k">class</span><span class="w"> </span><span class="nc">MockEncoder</span><span class="p">:</span>
+<a id="__codelineno-7-29" name="__codelineno-7-29" href="#__codelineno-7-29"></a>        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seed</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">RANDOM_SEED</span><span class="p">):</span>
+<a id="__codelineno-7-30" name="__codelineno-7-30" href="#__codelineno-7-30"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+<a id="__codelineno-7-31" name="__codelineno-7-31" href="#__codelineno-7-31"></a>
+<a id="__codelineno-7-32" name="__codelineno-7-32" href="#__codelineno-7-32"></a>        <span class="k">def</span><span class="w"> </span><span class="nf">encode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frames</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<a id="__codelineno-7-33" name="__codelineno-7-33" href="#__codelineno-7-33"></a>            <span class="n">batch_size</span> <span class="o">=</span> <span class="n">frames</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-7-34" name="__codelineno-7-34" href="#__codelineno-7-34"></a>            <span class="n">embeddings</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">768</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-7-35" name="__codelineno-7-35" href="#__codelineno-7-35"></a>            <span class="n">norms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">embeddings</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdims</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-7-36" name="__codelineno-7-36" href="#__codelineno-7-36"></a>            <span class="k">return</span> <span class="n">embeddings</span> <span class="o">/</span> <span class="n">norms</span>
+<a id="__codelineno-7-37" name="__codelineno-7-37" href="#__codelineno-7-37"></a>
+<a id="__codelineno-7-38" name="__codelineno-7-38" href="#__codelineno-7-38"></a>    <span class="k">return</span> <span class="n">MockEncoder</span><span class="p">()</span>
+<a id="__codelineno-7-39" name="__codelineno-7-39" href="#__codelineno-7-39"></a>
+<a id="__codelineno-7-40" name="__codelineno-7-40" href="#__codelineno-7-40"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<a id="__codelineno-7-41" name="__codelineno-7-41" href="#__codelineno-7-41"></a><span class="k">def</span><span class="w"> </span><span class="nf">temp_data_dir</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<a id="__codelineno-7-42" name="__codelineno-7-42" href="#__codelineno-7-42"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Create temporary directory with proper structure.&quot;&quot;&quot;</span>
+<a id="__codelineno-7-43" name="__codelineno-7-43" href="#__codelineno-7-43"></a>    <span class="p">(</span><span class="n">tmp_path</span> <span class="o">/</span> <span class="s2">&quot;embeddings&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span>
+<a id="__codelineno-7-44" name="__codelineno-7-44" href="#__codelineno-7-44"></a>    <span class="p">(</span><span class="n">tmp_path</span> <span class="o">/</span> <span class="s2">&quot;metadata&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span>
+<a id="__codelineno-7-45" name="__codelineno-7-45" href="#__codelineno-7-45"></a>    <span class="k">return</span> <span class="n">tmp_path</span>
+<a id="__codelineno-7-46" name="__codelineno-7-46" href="#__codelineno-7-46"></a>
+<a id="__codelineno-7-47" name="__codelineno-7-47" href="#__codelineno-7-47"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
+<a id="__codelineno-7-48" name="__codelineno-7-48" href="#__codelineno-7-48"></a><span class="k">def</span><span class="w"> </span><span class="nf">sample_video_path</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Path</span><span class="p">:</span>
+<a id="__codelineno-7-49" name="__codelineno-7-49" href="#__codelineno-7-49"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Path to sample test video.&quot;&quot;&quot;</span>
+<a id="__codelineno-7-50" name="__codelineno-7-50" href="#__codelineno-7-50"></a>    <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;data&quot;</span> <span class="o">/</span> <span class="s2">&quot;videos&quot;</span> <span class="o">/</span> <span class="s2">&quot;sample_30s.mp4&quot;</span>
+<a id="__codelineno-7-51" name="__codelineno-7-51" href="#__codelineno-7-51"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+<a id="__codelineno-7-52" name="__codelineno-7-52" href="#__codelineno-7-52"></a>        <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;Sample video not available&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-53" name="__codelineno-7-53" href="#__codelineno-7-53"></a>    <span class="k">return</span> <span class="n">path</span>
+</code></pre></div>
+<h3 id="92-test-markers">9.2 Test Markers</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># pyproject.toml</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="p">[</span><span class="n">tool</span><span class="o">.</span><span class="n">pytest</span><span class="o">.</span><span class="n">ini_options</span><span class="p">]</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">markers</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="s2">&quot;unit: Unit tests (fast, isolated)&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    <span class="s2">&quot;property: Property-based tests (Hypothesis)&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    <span class="s2">&quot;integration: Integration tests (may require resources)&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>    <span class="s2">&quot;benchmark: Performance benchmarks&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    <span class="s2">&quot;slow: Tests taking &gt;10 seconds&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    <span class="s2">&quot;gpu: Tests requiring CUDA GPU&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>    <span class="s2">&quot;network: Tests requiring network access&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>    <span class="s2">&quot;security: Security-focused tests&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>    <span class="s2">&quot;failure_mode: Failure mode testing&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>    <span class="s2">&quot;skip_ci: Skip in CI environment&quot;</span><span class="p">,</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="p">]</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="n">testpaths</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;tests&quot;</span><span class="p">]</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="n">python_files</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;test_*.py&quot;</span><span class="p">]</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="n">python_functions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;test_*&quot;</span><span class="p">]</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="n">addopts</span> <span class="o">=</span> <span class="s2">&quot;-v --tb=short&quot;</span>
+</code></pre></div>
+<h3 id="93-test-isolation">9.3 Test Isolation</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># conftest.py</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">tempfile</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">autouse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">isolate_tests</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Generator</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]:</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Ensure each test runs in isolation.&quot;&quot;&quot;</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    <span class="c1"># Set working directory to temp</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>    <span class="n">original_cwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">)</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>    <span class="c1"># Clear any module caches</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>    <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>    <span class="n">modules_before</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>    <span class="k">yield</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>    <span class="c1"># Restore working directory</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">original_cwd</span><span class="p">)</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>    <span class="c1"># Clean up any temp files</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a>    <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">tmp_path</span><span class="p">,</span> <span class="n">ignore_errors</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="10-test-data-management">10. Test Data Management</h2>
+<h3 id="101-test-data-storage">10.1 Test Data Storage</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Data Type</th>
+<th style="text-align: left;">Location</th>
+<th style="text-align: left;">Storage Method</th>
+<th style="text-align: left;">Size Budget</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Sample videos</td>
+<td style="text-align: left;"><code>tests/data/videos/</code></td>
+<td style="text-align: left;">Git LFS</td>
+<td style="text-align: left;">20MB total</td>
+</tr>
+<tr>
+<td style="text-align: left;">Mock weights</td>
+<td style="text-align: left;"><code>tests/data/models/</code></td>
+<td style="text-align: left;">Generated at test time</td>
+<td style="text-align: left;">&lt;1MB</td>
+</tr>
+<tr>
+<td style="text-align: left;">Reference embeddings</td>
+<td style="text-align: left;"><code>tests/data/embeddings/</code></td>
+<td style="text-align: left;">Git</td>
+<td style="text-align: left;">&lt;1MB</td>
+</tr>
+<tr>
+<td style="text-align: left;">Generated fixtures</td>
+<td style="text-align: left;"><code>tmp_path</code> (pytest)</td>
+<td style="text-align: left;">Ephemeral</td>
+<td style="text-align: left;">N/A</td>
+</tr>
+</tbody>
+</table>
+<h3 id="102-video-test-data">10.2 Video Test Data</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">File</th>
+<th style="text-align: left;">Duration</th>
+<th style="text-align: left;">Resolution</th>
+<th style="text-align: left;">Purpose</th>
+<th style="text-align: left;">Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>sample_30s.mp4</code></td>
+<td style="text-align: left;">30s</td>
+<td style="text-align: left;">1280x720</td>
+<td style="text-align: left;">Standard lecture clip</td>
+<td style="text-align: left;">~5MB</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>sample_empty.mp4</code></td>
+<td style="text-align: left;">0s</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">Empty video edge case</td>
+<td style="text-align: left;">&lt;1KB</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>sample_vfr.mp4</code></td>
+<td style="text-align: left;">10s</td>
+<td style="text-align: left;">1920x1080</td>
+<td style="text-align: left;">Variable frame rate</td>
+<td style="text-align: left;">~3MB</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>sample_corrupt.mp4</code></td>
+<td style="text-align: left;">10s</td>
+<td style="text-align: left;">720x480</td>
+<td style="text-align: left;">Corrupted at frame 50</td>
+<td style="text-align: left;">~2MB</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>sample_grayscale.mp4</code></td>
+<td style="text-align: left;">5s</td>
+<td style="text-align: left;">640x480</td>
+<td style="text-align: left;">Grayscale input</td>
+<td style="text-align: left;">~500KB</td>
+</tr>
+</tbody>
+</table>
+<h3 id="103-test-data-generation">10.3 Test Data Generation</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Generate test videos if not present</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>python<span class="w"> </span>scripts/generate_test_videos.py
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># Validate test data</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>pytest<span class="w"> </span>tests/data/<span class="w"> </span>--collect-only
+</code></pre></div>
+<hr />
+<h2 id="11-gpu-testing-strategy">11. GPU Testing Strategy</h2>
+<h3 id="111-gpu-test-configuration">11.1 GPU Test Configuration</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Environment</th>
+<th style="text-align: left;">GPU Tests</th>
+<th style="text-align: left;">Runner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Local dev</td>
+<td style="text-align: left;">Run if GPU available</td>
+<td style="text-align: left;">Native</td>
+</tr>
+<tr>
+<td style="text-align: left;">CI (GitHub Actions)</td>
+<td style="text-align: left;">Skipped by default</td>
+<td style="text-align: left;"><code>ubuntu-latest</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Nightly CI</td>
+<td style="text-align: left;">Run on GPU runner</td>
+<td style="text-align: left;">Self-hosted with CUDA</td>
+</tr>
+</tbody>
+</table>
+<h3 id="112-gpu-test-markers">11.2 GPU Test Markers</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">gpu</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_gpu_inference</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Requires CUDA GPU.&quot;&quot;&quot;</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">():</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>        <span class="n">pytest</span><span class="o">.</span><span class="n">skip</span><span class="p">(</span><span class="s2">&quot;CUDA not available&quot;</span><span class="p">)</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    <span class="o">...</span>
+</code></pre></div>
+<h3 id="113-gpu-fallback-verification">11.3 GPU Fallback Verification</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">test_automatic_gpu_fallback</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Verify system works when GPU is unavailable.&quot;&quot;&quot;</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s1">&#39;torch.cuda.is_available&#39;</span><span class="p">,</span> <span class="n">return_value</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>        <span class="kn">from</span><span class="w"> </span><span class="nn">vl_jepa.encoder</span><span class="w"> </span><span class="kn">import</span> <span class="n">VisualEncoder</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>        <span class="n">encoder</span> <span class="o">=</span> <span class="n">VisualEncoder</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">)</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>        <span class="n">result</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">sample_frames</span><span class="p">)</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>        <span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="mi">768</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="12-regression-testing">12. Regression Testing</h2>
+<h3 id="121-regression-test-protocol">12.1 Regression Test Protocol</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Trigger</th>
+<th style="text-align: left;">Tests Run</th>
+<th style="text-align: left;">Comparison</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Every PR</td>
+<td style="text-align: left;">Unit + Property</td>
+<td style="text-align: left;">N/A</td>
+</tr>
+<tr>
+<td style="text-align: left;">Merge to main</td>
+<td style="text-align: left;">All tests</td>
+<td style="text-align: left;">Baseline from main</td>
+</tr>
+<tr>
+<td style="text-align: left;">Nightly</td>
+<td style="text-align: left;">Full + Benchmarks</td>
+<td style="text-align: left;">Previous nightly</td>
+</tr>
+<tr>
+<td style="text-align: left;">Release</td>
+<td style="text-align: left;">Full + Manual E2E</td>
+<td style="text-align: left;">Previous release</td>
+</tr>
+</tbody>
+</table>
+<h3 id="122-performance-regression-detection">12.2 Performance Regression Detection</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># .github/workflows/benchmark.yml</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run benchmarks</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest tests/benchmarks/ --benchmark-json=benchmark.json</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Compare with baseline</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">  </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">    </span><span class="no">pytest-benchmark compare \</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">      </span><span class="no">benchmark.json baseline.json \</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">      </span><span class="no">--fail-on-change=10%</span>
+</code></pre></div>
+<h3 id="123-regression-investigation">12.3 Regression Investigation</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Severity</th>
+<th style="text-align: left;">Detection</th>
+<th style="text-align: left;">Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">&gt;25% slower</td>
+<td style="text-align: left;">PR blocked</td>
+<td style="text-align: left;">Must fix before merge</td>
+</tr>
+<tr>
+<td style="text-align: left;">10-25% slower</td>
+<td style="text-align: left;">Warning</td>
+<td style="text-align: left;">Document justification</td>
+</tr>
+<tr>
+<td style="text-align: left;">&lt;10% slower</td>
+<td style="text-align: left;">Logged</td>
+<td style="text-align: left;">Monitor trend</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="13-cicd-pipeline">13. CI/CD Pipeline</h2>
+<h3 id="131-pipeline-definition">13.1 Pipeline Definition</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># .github/workflows/test.yml</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Tests</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">push</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">pull_request</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="nt">env</span><span class="p">:</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">  </span><span class="nt">PYTHON_VERSION</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;3.10&quot;</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="nt">jobs</span><span class="p">:</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">  </span><span class="nt">lint</span><span class="p">:</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v5</span>
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="w">          </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.PYTHON_VERSION }}</span>
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install ruff mypy</span>
+<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ruff check src/</span>
+<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mypy src/ --strict</span>
+<a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a>
+<a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a><span class="w">  </span><span class="nt">unit-tests</span><span class="p">:</span>
+<a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a><span class="w">    </span><span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">lint</span>
+<a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v5</span>
+<a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-14-28" name="__codelineno-14-28" href="#__codelineno-14-28"></a><span class="w">          </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.PYTHON_VERSION }}</span>
+<a id="__codelineno-14-29" name="__codelineno-14-29" href="#__codelineno-14-29"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -e &quot;.[dev]&quot;</span>
+<a id="__codelineno-14-30" name="__codelineno-14-30" href="#__codelineno-14-30"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest tests/unit/ -v --cov=vl_jepa --cov-report=xml --cov-fail-under=90</span>
+<a id="__codelineno-14-31" name="__codelineno-14-31" href="#__codelineno-14-31"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">codecov/codecov-action@v4</span>
+<a id="__codelineno-14-32" name="__codelineno-14-32" href="#__codelineno-14-32"></a>
+<a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a><span class="w">  </span><span class="nt">property-tests</span><span class="p">:</span>
+<a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-14-35" name="__codelineno-14-35" href="#__codelineno-14-35"></a><span class="w">    </span><span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unit-tests</span>
+<a id="__codelineno-14-36" name="__codelineno-14-36" href="#__codelineno-14-36"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-14-37" name="__codelineno-14-37" href="#__codelineno-14-37"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<a id="__codelineno-14-38" name="__codelineno-14-38" href="#__codelineno-14-38"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v5</span>
+<a id="__codelineno-14-39" name="__codelineno-14-39" href="#__codelineno-14-39"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-14-40" name="__codelineno-14-40" href="#__codelineno-14-40"></a><span class="w">          </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.PYTHON_VERSION }}</span>
+<a id="__codelineno-14-41" name="__codelineno-14-41" href="#__codelineno-14-41"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -e &quot;.[dev]&quot;</span>
+<a id="__codelineno-14-42" name="__codelineno-14-42" href="#__codelineno-14-42"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest tests/property/ -v --hypothesis-profile=ci</span>
+<a id="__codelineno-14-43" name="__codelineno-14-43" href="#__codelineno-14-43"></a>
+<a id="__codelineno-14-44" name="__codelineno-14-44" href="#__codelineno-14-44"></a><span class="w">  </span><span class="nt">integration-tests</span><span class="p">:</span>
+<a id="__codelineno-14-45" name="__codelineno-14-45" href="#__codelineno-14-45"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-14-46" name="__codelineno-14-46" href="#__codelineno-14-46"></a><span class="w">    </span><span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">property-tests</span>
+<a id="__codelineno-14-47" name="__codelineno-14-47" href="#__codelineno-14-47"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-14-48" name="__codelineno-14-48" href="#__codelineno-14-48"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<a id="__codelineno-14-49" name="__codelineno-14-49" href="#__codelineno-14-49"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v5</span>
+<a id="__codelineno-14-50" name="__codelineno-14-50" href="#__codelineno-14-50"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-14-51" name="__codelineno-14-51" href="#__codelineno-14-51"></a><span class="w">          </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.PYTHON_VERSION }}</span>
+<a id="__codelineno-14-52" name="__codelineno-14-52" href="#__codelineno-14-52"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -e &quot;.[dev]&quot;</span>
+<a id="__codelineno-14-53" name="__codelineno-14-53" href="#__codelineno-14-53"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest tests/integration/ -v -m &quot;not gpu and not network&quot;</span>
+<a id="__codelineno-14-54" name="__codelineno-14-54" href="#__codelineno-14-54"></a>
+<a id="__codelineno-14-55" name="__codelineno-14-55" href="#__codelineno-14-55"></a><span class="w">  </span><span class="nt">security-tests</span><span class="p">:</span>
+<a id="__codelineno-14-56" name="__codelineno-14-56" href="#__codelineno-14-56"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-14-57" name="__codelineno-14-57" href="#__codelineno-14-57"></a><span class="w">    </span><span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unit-tests</span>
+<a id="__codelineno-14-58" name="__codelineno-14-58" href="#__codelineno-14-58"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-14-59" name="__codelineno-14-59" href="#__codelineno-14-59"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<a id="__codelineno-14-60" name="__codelineno-14-60" href="#__codelineno-14-60"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v5</span>
+<a id="__codelineno-14-61" name="__codelineno-14-61" href="#__codelineno-14-61"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-14-62" name="__codelineno-14-62" href="#__codelineno-14-62"></a><span class="w">          </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.PYTHON_VERSION }}</span>
+<a id="__codelineno-14-63" name="__codelineno-14-63" href="#__codelineno-14-63"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -e &quot;.[dev]&quot;</span>
+<a id="__codelineno-14-64" name="__codelineno-14-64" href="#__codelineno-14-64"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest tests/security/ -v</span>
+<a id="__codelineno-14-65" name="__codelineno-14-65" href="#__codelineno-14-65"></a>
+<a id="__codelineno-14-66" name="__codelineno-14-66" href="#__codelineno-14-66"></a><span class="w">  </span><span class="nt">benchmarks</span><span class="p">:</span>
+<a id="__codelineno-14-67" name="__codelineno-14-67" href="#__codelineno-14-67"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+<a id="__codelineno-14-68" name="__codelineno-14-68" href="#__codelineno-14-68"></a><span class="w">    </span><span class="nt">needs</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">integration-tests</span>
+<a id="__codelineno-14-69" name="__codelineno-14-69" href="#__codelineno-14-69"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+<a id="__codelineno-14-70" name="__codelineno-14-70" href="#__codelineno-14-70"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+<a id="__codelineno-14-71" name="__codelineno-14-71" href="#__codelineno-14-71"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v5</span>
+<a id="__codelineno-14-72" name="__codelineno-14-72" href="#__codelineno-14-72"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-14-73" name="__codelineno-14-73" href="#__codelineno-14-73"></a><span class="w">          </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${{ env.PYTHON_VERSION }}</span>
+<a id="__codelineno-14-74" name="__codelineno-14-74" href="#__codelineno-14-74"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install -e &quot;.[dev]&quot;</span>
+<a id="__codelineno-14-75" name="__codelineno-14-75" href="#__codelineno-14-75"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest tests/benchmarks/ --benchmark-only --benchmark-json=benchmark.json</span>
+<a id="__codelineno-14-76" name="__codelineno-14-76" href="#__codelineno-14-76"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">benchmark-action/github-action-benchmark@v1</span>
+<a id="__codelineno-14-77" name="__codelineno-14-77" href="#__codelineno-14-77"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+<a id="__codelineno-14-78" name="__codelineno-14-78" href="#__codelineno-14-78"></a><span class="w">          </span><span class="nt">tool</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pytest</span>
+<a id="__codelineno-14-79" name="__codelineno-14-79" href="#__codelineno-14-79"></a><span class="w">          </span><span class="nt">output-file-path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">benchmark.json</span>
+</code></pre></div>
+<h3 id="132-artifact-retention">13.2 Artifact Retention</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Artifact</th>
+<th style="text-align: left;">Retention</th>
+<th style="text-align: left;">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Coverage reports</td>
+<td style="text-align: left;">30 days</td>
+<td style="text-align: left;">Trend analysis</td>
+</tr>
+<tr>
+<td style="text-align: left;">Benchmark results</td>
+<td style="text-align: left;">90 days</td>
+<td style="text-align: left;">Performance tracking</td>
+</tr>
+<tr>
+<td style="text-align: left;">Test logs</td>
+<td style="text-align: left;">7 days</td>
+<td style="text-align: left;">Debugging</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="14-quality-gates">14. Quality Gates</h2>
+<h3 id="141-gate-definitions">14.1 Gate Definitions</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Gate</th>
+<th style="text-align: left;">Trigger</th>
+<th style="text-align: left;">Requirements</th>
+<th style="text-align: left;">Blocker</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>PR Gate</strong></td>
+<td style="text-align: left;">Every PR</td>
+<td style="text-align: left;">Unit tests pass, coverage &gt;90%, lint clean</td>
+<td style="text-align: left;">Merge blocked</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Main Gate</strong></td>
+<td style="text-align: left;">Merge to main</td>
+<td style="text-align: left;">All tests pass, benchmarks within budget</td>
+<td style="text-align: left;">Deploy blocked</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Release Gate</strong></td>
+<td style="text-align: left;">Version tag</td>
+<td style="text-align: left;">Full suite + manual E2E + security scan</td>
+<td style="text-align: left;">Release blocked</td>
+</tr>
+</tbody>
+</table>
+<h3 id="142-coverage-configuration">14.2 Coverage Configuration</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># pyproject.toml</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="k">[tool.coverage.run]</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">branch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="n">source</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;src/vl_jepa&quot;</span><span class="p">]</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="n">omit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;*/tests/*&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;*/__init__.py&quot;</span><span class="p">]</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="k">[tool.coverage.report]</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="n">fail_under</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">90</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="n">exclude_lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">    </span><span class="s2">&quot;pragma: no cover&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="w">    </span><span class="s2">&quot;if TYPE_CHECKING:&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">    </span><span class="s2">&quot;raise NotImplementedError&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="w">    </span><span class="s2">&quot;@abstractmethod&quot;</span><span class="p">,</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="p">]</span>
+</code></pre></div>
+<h3 id="143-benchmark-regression-rules">14.3 Benchmark Regression Rules</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Metric</th>
+<th style="text-align: left;">Threshold</th>
+<th style="text-align: left;">Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Mean latency increase</td>
+<td style="text-align: left;">&gt;10%</td>
+<td style="text-align: left;">Warning in PR</td>
+</tr>
+<tr>
+<td style="text-align: left;">Mean latency increase</td>
+<td style="text-align: left;">&gt;25%</td>
+<td style="text-align: left;">PR blocked</td>
+</tr>
+<tr>
+<td style="text-align: left;">P99 latency increase</td>
+<td style="text-align: left;">&gt;50%</td>
+<td style="text-align: left;">Investigation required</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="15-test-execution">15. Test Execution</h2>
+<h3 id="151-local-development">15.1 Local Development</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># Run all unit tests (fast feedback)</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>pytest<span class="w"> </span>tests/unit/<span class="w"> </span>-v
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1"># Run with coverage</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>pytest<span class="w"> </span>tests/unit/<span class="w"> </span>--cov<span class="o">=</span>vl_jepa<span class="w"> </span>--cov-report<span class="o">=</span>html
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>open<span class="w"> </span>htmlcov/index.html
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="c1"># Run property tests (quick profile)</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>pytest<span class="w"> </span>tests/property/<span class="w"> </span>-v<span class="w"> </span>--hypothesis-profile<span class="o">=</span>dev
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="c1"># Run specific test by ID</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>pytest<span class="w"> </span>-k<span class="w"> </span><span class="s2">&quot;T001.1&quot;</span><span class="w"> </span>-v
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="c1"># Run tests for specific spec</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>pytest<span class="w"> </span>-k<span class="w"> </span><span class="s2">&quot;S001&quot;</span><span class="w"> </span>-v
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="c1"># Skip slow tests</span>
+<a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a>pytest<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;not slow&quot;</span>
+<a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>
+<a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="c1"># Run only GPU tests</span>
+<a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a>pytest<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;gpu&quot;</span>
+<a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>
+<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="c1"># Run security tests</span>
+<a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a>pytest<span class="w"> </span>tests/security/<span class="w"> </span>-v
+<a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a>
+<a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a><span class="c1"># Run failure mode tests</span>
+<a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a>pytest<span class="w"> </span>tests/failure_modes/<span class="w"> </span>-v
+</code></pre></div>
+<h3 id="152-pre-commit-checks">15.2 Pre-Commit Checks</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1"># Fast validation (unit + lint)</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>pytest<span class="w"> </span>tests/unit/<span class="w"> </span>-x<span class="w"> </span>-q<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>ruff<span class="w"> </span>check<span class="w"> </span>src/<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>mypy<span class="w"> </span>src/<span class="w"> </span>--strict
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1"># Full validation (before PR)</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>pytest<span class="w"> </span>--cov<span class="o">=</span>vl_jepa<span class="w"> </span>--cov-fail-under<span class="o">=</span><span class="m">90</span>
+</code></pre></div>
+<h3 id="153-test-prioritization">15.3 Test Prioritization</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Priority</th>
+<th style="text-align: left;">Category</th>
+<th style="text-align: left;">When to Run</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">P0</td>
+<td style="text-align: left;">Smoke tests</td>
+<td style="text-align: left;">Every save (watch mode)</td>
+</tr>
+<tr>
+<td style="text-align: left;">P1</td>
+<td style="text-align: left;">Unit tests</td>
+<td style="text-align: left;">Every commit</td>
+</tr>
+<tr>
+<td style="text-align: left;">P2</td>
+<td style="text-align: left;">Property tests</td>
+<td style="text-align: left;">Every PR</td>
+</tr>
+<tr>
+<td style="text-align: left;">P3</td>
+<td style="text-align: left;">Integration tests</td>
+<td style="text-align: left;">Pre-merge</td>
+</tr>
+<tr>
+<td style="text-align: left;">P4</td>
+<td style="text-align: left;">Benchmarks</td>
+<td style="text-align: left;">Nightly / Release</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="16-approval-status">16. Approval Status</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Reviewer</th>
+<th style="text-align: left;">Verdict</th>
+<th style="text-align: left;">Date</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">HOSTILE_REVIEWER</td>
+<td style="text-align: left;">[PENDING]</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="17-revision-history">17. Revision History</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Date</th>
+<th style="text-align: left;">Changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1.0</td>
+<td style="text-align: left;">2024-12-31</td>
+<td style="text-align: left;">Initial test strategy</td>
+</tr>
+<tr>
+<td style="text-align: left;">1.1</td>
+<td style="text-align: left;">2024-12-31</td>
+<td style="text-align: left;">Added: Security Testing (Section 6), Failure Mode Testing (Section 7), ML Reproducibility (Section 8), GPU Testing (Section 11), Regression Testing (Section 12), CI/CD Pipeline (Section 13), Complete invariant coverage (Section 5), Test traceability (Section 3)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><em>Test Strategy Version: 1.1</em>
+<em>Author: QA_LEAD</em>
+<em>Project: VL-JEPA Lecture Summarizer</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/matte1782/lecture-mind" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

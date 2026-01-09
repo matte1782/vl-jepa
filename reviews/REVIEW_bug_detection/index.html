@@ -1,0 +1,1546 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Event-aware lecture summarizer using V-JEPA">
+      
+      
+      
+        <link rel="canonical" href="https://matte1782.github.io/lecture-mind/reviews/REVIEW_bug_detection/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Frontend Bug Detection Review - Lecture Mind</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#frontend-bug-detection-review" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Lecture Mind" class="md-header__button md-logo" aria-label="Lecture Mind" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Lecture Mind
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Frontend Bug Detection Review
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/matte1782/lecture-mind" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    matte1782/lecture-mind
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../quickstart/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guide/web-ui/" class="md-tabs__link">
+          
+  
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../ARCHITECTURE/" class="md-tabs__link">
+          
+  
+  
+  Development
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Lecture Mind" class="md-nav__button md-logo" aria-label="Lecture Mind" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Lecture Mind
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/matte1782/lecture-mind" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    matte1782/lecture-mind
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../local-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud Demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guide/web-ui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guide/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CONTRIBUTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DOCKER/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#critical-issues-80-confidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Critical Issues (80%+ Confidence)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Critical Issues (80%+ Confidence)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-memory-leak-cursor-glow-animation-never-stops" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Memory Leak: Cursor Glow Animation Never Stops
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-memory-leak-event-listeners-on-scrollresize-never-removed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Memory Leak: Event Listeners on Scroll/Resize Never Removed
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-race-condition-polling-continues-after-abort" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Race Condition: Polling Continues After Abort
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#major-issues-60-79-confidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Major Issues (60-79% Confidence)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Major Issues (60-79% Confidence)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4-accessibility-missing-focus-trap-in-modals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Accessibility: Missing Focus Trap in Modals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-accessibility-escape-key-handler-memory-leak" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Accessibility: Escape Key Handler Memory Leak
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-css-z-index-conflict-potential" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. CSS: Z-Index Conflict Potential
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-mobile-touch-events-not-handled-for-upload-zone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Mobile: Touch Events Not Handled for Upload Zone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-ios-safari-input-file-trigger-may-not-work" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. iOS Safari: Input File Trigger May Not Work
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-performance-animation-delay-accumulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Performance: Animation Delay Accumulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-xss-risk-innerhtml-usage-in-copy-button-reset" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. XSS Risk: innerHTML Usage in Copy Button Reset
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11-cross-browser-css-variable-in-animation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Cross-Browser: CSS Variable in Animation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#minor-issues-40-59-confidence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Minor Issues (40-59% Confidence)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Minor Issues (40-59% Confidence)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#12-missing-aria-live-region-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Missing ARIA Live Region Update
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-color-contrast-warning-badge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Color Contrast: Warning Badge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-missing-loadinglazy-for-offscreen-content" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Missing loading="lazy" for Offscreen Content
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-empty-state-icon-overflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Empty State Icon Overflow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-missing-relnoopener-on-some-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. Missing rel="noopener" on Some Links
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-potential-null-reference-video-player" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. Potential Null Reference: Video Player
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#18-inconsistent-error-handling-in-localstorage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18. Inconsistent Error Handling in localStorage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#19-css-vendor-prefix-missing-for-backdrop-filter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19. CSS: Vendor Prefix Missing for backdrop-filter
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#20-button-ripple-can-accumulate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20. Button Ripple Can Accumulate
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21-missing-prefers-reduced-motion-for-some-animations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21. Missing prefers-reduced-motion for Some Animations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-stale-data-bookmarks-for-deleted-videos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22. Stale Data: Bookmarks for Deleted Videos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-html-duplicate-id-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        23. HTML: Duplicate ID Reference
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#performance-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Recommendations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#browser-compatibility-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Browser Compatibility Matrix
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#testing-recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing Recommendations
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="frontend-bug-detection-review">Frontend Bug Detection Review</h1>
+<p><strong>Date</strong>: 2026-01-09
+<strong>Reviewed Files</strong>: <code>src/vl_jepa/api/static/index.html</code>, <code>app.js</code>, <code>components.css</code>, <code>animations.css</code>
+<strong>Reviewer</strong>: Senior Frontend QA Engineer</p>
+<hr />
+<h2 id="summary">Summary</h2>
+<ul>
+<li><strong>Critical Issues</strong>: 3</li>
+<li><strong>Major Issues</strong>: 8</li>
+<li><strong>Minor Issues</strong>: 12</li>
+<li><strong>Recommendation</strong>: CAUTION - Several memory leaks and accessibility gaps need attention before production release</li>
+</ul>
+<hr />
+<h2 id="critical-issues-80-confidence">Critical Issues (80%+ Confidence)</h2>
+<h3 id="1-memory-leak-cursor-glow-animation-never-stops">1. Memory Leak: Cursor Glow Animation Never Stops</h3>
+<p><strong>Severity</strong>: Critical
+<strong>Location</strong>: <code>app.js:354-364</code>
+<strong>Confidence</strong>: 95%</p>
+<p><strong>Issue</strong>: The <code>animateGlow()</code> function uses <code>requestAnimationFrame</code> in an infinite loop that never stops, even when the page or hero section is not visible. This causes continuous CPU usage and prevents garbage collection of the glow element.</p>
+<p><strong>Steps to Reproduce</strong>:
+1. Open page on desktop
+2. Scroll past hero section
+3. Monitor CPU usage - animation continues indefinitely
+4. Navigate away and back - new animation starts without stopping old one</p>
+<p><strong>Fix</strong>: Store the animation frame ID and cancel it when the glow becomes inactive. Check the <code>active</code> class before scheduling the next frame.</p>
+<hr />
+<h3 id="2-memory-leak-event-listeners-on-scrollresize-never-removed">2. Memory Leak: Event Listeners on Scroll/Resize Never Removed</h3>
+<p><strong>Severity</strong>: Critical
+<strong>Location</strong>: <code>app.js:223-224</code>, <code>app.js:557-562</code>
+<strong>Confidence</strong>: 90%</p>
+<p><strong>Issue</strong>: Multiple scroll and resize event listeners are added but never removed. While the page doesn't SPA-navigate, these can cause issues during hot-reload in development and accumulate if the code is ever used in an SPA context.</p>
+<p><strong>Steps to Reproduce</strong>:
+1. In development with hot-reload, edit app.js
+2. Each reload adds new listeners without removing old ones
+3. Scroll performance degrades over time</p>
+<p><strong>Fix</strong>: Store references to handlers in a Set and add a cleanup function that removes all listeners on <code>beforeunload</code>.</p>
+<hr />
+<h3 id="3-race-condition-polling-continues-after-abort">3. Race Condition: Polling Continues After Abort</h3>
+<p><strong>Severity</strong>: Critical
+<strong>Location</strong>: <code>app.js:714-738</code>
+<strong>Confidence</strong>: 85%</p>
+<p><strong>Issue</strong>: If <code>uploadFile()</code> is called while polling is already active (e.g., user uploads a new file during processing), the old polling interval is not cleared before a new upload starts. This can cause ghost polling for old jobs.</p>
+<p><strong>Steps to Reproduce</strong>:
+1. Upload a video, processing starts
+2. While processing, upload another video
+3. Both polling intervals may run simultaneously
+4. Results from old job may corrupt new job state</p>
+<p><strong>Fix</strong>: Call <code>stopPolling()</code> at the beginning of <code>uploadFile()</code> before creating a new AbortController.</p>
+<hr />
+<h2 id="major-issues-60-79-confidence">Major Issues (60-79% Confidence)</h2>
+<h3 id="4-accessibility-missing-focus-trap-in-modals">4. Accessibility: Missing Focus Trap in Modals</h3>
+<p><strong>Severity</strong>: Major
+<strong>Location</strong>: <code>app.js:1606-1658</code>, <code>app.js:1676-1761</code>
+<strong>Confidence</strong>: 75%</p>
+<p><strong>Issue</strong>: The bookmark type selector and bookmark note modals do not trap focus. Keyboard users can Tab out of the modal into background content.</p>
+<p><strong>Steps to Reproduce</strong>:
+1. Click "Add Bookmark" button
+2. Press Tab repeatedly
+3. Focus escapes modal to background elements</p>
+<p><strong>Fix</strong>: Implement a focus trap function that captures Tab/Shift+Tab and cycles focus within the modal's focusable elements.</p>
+<hr />
+<h3 id="5-accessibility-escape-key-handler-memory-leak">5. Accessibility: Escape Key Handler Memory Leak</h3>
+<p><strong>Severity</strong>: Major
+<strong>Location</strong>: <code>app.js:1651-1657</code>, <code>app.js:1754-1760</code>
+<strong>Confidence</strong>: 80%</p>
+<p><strong>Issue</strong>: When modal is closed by clicking overlay (not Escape), the Escape keydown listener is never removed.</p>
+<p><strong>Steps to Reproduce</strong>:
+1. Open bookmark modal
+2. Click outside to close (on overlay)
+3. Repeat 100 times
+4. 100 orphaned keydown listeners remain attached to document</p>
+<p><strong>Fix</strong>: Remove the Escape key handler in all modal close paths, not just when Escape is pressed.</p>
+<hr />
+<h3 id="6-css-z-index-conflict-potential">6. CSS: Z-Index Conflict Potential</h3>
+<p><strong>Severity</strong>: Major
+<strong>Location</strong>: <code>components.css:1138</code>, <code>animations.css:529</code>
+<strong>Confidence</strong>: 70%</p>
+<p><strong>Issue</strong>: The cursor glow has <code>z-index: 9999</code> which is higher than <code>--z-modal</code> (typically 1000-1050). This can cause the cursor glow to appear on top of modals.</p>
+<p><strong>Steps to Reproduce</strong>:
+1. Open modal on desktop
+2. Move mouse - glow may show above modal backdrop</p>
+<p><strong>Fix</strong>: Change cursor glow z-index to use <code>var(--z-popover, 40)</code> instead of hardcoded 9999.</p>
+<hr />
+<h3 id="7-mobile-touch-events-not-handled-for-upload-zone">7. Mobile: Touch Events Not Handled for Upload Zone</h3>
+<p><strong>Severity</strong>: Major
+<strong>Location</strong>: <code>app.js:617-619</code>, <code>index.html:388</code>
+<strong>Confidence</strong>: 75%</p>
+<p><strong>Issue</strong>: While drag-and-drop works, the upload zone doesn't have touch-specific handling. On mobile, dragging files from other apps may not work as expected.</p>
+<p><strong>Steps to Reproduce</strong>:
+1. Open on iOS Safari
+2. Try to drag a video from Files app
+3. Drop behavior may be inconsistent</p>
+<p><strong>Fix</strong>: Add touch event handlers and consider testing with <code>touchstart</code>/<code>touchend</code> for better mobile UX.</p>
+<hr />
+<h3 id="8-ios-safari-input-file-trigger-may-not-work">8. iOS Safari: Input File Trigger May Not Work</h3>
+<p><strong>Severity</strong>: Major
+<strong>Location</strong>: <code>app.js:599</code>
+<strong>Confidence</strong>: 65%</p>
+<p><strong>Issue</strong>: Programmatically clicking a file input (<code>fileInput.click()</code>) from a non-user-gesture context (like a keyboard event) may not work reliably on iOS Safari.</p>
+<p><strong>Steps to Reproduce</strong>:
+1. Open on iOS Safari with Bluetooth keyboard
+2. Focus upload zone
+3. Press Enter or Space
+4. File picker may not open</p>
+<p><strong>Fix</strong>: Ensure the file input is visible (opacity: 0 instead of display: none) and position it over the click zone.</p>
+<hr />
+<h3 id="9-performance-animation-delay-accumulation">9. Performance: Animation Delay Accumulation</h3>
+<p><strong>Severity</strong>: Major
+<strong>Location</strong>: <code>app.js:896</code>, <code>app.js:963</code>, <code>app.js:1119</code>
+<strong>Confidence</strong>: 70%</p>
+<p><strong>Issue</strong>: Animation delays are set inline with <code>element.style.animationDelay</code>. If content is re-rendered multiple times (e.g., events list updates), delays accumulate causing longer and longer animation wait times.</p>
+<p><strong>Steps to Reproduce</strong>:
+1. Process a video
+2. Trigger events/transcript re-render multiple times
+3. Animation delays may accumulate</p>
+<p><strong>Fix</strong>: Clear animation delay before setting by first assigning empty string.</p>
+<hr />
+<h3 id="10-xss-risk-innerhtml-usage-in-copy-button-reset">10. XSS Risk: innerHTML Usage in Copy Button Reset</h3>
+<p><strong>Severity</strong>: Major
+<strong>Location</strong>: <code>app.js:1367-1372</code>
+<strong>Confidence</strong>: 85%</p>
+<p><strong>Issue</strong>: After copying to clipboard, the button content is reset using innerHTML with a template string. While the content is static in this case, this pattern is risky and violates the codebase's "Safe DOM manipulation (XSS-free)" principle stated in the file header.</p>
+<p><strong>Steps to Reproduce</strong>:
+1. Select "Study Notes" export format
+2. Click "Copy to Clipboard"
+3. Button text changes to "Copied!" then resets using innerHTML</p>
+<p><strong>Fix</strong>: Use safe DOM methods - <code>clearElement(btn)</code> followed by <code>appendChild()</code> with <code>createSvgIcon()</code> and <code>document.createTextNode()</code>.</p>
+<hr />
+<h3 id="11-cross-browser-css-variable-in-animation">11. Cross-Browser: CSS Variable in Animation</h3>
+<p><strong>Severity</strong>: Major
+<strong>Location</strong>: <code>animations.css:699-722</code>
+<strong>Confidence</strong>: 60%</p>
+<p><strong>Issue</strong>: The liquid gradient animation uses <code>--angle</code> CSS variable with animation, which requires <code>@property</code> registration for proper animation. This has limited browser support.</p>
+<p><strong>Steps to Reproduce</strong>:
+1. Open in Safari &lt; 15.4 or Firefox &lt; 96
+2. Animation may not work as expected</p>
+<p><strong>Fix</strong>: Use transform rotation instead of CSS variable animation for better compatibility.</p>
+<hr />
+<h2 id="minor-issues-40-59-confidence">Minor Issues (40-59% Confidence)</h2>
+<h3 id="12-missing-aria-live-region-update">12. Missing ARIA Live Region Update</h3>
+<p><strong>Severity</strong>: Minor
+<strong>Location</strong>: <code>app.js:755</code>
+<strong>Confidence</strong>: 55%</p>
+<p><strong>Issue</strong>: Progress updates should announce to screen readers, but the live region doesn't properly announce stage changes.</p>
+<p><strong>Fix</strong>: Add <code>aria-atomic="true"</code> and update with semantic announcements.</p>
+<hr />
+<h3 id="13-color-contrast-warning-badge">13. Color Contrast: Warning Badge</h3>
+<p><strong>Severity</strong>: Minor
+<strong>Location</strong>: <code>components.css:368-376</code>
+<strong>Confidence</strong>: 50%</p>
+<p><strong>Issue</strong>: Warning badge may have insufficient contrast ratio in some themes.</p>
+<p><strong>Fix</strong>: Verify contrast ratio meets WCAG AA (4.5:1 for text).</p>
+<hr />
+<h3 id="14-missing-loadinglazy-for-offscreen-content">14. Missing <code>loading="lazy"</code> for Offscreen Content</h3>
+<p><strong>Severity</strong>: Minor
+<strong>Location</strong>: <code>index.html</code> (general)
+<strong>Confidence</strong>: 45%</p>
+<p><strong>Issue</strong>: While no <code>&lt;img&gt;</code> tags are present (uses SVG), if images are added later, lazy loading should be considered.</p>
+<hr />
+<h3 id="15-empty-state-icon-overflow">15. Empty State Icon Overflow</h3>
+<p><strong>Severity</strong>: Minor
+<strong>Location</strong>: <code>components.css:633-644</code>
+<strong>Confidence</strong>: 55%</p>
+<p><strong>Issue</strong>: The empty state icon uses <code>!important</code> on dimensions, suggesting a previous overflow issue that was patched rather than fixed properly.</p>
+<p><strong>Fix</strong>: Find and fix the root cause instead of using <code>!important</code>.</p>
+<hr />
+<h3 id="16-missing-relnoopener-on-some-links">16. Missing <code>rel="noopener"</code> on Some Links</h3>
+<p><strong>Severity</strong>: Minor
+<strong>Location</strong>: <code>index.html:919-926</code>
+<strong>Confidence</strong>: 50%</p>
+<p><strong>Issue</strong>: Some external links have <code>target="_blank"</code> with <code>rel="noopener"</code>, but footer links are missing this security attribute.</p>
+<p><strong>Fix</strong>: Add <code>rel="noopener noreferrer"</code> to all external links with <code>target="_blank"</code>.</p>
+<hr />
+<h3 id="17-potential-null-reference-video-player">17. Potential Null Reference: Video Player</h3>
+<p><strong>Severity</strong>: Minor
+<strong>Location</strong>: <code>app.js:838-862</code>
+<strong>Confidence</strong>: 60%</p>
+<p><strong>Issue</strong>: <code>seekVideo()</code> checks for <code>elements.videoPlayer</code> but doesn't check if the video is loaded before seeking.</p>
+<p><strong>Fix</strong>: Check <code>video.readyState &gt;= 2</code> before setting <code>currentTime</code>, or wait for <code>loadedmetadata</code> event.</p>
+<hr />
+<h3 id="18-inconsistent-error-handling-in-localstorage">18. Inconsistent Error Handling in localStorage</h3>
+<p><strong>Severity</strong>: Minor
+<strong>Location</strong>: <code>app.js:1786-1803</code>
+<strong>Confidence</strong>: 55%</p>
+<p><strong>Issue</strong>: localStorage operations use <code>console.warn</code> for errors but don't notify users when storage fails.</p>
+<p><strong>Fix</strong>: Consider showing a toast when localStorage quota is exceeded or unavailable.</p>
+<hr />
+<h3 id="19-css-vendor-prefix-missing-for-backdrop-filter">19. CSS: Vendor Prefix Missing for backdrop-filter</h3>
+<p><strong>Severity</strong>: Minor
+<strong>Location</strong>: <code>components.css:1143</code>
+<strong>Confidence</strong>: 45%</p>
+<p><strong>Issue</strong>: <code>backdrop-filter: blur(4px)</code> may need <code>-webkit-backdrop-filter</code> for older Safari versions.</p>
+<p><strong>Fix</strong>: Add <code>-webkit-backdrop-filter: blur(4px)</code> for Safari compatibility.</p>
+<hr />
+<h3 id="20-button-ripple-can-accumulate">20. Button Ripple Can Accumulate</h3>
+<p><strong>Severity</strong>: Minor
+<strong>Location</strong>: <code>app.js:324-327</code>
+<strong>Confidence</strong>: 50%</p>
+<p><strong>Issue</strong>: Rapid clicking creates multiple ripple elements. While they're removed after 600ms, rapid clicks could theoretically create many DOM nodes.</p>
+<p><strong>Fix</strong>: Remove existing ripple before creating new one.</p>
+<hr />
+<h3 id="21-missing-prefers-reduced-motion-for-some-animations">21. Missing prefers-reduced-motion for Some Animations</h3>
+<p><strong>Severity</strong>: Minor
+<strong>Location</strong>: <code>components.css:511</code>
+<strong>Confidence</strong>: 55%</p>
+<p><strong>Issue</strong>: Toast slide animation doesn't respect <code>prefers-reduced-motion</code>.</p>
+<p><strong>Fix</strong>: Add media query to disable toast animation when reduced motion is preferred.</p>
+<hr />
+<h3 id="22-stale-data-bookmarks-for-deleted-videos">22. Stale Data: Bookmarks for Deleted Videos</h3>
+<p><strong>Severity</strong>: Minor
+<strong>Location</strong>: <code>app.js:1785-1803</code>
+<strong>Confidence</strong>: 40%</p>
+<p><strong>Issue</strong>: Bookmarks are stored by <code>jobId</code> but old bookmarks are never cleaned up when videos are removed or re-uploaded.</p>
+<p><strong>Fix</strong>: Add periodic cleanup or storage limit.</p>
+<hr />
+<h3 id="23-html-duplicate-id-reference">23. HTML: Duplicate ID Reference</h3>
+<p><strong>Severity</strong>: Minor
+<strong>Location</strong>: <code>index.html:558</code>
+<strong>Confidence</strong>: 50%</p>
+<p><strong>Issue</strong>: Tab panel has <code>aria-labelledby="tab-search"</code> but <code>tab-search</code> is the panel's own ID, not the trigger's ID.</p>
+<p><strong>Fix</strong>: Reference the trigger button's ID instead, or add an ID to the trigger.</p>
+<hr />
+<h2 id="performance-recommendations">Performance Recommendations</h2>
+<ol>
+<li><strong>Debounce resize handlers</strong> in interactive particles and card tilt</li>
+<li><strong>Use <code>content-visibility: auto</code></strong> for offscreen sections</li>
+<li><strong>Add <code>contain: layout style paint</code></strong> to isolated components</li>
+<li><strong>Consider IntersectionObserver</strong> to pause animations when not visible</li>
+</ol>
+<hr />
+<h2 id="browser-compatibility-matrix">Browser Compatibility Matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Chrome</th>
+<th>Firefox</th>
+<th>Safari</th>
+<th>Edge</th>
+<th>iOS Safari</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CSS <code>animation-timeline</code></td>
+<td>115+</td>
+<td>N/A</td>
+<td>N/A</td>
+<td>115+</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td><code>backdrop-filter</code></td>
+<td>76+</td>
+<td>103+</td>
+<td>9+</td>
+<td>79+</td>
+<td>9+</td>
+</tr>
+<tr>
+<td><code>conic-gradient</code></td>
+<td>69+</td>
+<td>83+</td>
+<td>12.1+</td>
+<td>79+</td>
+<td>12.1+</td>
+</tr>
+<tr>
+<td>CSS Variables in animations</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>15.4+</td>
+<td>Yes</td>
+<td>15.4+</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="testing-recommendations">Testing Recommendations</h2>
+<ol>
+<li><strong>Automated Tests</strong>:</li>
+<li>Add Playwright/Cypress tests for modal focus trapping</li>
+<li>Test memory leaks with Chrome DevTools Performance Monitor</li>
+<li>
+<p>Test with <code>prefers-reduced-motion: reduce</code></p>
+</li>
+<li>
+<p><strong>Manual Tests</strong>:</p>
+</li>
+<li>Test keyboard-only navigation through entire flow</li>
+<li>Test VoiceOver/NVDA screen reader compatibility</li>
+<li>Test with slow 3G network throttling</li>
+<li>
+<p>Test with iOS Safari file picker</p>
+</li>
+<li>
+<p><strong>Load Tests</strong>:</p>
+</li>
+<li>Simulate many rapid bookmark additions</li>
+<li>Test with large transcript (1000+ chunks)</li>
+<li>Monitor memory during extended usage</li>
+</ol>
+<hr />
+<p><em>Review completed 2026-01-09 by Frontend QA</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/matte1782/lecture-mind" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

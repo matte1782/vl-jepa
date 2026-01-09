@@ -1,0 +1,2033 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Event-aware lecture summarizer using V-JEPA">
+      
+      
+      
+        <link rel="canonical" href="https://matte1782.github.io/lecture-mind/architecture/ARCHITECTURE/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>VL-JEPA Lecture Summarizer Architecture v1.0 - Lecture Mind</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#vl-jepa-lecture-summarizer-architecture-v10" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Lecture Mind" class="md-header__button md-logo" aria-label="Lecture Mind" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Lecture Mind
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              VL-JEPA Lecture Summarizer Architecture v1.0
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/matte1782/lecture-mind" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    matte1782/lecture-mind
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../quickstart/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guide/web-ui/" class="md-tabs__link">
+          
+  
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../ARCHITECTURE/" class="md-tabs__link">
+          
+  
+  
+  Development
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Lecture Mind" class="md-nav__button md-logo" aria-label="Lecture Mind" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Lecture Mind
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/matte1782/lecture-mind" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    matte1782/lecture-mind
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../local-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud Demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guide/web-ui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guide/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CONTRIBUTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DOCKER/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-system-overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. System Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-component-breakdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Component Breakdown
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Component Breakdown">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-video-input-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Video Input Module
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-frame-sampler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Frame Sampler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-visual-encoder-v-jepa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Visual Encoder (V-JEPA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-event-detector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Event Detector
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-text-encoder-minilm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Text Encoder (MiniLM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-embedding-index-faiss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Embedding Index (FAISS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27-y-decoder-gemma-2b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 Y-Decoder (Gemma-2B)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#28-storage-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8 Storage Layer
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-data-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Data Flow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Data Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-ingestion-flow-real-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Ingestion Flow (Real-time)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-query-flow-interactive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Query Flow (Interactive)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-memory-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Memory Layout
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Memory Layout">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-per-frame-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Per-Frame Memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-lecture-storage-estimates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Lecture Storage Estimates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-model-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Model Memory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-batch-size-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Batch Size Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-performance-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Performance Budget
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-failure-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Failure Modes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-security-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Security Considerations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Security Considerations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-data-privacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Data Privacy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-model-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Model Security
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73-input-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Input Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-open-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Open Questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-dependencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Dependencies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Dependencies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-python-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Python Packages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-external-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 External Models
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-approval-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Approval Status
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-revision-history" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Revision History
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="vl-jepa-lecture-summarizer-architecture-v10">VL-JEPA Lecture Summarizer Architecture v1.0</h1>
+<p><strong>Date:</strong> 2024-12-30
+<strong>Author:</strong> META_ARCHITECT
+<strong>Status:</strong> PROPOSED</p>
+<hr />
+<h2 id="1-system-overview">1. System Overview</h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>┌─────────────────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>│                    VL-JEPA LECTURE SUMMARIZER                                │
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├─────────────────────────────────────────────────────────────────────────────┤
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│                                                                             │
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐  │
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│  │   VIDEO     │    │   FRAME     │    │   VISUAL    │    │   EVENT     │  │
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│  │   INPUT     │───▶│   SAMPLER   │───▶│   ENCODER   │───▶│  DETECTOR   │  │
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│  │             │    │  (1-2 FPS)  │    │  (V-JEPA)   │    │ (threshold) │  │
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│  └─────────────┘    └─────────────┘    └─────────────┘    └──────┬──────┘  │
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│                                              │                    │         │
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│                                              ▼                    ▼         │
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│                                        ┌─────────────┐    ┌─────────────┐  │
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│                                        │  EMBEDDING  │    │  Y-DECODER  │  │
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>│                                        │    INDEX    │    │ (Gemma-2B)  │  │
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>│                                        │   (FAISS)   │    │             │  │
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>│                                        └──────┬──────┘    └──────┬──────┘  │
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>│                                               │                   │         │
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>│                                               ▼                   ▼         │
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>│  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐  │
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>│  │   USER      │    │    TEXT     │    │  SIMILARITY │    │   SUMMARY   │  │
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>│  │   QUERY     │───▶│   ENCODER   │───▶│   SEARCH    │    │   OUTPUT    │  │
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>│  │             │    │ (MiniLM)    │    │             │    │             │  │
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>│  └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘  │
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>│                                                                             │
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>│  ┌─────────────────────────────────────────────────────────────────────┐   │
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>│  │                         STORAGE LAYER                                │   │
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>│  │  ┌─────────────┐    ┌─────────────┐    ┌─────────────┐              │   │
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>│  │  │   SQLite    │    │   Numpy     │    │   Config    │              │   │
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>│  │  │  (metadata) │    │ (embeddings)│    │   (JSON)    │              │   │
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>│  │  └─────────────┘    └─────────────┘    └─────────────┘              │   │
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>│  └─────────────────────────────────────────────────────────────────────┘   │
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>│                                                                             │
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>└─────────────────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<hr />
+<h2 id="2-component-breakdown">2. Component Breakdown</h2>
+<h3 id="21-video-input-module">2.1 Video Input Module</h3>
+<ul>
+<li><strong>Purpose:</strong> Ingest video from file or stream (webcam/screen capture)</li>
+<li><strong>Inputs:</strong> Video file path OR stream URL OR device ID</li>
+<li><strong>Outputs:</strong> Raw video frames (BGR, variable resolution)</li>
+<li><strong>Invariants:</strong></li>
+<li>INV001: Frame timestamps are monotonically increasing</li>
+<li>INV002: Frame buffer never exceeds 10 frames (memory bound)</li>
+</ul>
+<h3 id="22-frame-sampler">2.2 Frame Sampler</h3>
+<ul>
+<li><strong>Purpose:</strong> Sample frames at configurable FPS for embedding</li>
+<li><strong>Inputs:</strong> Raw video frames with timestamps</li>
+<li><strong>Outputs:</strong> Sampled frames (224x224, RGB, normalized)</li>
+<li><strong>Invariants:</strong></li>
+<li>INV003: Output frames are exactly 224x224x3</li>
+<li>INV004: Frames are normalized to [-1, 1] range (V-JEPA requirement)</li>
+</ul>
+<p><strong>Configuration:</strong>
+- <code>fps</code>: Target frames per second (default: 1.0, range: 0.1-30.0)
+- <code>resize_mode</code>: "center_crop" | "resize" | "pad"</p>
+<h3 id="23-visual-encoder-v-jepa">2.3 Visual Encoder (V-JEPA)</h3>
+<ul>
+<li><strong>Purpose:</strong> Encode video frames to semantic embeddings</li>
+<li><strong>Inputs:</strong> Batch of frames (B, 3, 224, 224)</li>
+<li><strong>Outputs:</strong> Embeddings (B, 768)</li>
+<li><strong>Invariants:</strong></li>
+<li>INV005: Output embedding dimension is exactly 768</li>
+<li>INV006: Embeddings are L2-normalized</li>
+</ul>
+<p><strong>Model Specification:</strong>
+- Architecture: ViT-L/16
+- Input: 224x224 RGB images
+- Output: 768-dimensional embeddings
+- Checkpoint: <code>vjepa-vit-l-16.pth</code> (from Meta, PyTorch format)</p>
+<p><strong>Checkpoint Loading Protocol:</strong>
+1. Download <code>.pth</code> checkpoint from Meta's official V-JEPA repository
+2. Convert to safetensors format using <code>torch.save()</code> → <code>safetensors.torch.save_file()</code>
+3. Store as <code>models/vjepa-vit-l-16.safetensors</code> for secure loading
+4. Verify SHA256 checksum matches published hash</p>
+<p><strong>[HYPOTHESIS]</strong> V-JEPA embeddings are semantically meaningful for lecture content. Requires validation.</p>
+<h3 id="24-event-detector">2.4 Event Detector</h3>
+<ul>
+<li><strong>Purpose:</strong> Detect semantic boundaries (topic changes, slide transitions)</li>
+<li><strong>Inputs:</strong> Sequence of embeddings with timestamps</li>
+<li><strong>Outputs:</strong> Event boundaries with confidence scores</li>
+<li><strong>Invariants:</strong></li>
+<li>INV007: Events are non-overlapping</li>
+<li>INV008: Event confidence in [0.0, 1.0]</li>
+</ul>
+<p><strong>Algorithm (with smoothing):</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Maintain sliding window buffer</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">window_buffer</span><span class="p">:</span> <span class="n">deque</span><span class="p">[</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="n">deque</span><span class="p">(</span><span class="n">maxlen</span><span class="o">=</span><span class="n">smoothing_window</span><span class="p">)</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">last_event_time</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="o">-</span><span class="n">inf</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">for</span> <span class="n">each</span> <span class="n">new</span> <span class="n">embedding</span> <span class="n">e_t</span> <span class="n">at</span> <span class="n">timestamp</span> <span class="n">t</span><span class="p">:</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="n">window_buffer</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">e_t</span><span class="p">)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">window_buffer</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">smoothing_window</span><span class="p">:</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>        <span class="k">continue</span>  <span class="c1"># Wait for buffer to fill</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="c1"># Compute smoothed embedding (mean of window)</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="n">e_smoothed</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">window_buffer</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="n">e_smoothed</span> <span class="o">=</span> <span class="n">e_smoothed</span> <span class="o">/</span> <span class="n">norm</span><span class="p">(</span><span class="n">e_smoothed</span><span class="p">)</span>  <span class="c1"># Re-normalize</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    <span class="c1"># Compare against previous smoothed embedding</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="k">if</span> <span class="n">e_prev_smoothed</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>        <span class="n">distance</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">e_smoothed</span><span class="p">,</span> <span class="n">e_prev_smoothed</span><span class="p">)</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>        <span class="c1"># Check threshold AND minimum gap</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>        <span class="k">if</span> <span class="n">distance</span> <span class="o">&gt;</span> <span class="n">threshold</span> <span class="ow">and</span> <span class="p">(</span><span class="n">t</span> <span class="o">-</span> <span class="n">last_event_time</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">min_event_gap</span><span class="p">:</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>            <span class="n">confidence</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">distance</span><span class="p">)</span>  <span class="c1"># Clamp to [0, 1]</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>            <span class="n">emit</span> <span class="n">Event</span><span class="p">(</span><span class="n">timestamp</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="n">confidence</span><span class="p">)</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>            <span class="n">last_event_time</span> <span class="o">=</span> <span class="n">t</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>    <span class="n">e_prev_smoothed</span> <span class="o">=</span> <span class="n">e_smoothed</span>
+</code></pre></div></p>
+<p><strong>Configuration:</strong>
+- <code>threshold</code>: Detection threshold (default: 0.3, range: 0.1-0.9)
+- <code>min_event_gap</code>: Minimum seconds between events (default: 10)
+- <code>smoothing_window</code>: Frames to average for stability (default: 3)</p>
+<h3 id="25-text-encoder-minilm">2.5 Text Encoder (MiniLM)</h3>
+<ul>
+<li><strong>Purpose:</strong> Encode user queries to embedding space</li>
+<li><strong>Inputs:</strong> Text query string</li>
+<li><strong>Outputs:</strong> Query embedding (384-dim, projected to 768)</li>
+<li><strong>Invariants:</strong></li>
+<li>INV009: Output embedding dimension matches visual encoder (768)</li>
+<li>INV010: Query embedding is L2-normalized</li>
+</ul>
+<p><strong>Model Specification:</strong>
+- Model: <code>all-MiniLM-L6-v2</code>
+- Input: Text string (max 256 tokens)
+- Native output: 384-dimensional
+- Projection: Linear layer 384 to 768</p>
+<p><strong>Projection Layer Training Strategy:</strong></p>
+<p>The projection layer aligns MiniLM text embeddings with V-JEPA visual embeddings. Training approach:</p>
+<ol>
+<li><strong>Dataset:</strong> Use captioned video datasets (e.g., HowTo100M subset, lecture recordings with transcripts)</li>
+<li><strong>Training objective:</strong> Contrastive loss (InfoNCE)
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># For batch of (text, frame) pairs:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">text_emb</span> <span class="o">=</span> <span class="n">projection</span><span class="p">(</span><span class="n">minilm_encode</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>  <span class="c1"># (B, 768)</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">visual_emb</span> <span class="o">=</span> <span class="n">vjepa_encode</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>             <span class="c1"># (B, 768)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1"># Cosine similarity matrix</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">sim</span> <span class="o">=</span> <span class="n">text_emb</span> <span class="o">@</span> <span class="n">visual_emb</span><span class="o">.</span><span class="n">T</span>  <span class="c1"># (B, B)</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1"># InfoNCE loss (symmetric)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">labels</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="n">loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">sim</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span> <span class="o">+</span> <span class="n">cross_entropy</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">labels</span><span class="p">))</span> <span class="o">/</span> <span class="mi">2</span>
+</code></pre></div></li>
+<li><strong>Training size:</strong> ~10K aligned pairs sufficient for domain adaptation</li>
+<li><strong>Fallback:</strong> If no training data available, use frozen random projection (degraded but functional)</li>
+</ol>
+<p><strong>[VALIDATED]</strong> Projection approach follows established vision-language alignment methods (CLIP, ALIGN).</p>
+<h3 id="26-embedding-index-faiss">2.6 Embedding Index (FAISS)</h3>
+<ul>
+<li><strong>Purpose:</strong> Store and search embeddings efficiently</li>
+<li><strong>Inputs:</strong> Embeddings with metadata (timestamp, frame_id)</li>
+<li><strong>Outputs:</strong> Top-k similar embeddings for query</li>
+<li><strong>Invariants:</strong></li>
+<li>INV011: Index contains all processed embeddings</li>
+<li>INV012: Search returns exactly k results (or all if less than k exist)</li>
+</ul>
+<p><strong>Index Configuration:</strong>
+- Type: <code>IndexIVFFlat</code> for large collections, <code>IndexFlatIP</code> for small
+- Metric: Inner product (on L2-normalized vectors = cosine similarity)
+- nlist: 100 (number of clusters for IVF)
+- nprobe: 10 (clusters to search)</p>
+<p><strong>IVF Training Procedure:</strong></p>
+<p>IVF index requires training on representative vectors before use:</p>
+<ol>
+<li><strong>Trigger condition:</strong> When embedding count exceeds 1,000 vectors</li>
+<li><strong>Training process:</strong>
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Start with flat index for small collections</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">if</span> <span class="n">num_embeddings</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">:</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">index</span> <span class="o">=</span> <span class="n">faiss</span><span class="o">.</span><span class="n">IndexFlatIP</span><span class="p">(</span><span class="mi">768</span><span class="p">)</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="c1"># Train IVF when threshold exceeded</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="n">quantizer</span> <span class="o">=</span> <span class="n">faiss</span><span class="o">.</span><span class="n">IndexFlatIP</span><span class="p">(</span><span class="mi">768</span><span class="p">)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="n">index</span> <span class="o">=</span> <span class="n">faiss</span><span class="o">.</span><span class="n">IndexIVFFlat</span><span class="p">(</span><span class="n">quantizer</span><span class="p">,</span> <span class="mi">768</span><span class="p">,</span> <span class="n">nlist</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="c1"># Train on first N embeddings (or all if &lt; 10k)</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    <span class="n">training_vectors</span> <span class="o">=</span> <span class="n">embeddings</span><span class="p">[:</span><span class="nb">min</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">embeddings</span><span class="p">))]</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>    <span class="n">index</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">training_vectors</span><span class="p">)</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    <span class="c1"># Add all embeddings to trained index</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="n">index</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">embeddings</span><span class="p">)</span>
+</code></pre></div></li>
+<li><strong>Retraining:</strong> Rebuild index when embedding count doubles from last training</li>
+<li><strong>Cold start:</strong> Use IndexFlatIP (exact search) until enough vectors for IVF</li>
+</ol>
+<h3 id="27-y-decoder-gemma-2b">2.7 Y-Decoder (Gemma-2B)</h3>
+<ul>
+<li><strong>Purpose:</strong> Generate natural language summaries from visual context</li>
+<li><strong>Inputs:</strong> Event context (timestamps, surrounding frame descriptions, previous summaries)</li>
+<li><strong>Outputs:</strong> Summary text (1-3 sentences)</li>
+<li><strong>Invariants:</strong></li>
+<li>INV013: Output length is at most 150 tokens</li>
+<li>INV014: Generation completes within timeout (30s CPU, 5s GPU)</li>
+</ul>
+<p><strong>Model Specification:</strong>
+- Model: <code>google/gemma-2b-it</code>
+- Max output tokens: 150
+- Temperature: 0.7
+- Quantization: INT8 for CPU deployment</p>
+<p><strong>Prompt Engineering Strategy:</strong></p>
+<p>Since Gemma-2B is a text-to-text model, we cannot feed raw embeddings directly. Instead:</p>
+<ol>
+<li>
+<p><strong>Context Construction:</strong> Build text prompt from metadata and retrieved context
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">build_summary_prompt</span><span class="p">(</span><span class="n">event</span><span class="p">:</span> <span class="n">Event</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="n">EventContext</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;You are summarizing a lecture video segment.</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="s2">Segment Information:</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="s2">- Timestamp: </span><span class="si">{</span><span class="n">format_timestamp</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">timestamp_s</span><span class="p">)</span><span class="si">}</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="s2">- Duration since last topic: </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">timestamp_s</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">context</span><span class="o">.</span><span class="n">prev_event_time</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2"> seconds</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="s2">- Event type: </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">event_type</span><span class="si">}</span><span class="s2"> (confidence: </span><span class="si">{</span><span class="n">event</span><span class="o">.</span><span class="n">confidence</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="s2">Previous segment summary: </span><span class="si">{</span><span class="n">context</span><span class="o">.</span><span class="n">prev_summary</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s2">&quot;Start of lecture&quot;</span><span class="si">}</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="s2">Nearby content indicators:</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="si">{</span><span class="n">context</span><span class="o">.</span><span class="n">ocr_text</span><span class="w"> </span><span class="ow">or</span><span class="w"> </span><span class="s2">&quot;No text detected on screen&quot;</span><span class="si">}</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="s2">Generate a 1-2 sentence summary of what likely happened in this segment.</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="s2">Focus on topic transitions, key concepts, or visual changes.</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="s2">Summary:&quot;&quot;&quot;</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>    <span class="k">return</span> <span class="n">prompt</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Context Sources:</strong></p>
+</li>
+<li>Previous event summaries (temporal coherence)</li>
+<li>OCR text from frames (optional, if slide text extraction enabled)</li>
+<li>Embedding similarity to known lecture topics (from topic vocabulary)</li>
+<li>
+<p>Time elapsed since last event</p>
+</li>
+<li>
+<p><strong>Alternative: Retrieval-Augmented Generation</strong></p>
+</li>
+<li>Use event embedding to retrieve similar segments from training corpus</li>
+<li>Include retrieved summaries as few-shot examples in prompt</li>
+</ol>
+<p><strong>[DECISION]</strong> Prompt-based approach selected over soft-prompting due to:
+- No additional training required
+- Interpretable and debuggable
+- Works with quantized models</p>
+<h3 id="28-storage-layer">2.8 Storage Layer</h3>
+<ul>
+<li><strong>Purpose:</strong> Persist embeddings, metadata, and configuration</li>
+<li><strong>Invariants:</strong></li>
+<li>INV015: All writes are atomic (no partial states)</li>
+<li>INV016: Data survives process crash</li>
+</ul>
+<p><strong>Components:</strong>
+- <strong>SQLite database:</strong> Metadata, timestamps, event markers
+- <strong>NumPy files:</strong> Embedding vectors (memory-mapped for large lectures)
+- <strong>JSON config:</strong> User settings, model paths</p>
+<p><strong>Atomicity &amp; Crash Recovery Implementation:</strong></p>
+<ol>
+<li>
+<p><strong>SQLite Configuration:</strong>
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Enable WAL mode for crash safety</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">connection</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;PRAGMA journal_mode=WAL&quot;</span><span class="p">)</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">connection</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;PRAGMA synchronous=NORMAL&quot;</span><span class="p">)</span>  <span class="c1"># Balance speed/safety</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">connection</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;PRAGMA wal_checkpoint(TRUNCATE)&quot;</span><span class="p">)</span>  <span class="c1"># On clean shutdown</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Embedding File Writes (atomic via rename):</strong>
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">save_embeddings_atomic</span><span class="p">(</span><span class="n">embeddings</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="n">temp_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">&#39;.tmp&#39;</span><span class="p">)</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="n">np</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">temp_path</span><span class="p">,</span> <span class="n">embeddings</span><span class="p">)</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="n">os</span><span class="o">.</span><span class="n">fsync</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">temp_path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span>  <span class="c1"># Force to disk</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="n">temp_path</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>  <span class="c1"># Atomic on POSIX, nearly atomic on Windows</span>
+</code></pre></div></p>
+</li>
+<li>
+<p><strong>Backup Strategy:</strong></p>
+</li>
+<li>Auto-backup on every 100 new embeddings</li>
+<li>Keep last 3 backups: <code>embeddings.npy.bak.1</code>, <code>.bak.2</code>, <code>.bak.3</code></li>
+<li>
+<p>Backup SQLite via <code>.backup()</code> API</p>
+</li>
+<li>
+<p><strong>Recovery Procedure:</strong>
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">recover_from_crash</span><span class="p">(</span><span class="n">lecture_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    <span class="n">db_path</span> <span class="o">=</span> <span class="n">lecture_path</span> <span class="o">/</span> <span class="s2">&quot;metadata.db&quot;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    <span class="n">emb_path</span> <span class="o">=</span> <span class="n">lecture_path</span> <span class="o">/</span> <span class="s2">&quot;embeddings.npy&quot;</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="c1"># Check for WAL recovery</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">db_path</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">&#39;.db-wal&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>        <span class="c1"># SQLite auto-recovers on next open</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>        <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">db_path</span><span class="p">)</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>        <span class="n">conn</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;PRAGMA wal_checkpoint(RESTART)&quot;</span><span class="p">)</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>    <span class="c1"># Check embedding consistency</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">emb_path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="n">emb_path</span><span class="o">.</span><span class="n">with_suffix</span><span class="p">(</span><span class="s1">&#39;.tmp&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>        <span class="c1"># Incomplete write - restore from backup</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>        <span class="n">backup</span> <span class="o">=</span> <span class="n">find_latest_backup</span><span class="p">(</span><span class="n">emb_path</span><span class="p">)</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>        <span class="k">if</span> <span class="n">backup</span><span class="p">:</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a>            <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">backup</span><span class="p">,</span> <span class="n">emb_path</span><span class="p">)</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a>            <span class="k">return</span> <span class="kc">True</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>        <span class="k">return</span> <span class="kc">False</span>  <span class="c1"># Unrecoverable</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>    <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># No recovery needed</span>
+</code></pre></div></p>
+</li>
+</ol>
+<p><strong>[ENFORCED]</strong> INV015 and INV016 are enforced via WAL mode and atomic rename pattern.</p>
+<hr />
+<h2 id="3-data-flow">3. Data Flow</h2>
+<h3 id="31-ingestion-flow-real-time">3.1 Ingestion Flow (Real-time)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Video Source
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    │
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    ▼
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>[Frame Sampler] ──────▶ frames: (224, 224, 3) @ 1 FPS
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    │
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    ▼
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>[Visual Encoder] ─────▶ embeddings: (768,) per frame
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    │
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    ├──────────────────▶ [Embedding Index] (append)
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>    │
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>    ▼
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>[Event Detector] ─────▶ event_detected: bool
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>    │
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>    ▼ (if event)
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>[Y-Decoder] ──────────▶ summary: str
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>    │
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>    ▼
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>[Storage] ────────────▶ SQLite + NumPy files
+</code></pre></div>
+<h3 id="32-query-flow-interactive">3.2 Query Flow (Interactive)</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>User Query
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    │
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    ▼
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>[Text Encoder] ───────▶ query_embedding: (768,)
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    │
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    ▼
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>[Embedding Index] ────▶ top_k_results: [(frame_id, score), ...]
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>    │
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    ▼
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>[Storage] ────────────▶ metadata: timestamps, summaries
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>    │
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>    ▼
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>[Response Builder] ───▶ formatted response + video timestamps
+</code></pre></div>
+<hr />
+<h2 id="4-memory-layout">4. Memory Layout</h2>
+<h3 id="41-per-frame-memory">4.1 Per-Frame Memory</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Component</th>
+<th style="text-align: left;">Size</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Raw frame (1080p)</td>
+<td style="text-align: left;">6.2 MB</td>
+<td style="text-align: left;">1920x1080x3 bytes</td>
+</tr>
+<tr>
+<td style="text-align: left;">Resized frame (224x224)</td>
+<td style="text-align: left;">150 KB</td>
+<td style="text-align: left;">224x224x3 bytes</td>
+</tr>
+<tr>
+<td style="text-align: left;">Embedding (float32)</td>
+<td style="text-align: left;">3 KB</td>
+<td style="text-align: left;">768 x 4 bytes</td>
+</tr>
+<tr>
+<td style="text-align: left;">Metadata</td>
+<td style="text-align: left;">~100 bytes</td>
+<td style="text-align: left;">timestamp, frame_id</td>
+</tr>
+</tbody>
+</table>
+<h3 id="42-lecture-storage-estimates">4.2 Lecture Storage Estimates</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Duration</th>
+<th style="text-align: left;">Frames (1 FPS)</th>
+<th style="text-align: left;">Embeddings</th>
+<th style="text-align: left;">Index Size</th>
+<th style="text-align: left;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">30 min</td>
+<td style="text-align: left;">1,800</td>
+<td style="text-align: left;">5.4 MB</td>
+<td style="text-align: left;">~6 MB</td>
+<td style="text-align: left;">~12 MB</td>
+</tr>
+<tr>
+<td style="text-align: left;">1 hour</td>
+<td style="text-align: left;">3,600</td>
+<td style="text-align: left;">10.8 MB</td>
+<td style="text-align: left;">~12 MB</td>
+<td style="text-align: left;">~25 MB</td>
+</tr>
+<tr>
+<td style="text-align: left;">2 hours</td>
+<td style="text-align: left;">7,200</td>
+<td style="text-align: left;">21.6 MB</td>
+<td style="text-align: left;">~24 MB</td>
+<td style="text-align: left;">~50 MB</td>
+</tr>
+</tbody>
+</table>
+<h3 id="43-model-memory">4.3 Model Memory</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Model</th>
+<th style="text-align: left;">Size (disk)</th>
+<th style="text-align: left;">Size (RAM)</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">V-JEPA ViT-L/16</td>
+<td style="text-align: left;">~1.2 GB</td>
+<td style="text-align: left;">~1.5 GB</td>
+<td style="text-align: left;">Float16</td>
+</tr>
+<tr>
+<td style="text-align: left;">MiniLM-L6-v2</td>
+<td style="text-align: left;">~90 MB</td>
+<td style="text-align: left;">~120 MB</td>
+<td style="text-align: left;">Float32</td>
+</tr>
+<tr>
+<td style="text-align: left;">Gemma-2B (INT8)</td>
+<td style="text-align: left;">~2 GB</td>
+<td style="text-align: left;">~2.5 GB</td>
+<td style="text-align: left;">Quantized</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Total</strong></td>
+<td style="text-align: left;">~3.3 GB</td>
+<td style="text-align: left;">~4.1 GB</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p><strong>[FACT]</strong> Total memory budget: ~4GB for models + ~50MB for 2-hour lecture = within 8GB RAM constraint.</p>
+<h3 id="44-batch-size-constraints">4.4 Batch Size Constraints</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Device</th>
+<th style="text-align: left;">Available RAM</th>
+<th style="text-align: left;">Max Batch Size</th>
+<th style="text-align: left;">Activation Memory</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">CPU (8GB)</td>
+<td style="text-align: left;">~3.5 GB free</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">~500 MB</td>
+<td style="text-align: left;">Sequential processing</td>
+</tr>
+<tr>
+<td style="text-align: left;">CPU (16GB)</td>
+<td style="text-align: left;">~11 GB free</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">~2 GB</td>
+<td style="text-align: left;">Modest parallelism</td>
+</tr>
+<tr>
+<td style="text-align: left;">GPU (4GB VRAM)</td>
+<td style="text-align: left;">~2.5 GB free</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">~1 GB</td>
+<td style="text-align: left;">Entry-level GPU</td>
+</tr>
+<tr>
+<td style="text-align: left;">GPU (8GB VRAM)</td>
+<td style="text-align: left;">~6.5 GB free</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">~2.5 GB</td>
+<td style="text-align: left;">Mid-range GPU</td>
+</tr>
+<tr>
+<td style="text-align: left;">GPU (16GB VRAM)</td>
+<td style="text-align: left;">~14 GB free</td>
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">~5 GB</td>
+<td style="text-align: left;">High-end GPU</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Batch Size Selection Logic:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">select_batch_size</span><span class="p">(</span><span class="n">device</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">available_memory_gb</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    <span class="c1"># Reserve 1.5GB for V-JEPA model, 0.5GB for safety margin</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="n">usable_memory</span> <span class="o">=</span> <span class="n">available_memory_gb</span> <span class="o">-</span> <span class="mf">2.0</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    <span class="c1"># Each frame in batch requires ~300MB for activations</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>    <span class="n">activation_per_frame_gb</span> <span class="o">=</span> <span class="mf">0.3</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>    <span class="n">max_batch</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">usable_memory</span> <span class="o">/</span> <span class="n">activation_per_frame_gb</span><span class="p">))</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>    <span class="c1"># Clamp to power of 2 for efficiency</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">2</span> <span class="o">**</span> <span class="nb">int</span><span class="p">(</span><span class="n">log2</span><span class="p">(</span><span class="n">max_batch</span><span class="p">)))</span>
+</code></pre></div></p>
+<p><strong>Incomplete Batch Handling:</strong>
+- Process partial batches immediately (no waiting)
+- Pad batch to power-of-2 for GPU efficiency (optional)
+- INV017: Batch size never exceeds available memory</p>
+<hr />
+<h2 id="5-performance-budget">5. Performance Budget</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Operation</th>
+<th style="text-align: left;">Target (CPU)</th>
+<th style="text-align: left;">Target (GPU)</th>
+<th style="text-align: left;">Constraint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Frame encode (V-JEPA)</td>
+<td style="text-align: left;">&lt;200ms</td>
+<td style="text-align: left;">&lt;50ms</td>
+<td style="text-align: left;">Per frame</td>
+</tr>
+<tr>
+<td style="text-align: left;">Event detection</td>
+<td style="text-align: left;">&lt;10ms</td>
+<td style="text-align: left;">&lt;5ms</td>
+<td style="text-align: left;">Per frame</td>
+</tr>
+<tr>
+<td style="text-align: left;">Query encode (MiniLM)</td>
+<td style="text-align: left;">&lt;50ms</td>
+<td style="text-align: left;">&lt;10ms</td>
+<td style="text-align: left;">Per query</td>
+</tr>
+<tr>
+<td style="text-align: left;">Similarity search (10k)</td>
+<td style="text-align: left;">&lt;10ms</td>
+<td style="text-align: left;">&lt;5ms</td>
+<td style="text-align: left;">P99</td>
+</tr>
+<tr>
+<td style="text-align: left;">Similarity search (100k)</td>
+<td style="text-align: left;">&lt;100ms</td>
+<td style="text-align: left;">&lt;20ms</td>
+<td style="text-align: left;">P99</td>
+</tr>
+<tr>
+<td style="text-align: left;">Summary generation</td>
+<td style="text-align: left;">&lt;30s</td>
+<td style="text-align: left;">&lt;5s</td>
+<td style="text-align: left;">Per event</td>
+</tr>
+<tr>
+<td style="text-align: left;">Index load (2hr lecture)</td>
+<td style="text-align: left;">&lt;1s</td>
+<td style="text-align: left;">&lt;500ms</td>
+<td style="text-align: left;">Cold start</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-failure-modes">6. Failure Modes</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Failure</th>
+<th style="text-align: left;">Detection</th>
+<th style="text-align: left;">Recovery</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">GPU not available</td>
+<td style="text-align: left;">CUDA check fails</td>
+<td style="text-align: left;">Fall back to CPU</td>
+</tr>
+<tr>
+<td style="text-align: left;">Model file missing</td>
+<td style="text-align: left;">FileNotFoundError</td>
+<td style="text-align: left;">Prompt download, provide URL</td>
+</tr>
+<tr>
+<td style="text-align: left;">Out of memory</td>
+<td style="text-align: left;">MemoryError</td>
+<td style="text-align: left;">Reduce batch size, enable streaming</td>
+</tr>
+<tr>
+<td style="text-align: left;">Video decode fails</td>
+<td style="text-align: left;">OpenCV/decord error</td>
+<td style="text-align: left;">Log error, skip frame, continue</td>
+</tr>
+<tr>
+<td style="text-align: left;">Index corrupted</td>
+<td style="text-align: left;">Checksum mismatch</td>
+<td style="text-align: left;">Rebuild from embeddings</td>
+</tr>
+<tr>
+<td style="text-align: left;">Storage full</td>
+<td style="text-align: left;">IOError</td>
+<td style="text-align: left;">Alert user, stop ingestion</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7-security-considerations">7. Security Considerations</h2>
+<h3 id="71-data-privacy">7.1 Data Privacy</h3>
+<ul>
+<li>All processing is local by default</li>
+<li>No network calls without explicit user consent</li>
+<li>Video files are not retained unless explicitly saved</li>
+<li>Embeddings are stored, but cannot reconstruct original video</li>
+</ul>
+<h3 id="72-model-security">7.2 Model Security</h3>
+<ul>
+<li>Models loaded from local files only (no auto-download by default)</li>
+<li>Safetensors format preferred for model weights (secure serialization)</li>
+<li>Model integrity verified by checksum</li>
+</ul>
+<h3 id="73-input-validation">7.3 Input Validation</h3>
+<ul>
+<li>Video file paths validated (no path traversal)</li>
+<li>Query strings sanitized (max length enforced)</li>
+<li>Configuration values bounded (no arbitrary code execution)</li>
+</ul>
+<hr />
+<h2 id="8-open-questions">8. Open Questions</h2>
+<ul>
+<li>[Q1] <strong>Embedding alignment:</strong> ~~How well do V-JEPA visual embeddings align with MiniLM text embeddings?~~</li>
+<li><strong>Status:</strong> ✅ RESOLVED — Contrastive projection training strategy defined in Section 2.5</li>
+<li>
+<p><strong>Owner:</strong> ML_ENGINEER</p>
+</li>
+<li>
+<p>[Q2] <strong>Event detection threshold:</strong> What is the optimal threshold for lecture content?</p>
+</li>
+<li><strong>Status:</strong> OPEN — Requires empirical tuning during implementation</li>
+<li><strong>Owner:</strong> QA_LEAD</li>
+<li>
+<p><strong>Deadline:</strong> Gate 5 (Implementation)</p>
+</li>
+<li>
+<p>[Q3] <strong>Decoder prompt:</strong> ~~What prompt format produces best summaries from Gemma-2B?~~</p>
+</li>
+<li><strong>Status:</strong> ✅ RESOLVED — Prompt engineering strategy defined in Section 2.7</li>
+<li>
+<p><strong>Owner:</strong> ML_ENGINEER</p>
+</li>
+<li>
+<p>[Q4] <strong>Real-time streaming:</strong> Can we maintain 1 FPS processing on M1 MacBook Air (CPU only)?</p>
+</li>
+<li><strong>Status:</strong> OPEN — Requires benchmarking during implementation</li>
+<li><strong>Owner:</strong> ML_ENGINEER</li>
+<li><strong>Deadline:</strong> Gate 5 (Implementation)</li>
+</ul>
+<hr />
+<h2 id="9-dependencies">9. Dependencies</h2>
+<h3 id="91-python-packages">9.1 Python Packages</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>torch&gt;=2.0.0
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>transformers&gt;=4.35.0
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>sentence-transformers&gt;=2.2.0
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>faiss-cpu&gt;=1.7.4  # or faiss-gpu
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>decord&gt;=0.6.0
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>opencv-python&gt;=4.8.0
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>gradio&gt;=4.0.0
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>sqlalchemy&gt;=2.0.0
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>numpy&gt;=1.24.0
+</code></pre></div>
+<h3 id="92-external-models">9.2 External Models</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Model</th>
+<th style="text-align: left;">Source</th>
+<th style="text-align: left;">License</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">V-JEPA ViT-L/16</td>
+<td style="text-align: left;">Meta (GitHub)</td>
+<td style="text-align: left;">CC-BY-NC</td>
+</tr>
+<tr>
+<td style="text-align: left;">all-MiniLM-L6-v2</td>
+<td style="text-align: left;">HuggingFace</td>
+<td style="text-align: left;">Apache 2.0</td>
+</tr>
+<tr>
+<td style="text-align: left;">Gemma-2B</td>
+<td style="text-align: left;">Google</td>
+<td style="text-align: left;">Gemma License</td>
+</tr>
+</tbody>
+</table>
+<p><strong>[UNKNOWN]</strong> V-JEPA license may restrict commercial use. Verify before release.</p>
+<hr />
+<h2 id="10-approval-status">10. Approval Status</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Reviewer</th>
+<th style="text-align: left;">Verdict</th>
+<th style="text-align: left;">Date</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">HOSTILE_REVIEWER</td>
+<td style="text-align: left;">⚠️ CONDITIONAL_GO</td>
+<td style="text-align: left;">2024-12-31</td>
+<td style="text-align: left;">Initial review</td>
+</tr>
+<tr>
+<td style="text-align: left;">HOSTILE_REVIEWER</td>
+<td style="text-align: left;">✅ GO</td>
+<td style="text-align: left;">2024-12-31</td>
+<td style="text-align: left;">All issues addressed</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="11-revision-history">11. Revision History</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Version</th>
+<th style="text-align: left;">Date</th>
+<th style="text-align: left;">Changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1.0</td>
+<td style="text-align: left;">2024-12-30</td>
+<td style="text-align: left;">Initial architecture</td>
+</tr>
+<tr>
+<td style="text-align: left;">1.1</td>
+<td style="text-align: left;">2024-12-31</td>
+<td style="text-align: left;">Addressed hostile review findings: C1-C8</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Changes in v1.1:</strong>
+- Added checkpoint loading protocol (C2)
+- Updated event detection algorithm with smoothing (C4)
+- Added projection layer training strategy (C1)
+- Added IVF training procedure (C7)
+- Added Y-Decoder prompt engineering strategy (C3)
+- Added storage atomicity and crash recovery (C8)
+- Added batch size constraints table (C5)
+- Added INV017 (batch size memory constraint)</p>
+<hr />
+<p><em>Architecture Version: 1.1</em>
+<em>Author: META_ARCHITECT</em>
+<em>Project: VL-JEPA Lecture Summarizer</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/matte1782/lecture-mind" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

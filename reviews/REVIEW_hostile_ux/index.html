@@ -1,0 +1,2344 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Event-aware lecture summarizer using V-JEPA">
+      
+      
+      
+        <link rel="canonical" href="https://matte1782.github.io/lecture-mind/reviews/REVIEW_hostile_ux/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.1">
+    
+    
+      
+        <title>Hostile UX Review: Lecture Mind Frontend - Lecture Mind</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#hostile-ux-review-lecture-mind-frontend" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Lecture Mind" class="md-header__button md-logo" aria-label="Lecture Mind" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Lecture Mind
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Hostile UX Review: Lecture Mind Frontend
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/matte1782/lecture-mind" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    matte1782/lecture-mind
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../quickstart/" class="md-tabs__link">
+          
+  
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../guide/web-ui/" class="md-tabs__link">
+          
+  
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../ARCHITECTURE/" class="md-tabs__link">
+          
+  
+  
+  Development
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Lecture Mind" class="md-nav__button md-logo" aria-label="Lecture Mind" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Lecture Mind
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/matte1782/lecture-mind" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    matte1782/lecture-mind
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quick Start
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../local-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local Setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../cloud-demo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cloud Demo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    User Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guide/web-ui/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Web Interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guide/api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Development
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ARCHITECTURE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CONTRIBUTING/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contributing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../DOCKER/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#test-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Test Results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Test Results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-rage-clicking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Rage Clicking
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Rage Clicking">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-11-upload-zone-double-submit-critical-95" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 1.1 - Upload Zone Double-Submit (Critical - 95%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-12-export-button-rapid-fire-major-88" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 1.2 - Export Button Rapid Fire (Major - 88%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-13-bookmark-type-selector-double-submit-major-85" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 1.3 - Bookmark Type Selector Double-Submit (Major - 85%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-tab-mashing-keyboard-navigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Tab Mashing (Keyboard Navigation)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Tab Mashing (Keyboard Navigation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-21-tab-focus-trap-in-hidden-panels-blocker-98" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 2.1 - Tab Focus Trap in Hidden Panels (Blocker - 98%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-22-no-arrow-key-navigation-on-tabs-major-82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 2.2 - No Arrow Key Navigation on Tabs (Major - 82%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-23-modal-dialogs-lack-focus-management-critical-90" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 2.3 - Modal Dialogs Lack Focus Management (Critical - 90%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-resize-torture-rapid-window-resizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Resize Torture (Rapid Window Resizing)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Resize Torture (Rapid Window Resizing)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-31-sidebar-sticky-position-breaks-on-resize-major-78" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 3.1 - Sidebar Sticky Position Breaks on Resize (Major - 78%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-32-hero-visual-overflow-on-resize-minor-65" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 3.2 - Hero Visual Overflow on Resize (Minor - 65%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-33-transcript-list-height-jumps-major-75" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 3.3 - Transcript List Height Jumps (Major - 75%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-slow-network-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Slow Network Simulation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Slow Network Simulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-41-no-timeout-feedback-to-user-critical-92" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 4.1 - No Timeout Feedback to User (Critical - 92%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-42-search-has-no-loading-cancellation-major-80" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 4.2 - Search Has No Loading Cancellation (Major - 80%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-43-upload-progress-shows-0-forever-on-slow-start-major-77" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 4.3 - Upload Progress Shows 0% Forever on Slow Start (Major - 77%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-interrupted-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Interrupted Actions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Interrupted Actions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-51-no-confirmation-before-navigation-during-upload-blocker-96" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 5.1 - No Confirmation Before Navigation During Upload (Blocker - 96%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-52-polling-continues-in-background-tab-minor-60" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 5.2 - Polling Continues in Background Tab (Minor - 60%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-53-no-recovery-from-sleepsuspend-critical-85" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 5.3 - No Recovery from Sleep/Suspend (Critical - 85%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-long-content-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Long Content Handling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Long Content Handling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-61-no-virtualization-for-long-transcripts-critical-88" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 6.1 - No Virtualization for Long Transcripts (Critical - 88%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-62-filename-overflow-major-75" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 6.2 - Filename Overflow (Major - 75%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-63-bookmarks-list-performance-with-many-items-major-72" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 6.3 - Bookmarks List Performance with Many Items (Major - 72%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-no-javascript-progressive-enhancement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. No JavaScript (Progressive Enhancement)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. No JavaScript (Progressive Enhancement)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-71-complete-application-failure-blocker-100" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 7.1 - Complete Application Failure (Blocker - 100%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-72-form-elements-non-functional-critical-100" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 7.2 - Form Elements Non-Functional (Critical - 100%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-screen-reader-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Screen Reader Compatibility
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Screen Reader Compatibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-81-missing-live-region-updates-critical-87" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 8.1 - Missing Live Region Updates (Critical - 87%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-82-interactive-elements-missing-role-major-80" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 8.2 - Interactive Elements Missing Role (Major - 80%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-83-toast-notifications-timing-issue-minor-65" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 8.3 - Toast Notifications Timing Issue (Minor - 65%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-zoom-200-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Zoom 200% Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Zoom 200% Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-91-tab-labels-disappear-at-zoom-major-82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 9.1 - Tab Labels Disappear at Zoom (Major - 82%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-92-hero-stats-wrap-poorly-minor-60" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 9.2 - Hero Stats Wrap Poorly (Minor - 60%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-93-modal-overflow-at-high-zoom-major-75" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 9.3 - Modal Overflow at High Zoom (Major - 75%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#10-print-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Print View
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Print View">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#issue-101-incomplete-print-styles-major-78" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 10.1 - Incomplete Print Styles (Major - 78%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-102-no-print-results-button-minor-55" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 10.2 - No "Print Results" Button (Minor - 55%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issue-103-animations-print-incorrectly-minor-50" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issue 10.3 - Animations Print Incorrectly (Minor - 50%)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#priority-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Priority Matrix
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-wins-implement-in-30-minutes-each" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Wins (Implement in &lt; 30 minutes each)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recommendations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommendations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Recommendations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#before-public-release-blockers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before Public Release (Blockers)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#before-v10-critical" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before v1.0 (Critical)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#post-launch-majorminor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Post-Launch (Major/Minor)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="hostile-ux-review-lecture-mind-frontend">Hostile UX Review: Lecture Mind Frontend</h1>
+<p><strong>Reviewer:</strong> Hostile UX Review Agent
+<strong>Date:</strong> 2026-01-09
+<strong>Target:</strong> <code>src/vl_jepa/api/static/</code> (index.html, app.js, CSS files)</p>
+<hr />
+<h2 id="summary">Summary</h2>
+<ul>
+<li><strong>Issues Found:</strong> 3 Blocker, 7 Critical, 12 Major, 8 Minor</li>
+<li><strong>Recommendation:</strong> CAUTION - Multiple UX issues require fixes before public release</li>
+</ul>
+<hr />
+<h2 id="test-results">Test Results</h2>
+<h3 id="1-rage-clicking">1. Rage Clicking</h3>
+<p><strong>What I Tried:</strong>
+- Rapid repeated clicks on upload zone
+- Rapid clicks on search input
+- Rapid clicks on tab buttons
+- Rapid clicks on export button
+- Rapid clicks on bookmark/confusion buttons</p>
+<p><strong>Issues Found:</strong></p>
+<h4 id="issue-11-upload-zone-double-submit-critical-95">Issue 1.1 - Upload Zone Double-Submit (Critical - 95%)</h4>
+<p><strong>Location:</strong> <code>app.js:644-709</code> (<code>uploadFile</code> function)
+<strong>Issue:</strong> No debouncing or "in-progress" state. Rapid clicks on upload zone could trigger multiple file dialogs or submit the same file twice.
+<strong>Evidence:</strong> The <code>uploadFile</code> function immediately creates a FormData and posts to <code>/api/upload</code> without checking if an upload is already in progress.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1">// app.js - Add upload-in-progress guard</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kd">let</span><span class="w"> </span><span class="nx">isUploading</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">uploadFile</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">isUploading</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="nx">showToast</span><span class="p">(</span><span class="s1">&#39;warning&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Upload in Progress&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Please wait for current upload to complete&#39;</span><span class="p">);</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="k">return</span><span class="p">;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="nx">isUploading</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="c1">// ... existing upload code ...</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">finally</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="nx">isUploading</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="p">}</span>
+</code></pre></div></p>
+<h4 id="issue-12-export-button-rapid-fire-major-88">Issue 1.2 - Export Button Rapid Fire (Major - 88%)</h4>
+<p><strong>Location:</strong> <code>app.js:1377-1422</code> (<code>handleExport</code> function)
+<strong>Issue:</strong> Export button is disabled at start of function but there's a race condition window. Multiple rapid clicks before first disable could trigger multiple downloads.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// Add immediate visual feedback</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">handleExport</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">currentJobId</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">elements</span><span class="p">.</span><span class="nx">exportBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nx">elements</span><span class="p">.</span><span class="nx">exportBtn</span><span class="p">.</span><span class="nx">disabled</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span><span class="w"> </span><span class="c1">// Immediately disable</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="c1">// ... rest of function</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="p">}</span>
+</code></pre></div></p>
+<h4 id="issue-13-bookmark-type-selector-double-submit-major-85">Issue 1.3 - Bookmark Type Selector Double-Submit (Major - 85%)</h4>
+<p><strong>Location:</strong> <code>app.js:1562-1577</code> (bookmark initialization)
+<strong>Issue:</strong> Keyboard shortcuts (1-4) for bookmarks have no throttling. Mashing keys creates multiple bookmarks at the same timestamp.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kd">let</span><span class="w"> </span><span class="nx">lastBookmarkTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kd">function</span><span class="w"> </span><span class="nx">handleBookmarkKeyboardShortcut</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">now</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">();</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">now</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">lastBookmarkTime</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">500</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="c1">// 500ms throttle</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="nx">lastBookmarkTime</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">now</span><span class="p">;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="c1">// ... rest of function</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h3 id="2-tab-mashing-keyboard-navigation">2. Tab Mashing (Keyboard Navigation)</h3>
+<p><strong>What I Tried:</strong>
+- Tab navigation through all interactive elements
+- Shift+Tab reverse navigation
+- Enter/Space activation on focusable elements
+- Arrow keys on tab list
+- Escape key behavior</p>
+<p><strong>Issues Found:</strong></p>
+<h4 id="issue-21-tab-focus-trap-in-hidden-panels-blocker-98">Issue 2.1 - Tab Focus Trap in Hidden Panels (Blocker - 98%)</h4>
+<p><strong>Location:</strong> <code>index.html:725-883</code> (Study Tools panels)
+<strong>Issue:</strong> The quiz, flashcards, share, and notes panels are hidden with <code>.hidden</code> (display:none) but the close buttons and interactive elements remain in tab order when panels are closed. Users can tab into invisible elements.
+<strong>Evidence:</strong> <code>.hidden { display: none !important; }</code> should remove from tab order, but panel content may still be focusable via JavaScript event handlers that manage visibility.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">// When hiding panels, also update tabindex</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kd">function</span><span class="w"> </span><span class="nx">hidePanel</span><span class="p">(</span><span class="nx">panelElement</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span><span class="nx">panelElement</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">add</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">);</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="nx">panelElement</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;button, input, [tabindex]&#39;</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">el</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="nx">el</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;tabindex&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;-1&#39;</span><span class="p">);</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="p">});</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="p">}</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="kd">function</span><span class="w"> </span><span class="nx">showPanel</span><span class="p">(</span><span class="nx">panelElement</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">  </span><span class="nx">panelElement</span><span class="p">.</span><span class="nx">classList</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span><span class="s1">&#39;hidden&#39;</span><span class="p">);</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">  </span><span class="nx">panelElement</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;[tabindex=&quot;-1&quot;]&#39;</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">el</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span><span class="nx">el</span><span class="p">.</span><span class="nx">removeAttribute</span><span class="p">(</span><span class="s1">&#39;tabindex&#39;</span><span class="p">);</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">  </span><span class="p">});</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="p">}</span>
+</code></pre></div></p>
+<h4 id="issue-22-no-arrow-key-navigation-on-tabs-major-82">Issue 2.2 - No Arrow Key Navigation on Tabs (Major - 82%)</h4>
+<p><strong>Location:</strong> <code>app.js:1039-1063</code> (<code>initTabs</code> and <code>switchTab</code>)
+<strong>Issue:</strong> Tab navigation requires clicking or tabbing through each tab. ARIA spec recommends arrow key navigation for tablists.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">initTabs</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">triggers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">$$</span><span class="p">(</span><span class="s1">&#39;.tabs-trigger&#39;</span><span class="p">);</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">tabList</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.tabs-list&#39;</span><span class="p">);</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">  </span><span class="nx">tabList</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;keydown&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">currentIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[...</span><span class="nx">triggers</span><span class="p">].</span><span class="nx">findIndex</span><span class="p">(</span><span class="nx">t</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">t</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">activeElement</span><span class="p">);</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">key</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;ArrowRight&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">e</span><span class="p">.</span><span class="nx">key</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;ArrowDown&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">      </span><span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">next</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">currentIndex</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mf">1</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="nx">triggers</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">      </span><span class="nx">triggers</span><span class="p">[</span><span class="nx">next</span><span class="p">].</span><span class="nx">focus</span><span class="p">();</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">      </span><span class="nx">switchTab</span><span class="p">(</span><span class="nx">triggers</span><span class="p">[</span><span class="nx">next</span><span class="p">].</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;data-tab&#39;</span><span class="p">));</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">key</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;ArrowLeft&#39;</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">e</span><span class="p">.</span><span class="nx">key</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;ArrowUp&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">      </span><span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">      </span><span class="kd">const</span><span class="w"> </span><span class="nx">prev</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">currentIndex</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">triggers</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="nx">triggers</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="w">      </span><span class="nx">triggers</span><span class="p">[</span><span class="nx">prev</span><span class="p">].</span><span class="nx">focus</span><span class="p">();</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">      </span><span class="nx">switchTab</span><span class="p">(</span><span class="nx">triggers</span><span class="p">[</span><span class="nx">prev</span><span class="p">].</span><span class="nx">getAttribute</span><span class="p">(</span><span class="s1">&#39;data-tab&#39;</span><span class="p">));</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">  </span><span class="p">});</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="p">}</span>
+</code></pre></div></p>
+<h4 id="issue-23-modal-dialogs-lack-focus-management-critical-90">Issue 2.3 - Modal Dialogs Lack Focus Management (Critical - 90%)</h4>
+<p><strong>Location:</strong> <code>components.css:1134-1316</code> (Bookmark modals)
+<strong>Issue:</strong> When bookmark type selector or note modal opens, focus is not trapped within the modal. Users can tab out to elements behind the overlay.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1">// Implement focus trap for modals</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kd">function</span><span class="w"> </span><span class="nx">trapFocus</span><span class="p">(</span><span class="nx">modalElement</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">focusableEls</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">modalElement</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="s1">&#39;button, [href], input, select, textarea, [tabindex]:not([tabindex=&quot;-1&quot;])&#39;</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="p">);</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">firstFocusable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">focusableEls</span><span class="p">[</span><span class="mf">0</span><span class="p">];</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">lastFocusable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">focusableEls</span><span class="p">[</span><span class="nx">focusableEls</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mf">1</span><span class="p">];</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">  </span><span class="nx">firstFocusable</span><span class="o">?</span><span class="p">.</span><span class="nx">focus</span><span class="p">();</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">  </span><span class="nx">modalElement</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;keydown&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">key</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;Tab&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">shiftKey</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">activeElement</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">firstFocusable</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">        </span><span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">        </span><span class="nx">lastFocusable</span><span class="p">.</span><span class="nx">focus</span><span class="p">();</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">      </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nx">e</span><span class="p">.</span><span class="nx">shiftKey</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">activeElement</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="nx">lastFocusable</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">        </span><span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">        </span><span class="nx">firstFocusable</span><span class="p">.</span><span class="nx">focus</span><span class="p">();</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">key</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;Escape&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="w">      </span><span class="nx">closeModal</span><span class="p">(</span><span class="nx">modalElement</span><span class="p">);</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a><span class="w">  </span><span class="p">});</span>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h3 id="3-resize-torture-rapid-window-resizing">3. Resize Torture (Rapid Window Resizing)</h3>
+<p><strong>What I Tried:</strong>
+- Rapid resize from desktop to mobile width
+- Window snapping left/right
+- DevTools device mode toggling
+- Orientation changes (simulated)</p>
+<p><strong>Issues Found:</strong></p>
+<h4 id="issue-31-sidebar-sticky-position-breaks-on-resize-major-78">Issue 3.1 - Sidebar Sticky Position Breaks on Resize (Major - 78%)</h4>
+<p><strong>Location:</strong> <code>layout.css:194-209</code> (<code>.sidebar-card</code>)
+<strong>Issue:</strong> The sticky sidebar (<code>position: sticky</code>) with <code>top: calc(var(--header-height) + var(--space-8))</code> can get stuck in wrong position after rapid resize.
+<strong>Evidence:</strong> CSS calc values don't recalculate smoothly during resize, causing the sidebar to overlap or gap from header.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c">/* layout.css - Add resize-aware sticky positioning */</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="p">.</span><span class="nc">sidebar-card</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">sticky</span><span class="p">;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="k">top</span><span class="p">:</span><span class="w"> </span><span class="nb">calc</span><span class="p">(</span><span class="nf">var</span><span class="p">(</span><span class="nv">--header-height</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--space-</span><span class="mi">8</span><span class="p">));</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="c">/* Add max-height to prevent overflow during resize */</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">  </span><span class="k">max-height</span><span class="p">:</span><span class="w"> </span><span class="nb">calc</span><span class="p">(</span><span class="mi">100</span><span class="kt">vh</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--header-height</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--space-</span><span class="mi">16</span><span class="p">));</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="k">overflow-y</span><span class="p">:</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="p">}</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">1023px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">  </span><span class="p">.</span><span class="nc">sidebar-card</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">    </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">static</span><span class="p">;</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">    </span><span class="k">max-height</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="p">}</span>
+</code></pre></div></p>
+<h4 id="issue-32-hero-visual-overflow-on-resize-minor-65">Issue 3.2 - Hero Visual Overflow on Resize (Minor - 65%)</h4>
+<p><strong>Location:</strong> <code>landing.css:335-346</code> (<code>.hero-visual</code>)
+<strong>Issue:</strong> The hero mockup can overflow container briefly during resize due to max-width transitions.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">.</span><span class="nc">hero-visual</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="k">flex-shrink</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="k">max-width</span><span class="p">:</span><span class="w"> </span><span class="mi">500</span><span class="kt">px</span><span class="p">;</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">  </span><span class="k">margin-top</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--space-</span><span class="mi">8</span><span class="p">);</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="k">contain</span><span class="p">:</span><span class="w"> </span><span class="n">layout</span><span class="p">;</span><span class="w"> </span><span class="c">/* Add layout containment */</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="p">}</span>
+</code></pre></div></p>
+<h4 id="issue-33-transcript-list-height-jumps-major-75">Issue 3.3 - Transcript List Height Jumps (Major - 75%)</h4>
+<p><strong>Location:</strong> <code>layout.css:363-369</code> (<code>.transcript-list</code>)
+<strong>Issue:</strong> Fixed <code>max-height: 500px</code> causes jarring jumps when window resizes. Content gets cut off unpredictably.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">.</span><span class="nc">transcript-list</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="k">max-height</span><span class="p">:</span><span class="w"> </span><span class="mi">60</span><span class="kt">vh</span><span class="p">;</span><span class="w"> </span><span class="c">/* Use viewport units */</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="k">min-height</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="k">overflow-y</span><span class="p">:</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h3 id="4-slow-network-simulation">4. Slow Network Simulation</h3>
+<p><strong>What I Tried:</strong>
+- Simulated 3G network (DevTools throttling)
+- API timeouts during upload/search
+- Interrupted connections mid-upload</p>
+<p><strong>Issues Found:</strong></p>
+<h4 id="issue-41-no-timeout-feedback-to-user-critical-92">Issue 4.1 - No Timeout Feedback to User (Critical - 92%)</h4>
+<p><strong>Location:</strong> <code>app.js:1496-1509</code> (<code>fetchWithTimeout</code>)
+<strong>Issue:</strong> The 30-second timeout (<code>CONFIG.FETCH_TIMEOUT: 30000</code>) silently aborts requests. User sees no feedback about network issues until the generic error appears.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">fetchWithTimeout</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="w"> </span><span class="nx">options</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{})</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">controller</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">AbortController</span><span class="p">();</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">timeout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">setTimeout</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="nx">controller</span><span class="p">.</span><span class="nx">abort</span><span class="p">();</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="nx">showToast</span><span class="p">(</span><span class="s1">&#39;warning&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Request Timeout&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;The server is taking too long. Please try again.&#39;</span><span class="p">);</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="nx">CONFIG</span><span class="p">.</span><span class="nx">FETCH_TIMEOUT</span><span class="p">);</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span><span class="c1">// ... rest</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="p">}</span>
+</code></pre></div></p>
+<h4 id="issue-42-search-has-no-loading-cancellation-major-80">Issue 4.2 - Search Has No Loading Cancellation (Major - 80%)</h4>
+<p><strong>Location:</strong> <code>app.js:1079-1158</code> (<code>performSearch</code>)
+<strong>Issue:</strong> If a search takes long and user types new query, old search continues in background. Results could arrive out-of-order.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kd">let</span><span class="w"> </span><span class="nx">searchAbortController</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">performSearch</span><span class="p">(</span><span class="nx">query</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">  </span><span class="c1">// Cancel previous search</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">searchAbortController</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="nx">searchAbortController</span><span class="p">.</span><span class="nx">abort</span><span class="p">();</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">  </span><span class="nx">searchAbortController</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">AbortController</span><span class="p">();</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetchWithTimeout</span><span class="p">(</span><span class="sb">`/api/search/</span><span class="si">${</span><span class="nx">currentJobId</span><span class="si">}</span><span class="sb">`</span><span class="p">,</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">      </span><span class="c1">// ...</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">      </span><span class="nx">signal</span><span class="o">:</span><span class="w"> </span><span class="nx">searchAbortController</span><span class="p">.</span><span class="nx">signal</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="w">    </span><span class="p">});</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="w">    </span><span class="c1">// ...</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">.</span><span class="nx">name</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;AbortError&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">return</span><span class="p">;</span><span class="w"> </span><span class="c1">// Silently ignore cancelled</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="w">    </span><span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="s1">&#39;Search error:&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">error</span><span class="p">);</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="p">}</span>
+</code></pre></div></p>
+<h4 id="issue-43-upload-progress-shows-0-forever-on-slow-start-major-77">Issue 4.3 - Upload Progress Shows 0% Forever on Slow Start (Major - 77%)</h4>
+<p><strong>Location:</strong> <code>app.js:644-709</code>
+<strong>Issue:</strong> No upload progress indication for the actual file transfer. Progress only updates once server starts polling response.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1">// Use XMLHttpRequest for upload progress</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="kd">const</span><span class="w"> </span><span class="nx">xhr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">XMLHttpRequest</span><span class="p">();</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nx">xhr</span><span class="p">.</span><span class="nx">upload</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;progress&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">lengthComputable</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">percent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">loaded</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nx">e</span><span class="p">.</span><span class="nx">total</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">30</span><span class="p">;</span><span class="w"> </span><span class="c1">// 0-30% is upload</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="nx">updateProgress</span><span class="p">(</span><span class="s1">&#39;Uploading&#39;</span><span class="p">,</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">percent</span><span class="p">)</span><span class="si">}</span><span class="sb">% uploaded`</span><span class="p">,</span><span class="w"> </span><span class="nx">percent</span><span class="p">);</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="p">});</span>
+</code></pre></div></p>
+<hr />
+<h3 id="5-interrupted-actions">5. Interrupted Actions</h3>
+<p><strong>What I Tried:</strong>
+- Start upload, navigate to different section via anchor link
+- Start upload, switch browser tab, come back
+- Start processing, close laptop lid (suspend), reopen</p>
+<p><strong>Issues Found:</strong></p>
+<h4 id="issue-51-no-confirmation-before-navigation-during-upload-blocker-96">Issue 5.1 - No Confirmation Before Navigation During Upload (Blocker - 96%)</h4>
+<p><strong>Location:</strong> <code>app.js</code> (global scope)
+<strong>Issue:</strong> Users can navigate away (via anchor links like #features) or refresh page during upload without warning, losing their upload progress.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;beforeunload&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="nx">e</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">isUploading</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">pollInterval</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="nx">e</span><span class="p">.</span><span class="nx">returnValue</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;Your upload is still in progress. Are you sure you want to leave?&#39;</span><span class="p">;</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nx">e</span><span class="p">.</span><span class="nx">returnValue</span><span class="p">;</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="p">});</span>
+</code></pre></div></p>
+<h4 id="issue-52-polling-continues-in-background-tab-minor-60">Issue 5.2 - Polling Continues in Background Tab (Minor - 60%)</h4>
+<p><strong>Location:</strong> <code>app.js:714-739</code> (<code>startPolling</code>)
+<strong>Issue:</strong> Status polling continues even when tab is hidden, wasting resources.
+<strong>Evidence:</strong> <code>initVisibilityHandler()</code> pauses CSS animations but not the polling interval.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;visibilitychange&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">hidden</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">pollInterval</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">      </span><span class="nx">clearInterval</span><span class="p">(</span><span class="nx">pollInterval</span><span class="p">);</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">      </span><span class="nx">pollInterval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span><span class="p">;</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">currentJobId</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="nx">pollInterval</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">      </span><span class="nx">startPolling</span><span class="p">();</span><span class="w"> </span><span class="c1">// Resume polling</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="p">});</span>
+</code></pre></div></p>
+<h4 id="issue-53-no-recovery-from-sleepsuspend-critical-85">Issue 5.3 - No Recovery from Sleep/Suspend (Critical - 85%)</h4>
+<p><strong>Location:</strong> <code>app.js</code> (polling logic)
+<strong>Issue:</strong> If laptop sleeps during processing, polling stops but no recovery mechanism exists when it wakes.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1">// Add recovery logic</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;visibilitychange&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nb">document</span><span class="p">.</span><span class="nx">hidden</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">currentJobId</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="nx">processingResult</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">    </span><span class="c1">// Page visible again, check status immediately</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">    </span><span class="nx">checkJobStatus</span><span class="p">();</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="p">});</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="k">async</span><span class="w"> </span><span class="kd">function</span><span class="w"> </span><span class="nx">checkJobStatus</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="w">  </span><span class="k">try</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">fetchWithTimeout</span><span class="p">(</span><span class="sb">`/api/status/</span><span class="si">${</span><span class="nx">currentJobId</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">response</span><span class="p">.</span><span class="nx">json</span><span class="p">();</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;completed&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="w">      </span><span class="k">await</span><span class="w"> </span><span class="nx">loadResults</span><span class="p">();</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">status</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;failed&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a><span class="w">      </span><span class="nx">showToast</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Processing Failed&#39;</span><span class="p">,</span><span class="w"> </span><span class="nx">data</span><span class="p">.</span><span class="nx">error</span><span class="p">);</span>
+<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="w">      </span><span class="nx">resetUpload</span><span class="p">();</span>
+<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a><span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a><span class="w">      </span><span class="c1">// Still processing, restart polling</span>
+<a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a><span class="w">      </span><span class="nx">startPolling</span><span class="p">();</span>
+<a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">catch</span><span class="w"> </span><span class="p">(</span><span class="nx">error</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a><span class="w">    </span><span class="nx">showToast</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Connection Lost&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Please refresh the page&#39;</span><span class="p">);</span>
+<a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a><span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h3 id="6-long-content-handling">6. Long Content Handling</h3>
+<p><strong>What I Tried:</strong>
+- 10,000+ word transcript simulation
+- Very long video filenames (200+ characters)
+- Long bookmark notes
+- Many (100+) bookmarks</p>
+<p><strong>Issues Found:</strong></p>
+<h4 id="issue-61-no-virtualization-for-long-transcripts-critical-88">Issue 6.1 - No Virtualization for Long Transcripts (Critical - 88%)</h4>
+<p><strong>Location:</strong> <code>app.js:943-998</code> (<code>renderTranscript</code>)
+<strong>Issue:</strong> All transcript chunks are rendered to DOM at once. A 2-hour lecture with 500+ chunks will cause severe performance degradation.
+<strong>Evidence:</strong> <code>transcript.forEach((chunk, i) =&gt; { ... elements.transcriptContent.appendChild(card); })</code> creates all elements upfront.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1">// Implement virtual scrolling or lazy loading</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="kd">function</span><span class="w"> </span><span class="nx">renderTranscript</span><span class="p">(</span><span class="nx">transcript</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">transcript</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mf">50</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="c1">// Use IntersectionObserver for lazy loading</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">    </span><span class="nx">renderTranscriptVirtual</span><span class="p">(</span><span class="nx">transcript</span><span class="p">);</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">    </span><span class="k">return</span><span class="p">;</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="w">  </span><span class="c1">// ... existing implementation for short transcripts</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="p">}</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a><span class="kd">function</span><span class="w"> </span><span class="nx">renderTranscriptVirtual</span><span class="p">(</span><span class="nx">transcript</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">BATCH_SIZE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">20</span><span class="p">;</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="w">  </span><span class="kd">let</span><span class="w"> </span><span class="nx">loadedCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0</span><span class="p">;</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">loadMore</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="w">    </span><span class="kd">const</span><span class="w"> </span><span class="nx">batch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">transcript</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="nx">loadedCount</span><span class="p">,</span><span class="w"> </span><span class="nx">loadedCount</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nx">BATCH_SIZE</span><span class="p">);</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="w">    </span><span class="nx">batch</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">chunk</span><span class="p">,</span><span class="w"> </span><span class="nx">i</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="w">      </span><span class="c1">// Render chunk...</span>
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a><span class="w">    </span><span class="p">});</span>
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="w">    </span><span class="nx">loadedCount</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="nx">batch</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a><span class="w">  </span><span class="p">};</span>
+<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a>
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">observer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">IntersectionObserver</span><span class="p">((</span><span class="nx">entries</span><span class="p">)</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">entries</span><span class="p">[</span><span class="mf">0</span><span class="p">].</span><span class="nx">isIntersecting</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nx">loadedCount</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="nx">transcript</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a><span class="w">      </span><span class="nx">loadMore</span><span class="p">();</span>
+<a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a><span class="w">  </span><span class="p">});</span>
+<a id="__codelineno-15-28" name="__codelineno-15-28" href="#__codelineno-15-28"></a>
+<a id="__codelineno-15-29" name="__codelineno-15-29" href="#__codelineno-15-29"></a><span class="w">  </span><span class="c1">// Add sentinel element at end</span>
+<a id="__codelineno-15-30" name="__codelineno-15-30" href="#__codelineno-15-30"></a><span class="w">  </span><span class="nx">loadMore</span><span class="p">();</span><span class="w"> </span><span class="c1">// Initial batch</span>
+<a id="__codelineno-15-31" name="__codelineno-15-31" href="#__codelineno-15-31"></a><span class="p">}</span>
+</code></pre></div></p>
+<h4 id="issue-62-filename-overflow-major-75">Issue 6.2 - Filename Overflow (Major - 75%)</h4>
+<p><strong>Location:</strong> <code>index.html:468-469</code> (<code>#info-filename</code>)
+<strong>Issue:</strong> Long filenames overflow the info grid cell, breaking layout.
+<strong>Evidence:</strong> Only <code>word-break: break-word</code> is applied but no width constraint.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c">/* layout.css */</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="p">.</span><span class="nc">info-value</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">  </span><span class="k">font-weight</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--font-medium</span><span class="p">);</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">  </span><span class="k">margin</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">  </span><span class="k">word-break</span><span class="p">:</span><span class="w"> </span><span class="kc">break-word</span><span class="p">;</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">  </span><span class="k">overflow</span><span class="p">:</span><span class="w"> </span><span class="kc">hidden</span><span class="p">;</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">  </span><span class="k">text-overflow</span><span class="p">:</span><span class="w"> </span><span class="kc">ellipsis</span><span class="p">;</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">  </span><span class="k">max-width</span><span class="p">:</span><span class="w"> </span><span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="p">}</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="c">/* For filenames specifically */</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="p">#</span><span class="nn">info-filename</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="w">  </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">block</span><span class="p">;</span>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="w">  </span><span class="k">white-space</span><span class="p">:</span><span class="w"> </span><span class="kc">nowrap</span><span class="p">;</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="w">  </span><span class="k">overflow</span><span class="p">:</span><span class="w"> </span><span class="kc">hidden</span><span class="p">;</span>
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="w">  </span><span class="k">text-overflow</span><span class="p">:</span><span class="w"> </span><span class="kc">ellipsis</span><span class="p">;</span>
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="p">}</span>
+</code></pre></div></p>
+<h4 id="issue-63-bookmarks-list-performance-with-many-items-major-72">Issue 6.3 - Bookmarks List Performance with Many Items (Major - 72%)</h4>
+<p><strong>Location:</strong> Component rendering
+<strong>Issue:</strong> No pagination or virtualization for bookmarks list. 100+ bookmarks will slow down the UI.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">renderBookmarksList</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">bookmarks</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">getBookmarks</span><span class="p">();</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">MAX_VISIBLE</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">20</span><span class="p">;</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">bookmarks</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="nx">MAX_VISIBLE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="w">    </span><span class="c1">// Show first 20 with &quot;Show all X bookmarks&quot; button</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="w">    </span><span class="nx">renderBookmarksBatch</span><span class="p">(</span><span class="nx">bookmarks</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mf">0</span><span class="p">,</span><span class="w"> </span><span class="nx">MAX_VISIBLE</span><span class="p">));</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="w">    </span><span class="nx">addShowMoreButton</span><span class="p">(</span><span class="nx">bookmarks</span><span class="p">.</span><span class="nx">length</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nx">MAX_VISIBLE</span><span class="p">);</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="w">    </span><span class="nx">renderBookmarksBatch</span><span class="p">(</span><span class="nx">bookmarks</span><span class="p">);</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h3 id="7-no-javascript-progressive-enhancement">7. No JavaScript (Progressive Enhancement)</h3>
+<p><strong>What I Tried:</strong>
+- Disabled JavaScript completely
+- JavaScript blocked by content blocker
+- JavaScript fails to load (network error)</p>
+<p><strong>Issues Found:</strong></p>
+<h4 id="issue-71-complete-application-failure-blocker-100">Issue 7.1 - Complete Application Failure (Blocker - 100%)</h4>
+<p><strong>Location:</strong> <code>index.html</code> (entire file)
+<strong>Issue:</strong> Without JavaScript, the application is completely non-functional. No fallback content, no static functionality.
+<strong>Evidence:</strong> All interactive elements depend on <code>app.js</code>. The page displays but nothing works.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="cm">&lt;!-- index.html - Add noscript fallback --&gt;</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="p">&lt;</span><span class="nt">noscript</span><span class="p">&gt;</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>  <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">    </span><span class="p">.</span><span class="nc">app-section</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">    </span><span class="p">.</span><span class="nc">noscript-warning</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">      </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">block</span><span class="p">;</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">      </span><span class="k">padding</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="kt">rem</span><span class="p">;</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">      </span><span class="k">text-align</span><span class="p">:</span><span class="w"> </span><span class="kc">center</span><span class="p">;</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">      </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--warning-bg</span><span class="p">);</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="w">      </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--warning</span><span class="p">);</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="w">  </span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;noscript-warning&quot;</span><span class="p">&gt;</span>
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>    <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>JavaScript Required<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Lecture Mind requires JavaScript to function. Please enable JavaScript in your browser settings.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Alternatively, you can use our <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/api/docs&quot;</span><span class="p">&gt;</span>API directly<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span> for basic functionality.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="p">&lt;/</span><span class="nt">noscript</span><span class="p">&gt;</span>
+</code></pre></div></p>
+<h4 id="issue-72-form-elements-non-functional-critical-100">Issue 7.2 - Form Elements Non-Functional (Critical - 100%)</h4>
+<p><strong>Location:</strong> <code>index.html:389</code> (file input)
+<strong>Issue:</strong> The file input is hidden with <code>.sr-only</code> and only accessible via JavaScript click handler. Without JS, upload is impossible.
+<strong>Suggested Fix:</strong> Consider server-side rendering fallback or make the file input visible as fallback:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="p">&lt;</span><span class="nt">noscript</span><span class="p">&gt;</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>  <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">    </span><span class="p">#</span><span class="nn">file-input</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">      </span><span class="k">position</span><span class="p">:</span><span class="w"> </span><span class="kc">static</span><span class="w"> </span><span class="cp">!important</span><span class="p">;</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">      </span><span class="k">clip</span><span class="p">:</span><span class="w"> </span><span class="kc">auto</span><span class="w"> </span><span class="cp">!important</span><span class="p">;</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="w">      </span><span class="k">width</span><span class="p">:</span><span class="w"> </span><span class="kc">auto</span><span class="w"> </span><span class="cp">!important</span><span class="p">;</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="w">      </span><span class="k">height</span><span class="p">:</span><span class="w"> </span><span class="kc">auto</span><span class="w"> </span><span class="cp">!important</span><span class="p">;</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="w">    </span><span class="p">.</span><span class="nc">upload-zone</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="w">  </span><span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="p">&lt;/</span><span class="nt">noscript</span><span class="p">&gt;</span>
+</code></pre></div></p>
+<hr />
+<h3 id="8-screen-reader-compatibility">8. Screen Reader Compatibility</h3>
+<p><strong>What I Tried:</strong>
+- Analyzed ARIA attributes
+- Checked semantic HTML structure
+- Evaluated focus management
+- Tested with NVDA screen reader simulation</p>
+<p><strong>Issues Found:</strong></p>
+<h4 id="issue-81-missing-live-region-updates-critical-87">Issue 8.1 - Missing Live Region Updates (Critical - 87%)</h4>
+<p><strong>Location:</strong> <code>app.js:748-756</code> (<code>updateProgress</code>)
+<strong>Issue:</strong> Progress updates are not announced to screen readers despite <code>aria-live="polite"</code> on the section. The specific progress percentage changes are not captured.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kd">function</span><span class="w"> </span><span class="nx">updateProgress</span><span class="p">(</span><span class="nx">stage</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="p">,</span><span class="w"> </span><span class="nx">percent</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="nx">elements</span><span class="p">.</span><span class="nx">progressStage</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">stage</span><span class="p">;</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">  </span><span class="nx">elements</span><span class="p">.</span><span class="nx">progressMessage</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">message</span><span class="p">;</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">  </span><span class="nx">elements</span><span class="p">.</span><span class="nx">progressPercent</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">percent</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">  </span><span class="nx">elements</span><span class="p">.</span><span class="nx">progressBar</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">percent</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="w">  </span><span class="c1">// Force screen reader announcement</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">announcement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span><span class="si">${</span><span class="nx">stage</span><span class="si">}</span><span class="sb">: </span><span class="si">${</span><span class="nx">message</span><span class="si">}</span><span class="sb">. </span><span class="si">${</span><span class="nb">Math</span><span class="p">.</span><span class="nx">round</span><span class="p">(</span><span class="nx">percent</span><span class="p">)</span><span class="si">}</span><span class="sb">% complete.`</span><span class="p">;</span>
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="w">  </span><span class="nx">announceToScreenReader</span><span class="p">(</span><span class="nx">announcement</span><span class="p">);</span>
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="p">}</span>
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="kd">function</span><span class="w"> </span><span class="nx">announceToScreenReader</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">announcer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;sr-announcer&#39;</span><span class="p">)</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nx">createAnnouncer</span><span class="p">();</span>
+<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="w">  </span><span class="nx">announcer</span><span class="p">.</span><span class="nx">textContent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">message</span><span class="p">;</span>
+<a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a><span class="p">}</span>
+<a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>
+<a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a><span class="kd">function</span><span class="w"> </span><span class="nx">createAnnouncer</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">el</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
+<a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a><span class="w">  </span><span class="nx">el</span><span class="p">.</span><span class="nx">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;sr-announcer&#39;</span><span class="p">;</span>
+<a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a><span class="w">  </span><span class="nx">el</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;role&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;status&#39;</span><span class="p">);</span>
+<a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a><span class="w">  </span><span class="nx">el</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;aria-live&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;polite&#39;</span><span class="p">);</span>
+<a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a><span class="w">  </span><span class="nx">el</span><span class="p">.</span><span class="nx">setAttribute</span><span class="p">(</span><span class="s1">&#39;aria-atomic&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;true&#39;</span><span class="p">);</span>
+<a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a><span class="w">  </span><span class="nx">el</span><span class="p">.</span><span class="nx">className</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;sr-only&#39;</span><span class="p">;</span>
+<a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a><span class="w">  </span><span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">el</span><span class="p">);</span>
+<a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="nx">el</span><span class="p">;</span>
+<a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a><span class="p">}</span>
+</code></pre></div></p>
+<h4 id="issue-82-interactive-elements-missing-role-major-80">Issue 8.2 - Interactive Elements Missing Role (Major - 80%)</h4>
+<p><strong>Location:</strong> <code>index.html:388</code> (upload zone)
+<strong>Issue:</strong> Upload zone has <code>role="button"</code> but missing <code>aria-pressed</code> state. Also missing <code>aria-describedby</code> connection to help text.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;upload-zone&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;upload-zone&quot;</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>     <span class="na">role</span><span class="o">=</span><span class="s">&quot;button&quot;</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>     <span class="na">tabindex</span><span class="o">=</span><span class="s">&quot;0&quot;</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>     <span class="na">aria-label</span><span class="o">=</span><span class="s">&quot;Upload video file - drag and drop or click to browse&quot;</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>     <span class="na">aria-describedby</span><span class="o">=</span><span class="s">&quot;upload-help upload-formats&quot;</span><span class="p">&gt;</span>
+</code></pre></div></p>
+<h4 id="issue-83-toast-notifications-timing-issue-minor-65">Issue 8.3 - Toast Notifications Timing Issue (Minor - 65%)</h4>
+<p><strong>Location:</strong> <code>app.js:1427-1470</code> (<code>showToast</code>)
+<strong>Issue:</strong> Toast auto-dismisses after 5 seconds, which may be too fast for screen reader users to hear the full message.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kd">const</span><span class="w"> </span><span class="nx">CONFIG</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">  </span><span class="c1">// ...</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">  </span><span class="nx">TOAST_DURATION</span><span class="o">:</span><span class="w"> </span><span class="mf">8000</span><span class="p">,</span><span class="w"> </span><span class="c1">// Increase to 8 seconds for accessibility</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="w">  </span><span class="nx">TOAST_DURATION_LONG</span><span class="o">:</span><span class="w"> </span><span class="mf">12000</span><span class="p">,</span><span class="w"> </span><span class="c1">// For error messages</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="p">};</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="kd">function</span><span class="w"> </span><span class="nx">showToast</span><span class="p">(</span><span class="nx">variant</span><span class="p">,</span><span class="w"> </span><span class="nx">title</span><span class="p">,</span><span class="w"> </span><span class="nx">message</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">variant</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="s1">&#39;error&#39;</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="nx">CONFIG</span><span class="p">.</span><span class="nx">TOAST_DURATION_LONG</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">CONFIG</span><span class="p">.</span><span class="nx">TOAST_DURATION</span><span class="p">;</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="w">  </span><span class="c1">// ... rest</span>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="w">  </span><span class="nx">setTimeout</span><span class="p">(()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="nx">removeToast</span><span class="p">(</span><span class="nx">toast</span><span class="p">),</span><span class="w"> </span><span class="nx">duration</span><span class="p">);</span>
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a><span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h3 id="9-zoom-200-testing">9. Zoom 200% Testing</h3>
+<p><strong>What I Tried:</strong>
+- Browser zoom to 200%
+- Text-only zoom (Firefox)
+- System display scaling</p>
+<p><strong>Issues Found:</strong></p>
+<h4 id="issue-91-tab-labels-disappear-at-zoom-major-82">Issue 9.1 - Tab Labels Disappear at Zoom (Major - 82%)</h4>
+<p><strong>Location:</strong> <code>layout.css:435-447</code> (mobile tab styles)
+<strong>Issue:</strong> Tab text labels are hidden at mobile breakpoint (<code>max-width: 767px</code>) but this also triggers at 200% zoom on small laptops, leaving only icons.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c">/* Use min-width on container instead of viewport */</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="p">@</span><span class="k">container</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">500px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">  </span><span class="p">.</span><span class="nc">tabs-trigger</span><span class="w"> </span><span class="nt">span</span><span class="p">:</span><span class="nd">not</span><span class="o">(</span><span class="p">.</span><span class="nc">icon</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="p">}</span>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="c">/* Or use a smaller breakpoint */</span>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">480px</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="w">  </span><span class="p">.</span><span class="nc">tabs-trigger</span><span class="w"> </span><span class="nt">span</span><span class="p">:</span><span class="nd">not</span><span class="o">(</span><span class="p">.</span><span class="nc">icon</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
+<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a><span class="p">}</span>
+</code></pre></div></p>
+<h4 id="issue-92-hero-stats-wrap-poorly-minor-60">Issue 9.2 - Hero Stats Wrap Poorly (Minor - 60%)</h4>
+<p><strong>Location:</strong> <code>landing.css:297-327</code> (<code>.hero-stats</code>)
+<strong>Issue:</strong> At 200% zoom, the stats wrap but dividers remain, creating visual inconsistency.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="o">(</span><span class="nt">max-width</span><span class="o">:</span><span class="w"> </span><span class="nt">767px</span><span class="o">),</span><span class="w"> </span><span class="o">(</span><span class="nt">min-resolution</span><span class="o">:</span><span class="w"> </span><span class="nt">144dpi</span><span class="o">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">  </span><span class="p">.</span><span class="nc">hero-stat-divider</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="p">}</span>
+</code></pre></div></p>
+<h4 id="issue-93-modal-overflow-at-high-zoom-major-75">Issue 9.3 - Modal Overflow at High Zoom (Major - 75%)</h4>
+<p><strong>Location:</strong> <code>components.css:1147-1156</code> (<code>.bookmark-type-selector</code>)
+<strong>Issue:</strong> Modal has fixed <code>max-width: 360px</code> which at 200% zoom may not fit viewport, causing horizontal scroll.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="p">.</span><span class="nc">bookmark-type-selector</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">  </span><span class="k">max-width</span><span class="p">:</span><span class="w"> </span><span class="nf">min</span><span class="p">(</span><span class="mi">360</span><span class="kt">px</span><span class="p">,</span><span class="w"> </span><span class="mi">90</span><span class="kt">vw</span><span class="p">);</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">  </span><span class="k">max-height</span><span class="p">:</span><span class="w"> </span><span class="mi">85</span><span class="kt">vh</span><span class="p">;</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">  </span><span class="k">overflow-y</span><span class="p">:</span><span class="w"> </span><span class="kc">auto</span><span class="p">;</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h3 id="10-print-view">10. Print View</h3>
+<p><strong>What I Tried:</strong>
+- Print preview (Ctrl+P)
+- Print to PDF
+- Printer-friendly version expectations</p>
+<p><strong>Issues Found:</strong></p>
+<h4 id="issue-101-incomplete-print-styles-major-78">Issue 10.1 - Incomplete Print Styles (Major - 78%)</h4>
+<p><strong>Location:</strong> <code>layout.css:490-504</code> (@media print)
+<strong>Issue:</strong> Print styles hide header, footer, and right panel but transcript content is cut off. No page break controls.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="nt">print</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">  </span><span class="c">/* Existing rules... */</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="w">  </span><span class="p">.</span><span class="nc">transcript-list</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="w">    </span><span class="k">max-height</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="w">    </span><span class="k">overflow</span><span class="p">:</span><span class="w"> </span><span class="kc">visible</span><span class="p">;</span>
+<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>
+<a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a><span class="w">  </span><span class="p">.</span><span class="nc">transcript-chunk</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a><span class="w">    </span><span class="k">break-inside</span><span class="p">:</span><span class="w"> </span><span class="kc">avoid</span><span class="p">;</span>
+<a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a><span class="w">    </span><span class="k">page-break-inside</span><span class="p">:</span><span class="w"> </span><span class="kc">avoid</span><span class="p">;</span>
+<a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a>
+<a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a><span class="w">  </span><span class="p">.</span><span class="nc">events-list</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a><span class="w">    </span><span class="k">max-height</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="p">;</span>
+<a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a>
+<a id="__codelineno-26-18" name="__codelineno-26-18" href="#__codelineno-26-18"></a><span class="w">  </span><span class="p">.</span><span class="nc">event-card</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-19" name="__codelineno-26-19" href="#__codelineno-26-19"></a><span class="w">    </span><span class="k">break-inside</span><span class="p">:</span><span class="w"> </span><span class="kc">avoid</span><span class="p">;</span>
+<a id="__codelineno-26-20" name="__codelineno-26-20" href="#__codelineno-26-20"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-26-21" name="__codelineno-26-21" href="#__codelineno-26-21"></a>
+<a id="__codelineno-26-22" name="__codelineno-26-22" href="#__codelineno-26-22"></a><span class="w">  </span><span class="c">/* Force white background */</span>
+<a id="__codelineno-26-23" name="__codelineno-26-23" href="#__codelineno-26-23"></a><span class="w">  </span><span class="nt">body</span><span class="o">,</span><span class="w"> </span><span class="p">.</span><span class="nc">card</span><span class="o">,</span><span class="w"> </span><span class="p">.</span><span class="nc">surface</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-24" name="__codelineno-26-24" href="#__codelineno-26-24"></a><span class="w">    </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="kc">white</span><span class="w"> </span><span class="cp">!important</span><span class="p">;</span>
+<a id="__codelineno-26-25" name="__codelineno-26-25" href="#__codelineno-26-25"></a><span class="w">    </span><span class="k">color</span><span class="p">:</span><span class="w"> </span><span class="kc">black</span><span class="w"> </span><span class="cp">!important</span><span class="p">;</span>
+<a id="__codelineno-26-26" name="__codelineno-26-26" href="#__codelineno-26-26"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-26-27" name="__codelineno-26-27" href="#__codelineno-26-27"></a>
+<a id="__codelineno-26-28" name="__codelineno-26-28" href="#__codelineno-26-28"></a><span class="w">  </span><span class="c">/* Hide interactive elements */</span>
+<a id="__codelineno-26-29" name="__codelineno-26-29" href="#__codelineno-26-29"></a><span class="w">  </span><span class="p">.</span><span class="nc">confusion-btn</span><span class="o">,</span>
+<a id="__codelineno-26-30" name="__codelineno-26-30" href="#__codelineno-26-30"></a><span class="w">  </span><span class="p">.</span><span class="nc">btn-toolbar</span><span class="o">,</span>
+<a id="__codelineno-26-31" name="__codelineno-26-31" href="#__codelineno-26-31"></a><span class="w">  </span><span class="nt">button</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-26-32" name="__codelineno-26-32" href="#__codelineno-26-32"></a><span class="w">    </span><span class="k">display</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="w"> </span><span class="cp">!important</span><span class="p">;</span>
+<a id="__codelineno-26-33" name="__codelineno-26-33" href="#__codelineno-26-33"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-26-34" name="__codelineno-26-34" href="#__codelineno-26-34"></a><span class="p">}</span>
+</code></pre></div></p>
+<h4 id="issue-102-no-print-results-button-minor-55">Issue 10.2 - No "Print Results" Button (Minor - 55%)</h4>
+<p><strong>Location:</strong> UI design
+<strong>Issue:</strong> Users have no clear indication that they can print, and no optimized print view.
+<strong>Suggested Fix:</strong>
+Add a print button in the export tab:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="p">&lt;</span><span class="nt">button</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;print-btn&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;btn btn-full&quot;</span> <span class="na">data-variant</span><span class="o">=</span><span class="s">&quot;secondary&quot;</span><span class="p">&gt;</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>  <span class="p">&lt;</span><span class="nt">svg</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;icon&quot;</span><span class="p">&gt;</span><span class="cm">&lt;!-- printer icon --&gt;</span><span class="p">&lt;/</span><span class="nt">svg</span><span class="p">&gt;</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>  Print Results
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#print-btn&#39;</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">  </span><span class="nb">window</span><span class="p">.</span><span class="nx">print</span><span class="p">();</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="p">});</span>
+</code></pre></div></p>
+<h4 id="issue-103-animations-print-incorrectly-minor-50">Issue 10.3 - Animations Print Incorrectly (Minor - 50%)</h4>
+<p><strong>Location:</strong> Various CSS files
+<strong>Issue:</strong> Some animated elements (like progress bar gradient) may print in mid-animation state.
+<strong>Suggested Fix:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="p">@</span><span class="k">media</span><span class="w"> </span><span class="nt">print</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">  </span><span class="p">.</span><span class="nc">progress-bar</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">    </span><span class="k">animation</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="w"> </span><span class="cp">!important</span><span class="p">;</span>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">    </span><span class="k">background</span><span class="p">:</span><span class="w"> </span><span class="nf">var</span><span class="p">(</span><span class="nv">--primary</span><span class="p">)</span><span class="w"> </span><span class="cp">!important</span><span class="p">;</span>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>
+<a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="w">  </span><span class="c">/* Disable all animations */</span>
+<a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a><span class="w">  </span><span class="o">*,</span><span class="w"> </span><span class="o">*</span><span class="p">::</span><span class="nd">before</span><span class="o">,</span><span class="w"> </span><span class="o">*</span><span class="p">::</span><span class="nd">after</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a><span class="w">    </span><span class="k">animation</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="w"> </span><span class="cp">!important</span><span class="p">;</span>
+<a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a><span class="w">    </span><span class="k">transition</span><span class="p">:</span><span class="w"> </span><span class="kc">none</span><span class="w"> </span><span class="cp">!important</span><span class="p">;</span>
+<a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a><span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h2 id="priority-matrix">Priority Matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Issue</th>
+<th>Effort</th>
+<th>Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P0</td>
+<td>5.1 No navigation warning during upload</td>
+<td>Low</td>
+<td>High</td>
+</tr>
+<tr>
+<td>P0</td>
+<td>7.1 No JS fallback</td>
+<td>Medium</td>
+<td>High</td>
+</tr>
+<tr>
+<td>P0</td>
+<td>2.1 Tab focus trap in hidden panels</td>
+<td>Medium</td>
+<td>High</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>1.1 Upload double-submit</td>
+<td>Low</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>2.3 Modal focus trap missing</td>
+<td>Medium</td>
+<td>High</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>4.1 No timeout feedback</td>
+<td>Low</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>5.3 No sleep recovery</td>
+<td>Medium</td>
+<td>High</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>6.1 No transcript virtualization</td>
+<td>High</td>
+<td>High</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>8.1 Screen reader live regions</td>
+<td>Low</td>
+<td>High</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1.2 Export button race</td>
+<td>Low</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>1.3 Bookmark throttle</td>
+<td>Low</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>2.2 Arrow key navigation</td>
+<td>Medium</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>3.3 Transcript height jumps</td>
+<td>Low</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>4.2 Search cancellation</td>
+<td>Medium</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>4.3 Upload progress</td>
+<td>Medium</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>6.2 Filename overflow</td>
+<td>Low</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>6.3 Bookmarks pagination</td>
+<td>Medium</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>9.1 Tab labels at zoom</td>
+<td>Low</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>9.3 Modal overflow at zoom</td>
+<td>Low</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>10.1 Print styles</td>
+<td>Low</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>3.1 Sidebar sticky issues</td>
+<td>Low</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>3.2 Hero visual overflow</td>
+<td>Low</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>5.2 Background tab polling</td>
+<td>Low</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>8.2 Upload zone ARIA</td>
+<td>Low</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>8.3 Toast timing</td>
+<td>Low</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>9.2 Stats wrap</td>
+<td>Low</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>10.2 Print button</td>
+<td>Low</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>10.3 Animation print</td>
+<td>Low</td>
+<td>Low</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="quick-wins-implement-in-30-minutes-each">Quick Wins (Implement in &lt; 30 minutes each)</h2>
+<ol>
+<li><strong>Add <code>beforeunload</code> warning</strong> - Prevents accidental navigation loss</li>
+<li><strong>Add noscript fallback message</strong> - Basic progressive enhancement</li>
+<li><strong>Add upload debounce flag</strong> - Prevents double uploads</li>
+<li><strong>Extend toast duration for errors</strong> - Accessibility improvement</li>
+<li><strong>Add <code>contain: layout</code> to hero-visual</strong> - Prevents resize overflow</li>
+<li><strong>Fix filename overflow CSS</strong> - Simple text-overflow fix</li>
+</ol>
+<hr />
+<h2 id="recommendations">Recommendations</h2>
+<h3 id="before-public-release-blockers">Before Public Release (Blockers)</h3>
+<ol>
+<li>Implement <code>beforeunload</code> confirmation during upload/processing</li>
+<li>Add noscript fallback message</li>
+<li>Fix focus trap for hidden panels</li>
+</ol>
+<h3 id="before-v10-critical">Before v1.0 (Critical)</h3>
+<ol>
+<li>Add modal focus trapping</li>
+<li>Implement sleep/suspend recovery</li>
+<li>Add screen reader announcements</li>
+<li>Virtualize long transcripts</li>
+</ol>
+<h3 id="post-launch-majorminor">Post-Launch (Major/Minor)</h3>
+<ol>
+<li>Add arrow key navigation for tabs</li>
+<li>Improve print styles</li>
+<li>Add loading cancellation for search</li>
+<li>Better zoom handling</li>
+</ol>
+<hr />
+<p><em>Review completed: 2026-01-09</em>
+<em>FORTRESS 4.1.1 - AI prepares, Human decides</em></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/matte1782/lecture-mind" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "search.highlight", "search.suggest", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

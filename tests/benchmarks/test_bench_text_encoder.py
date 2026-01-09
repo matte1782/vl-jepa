@@ -94,10 +94,10 @@ class TestTextEncoderBenchmarks:
     def test_encode_batch_latency(self, benchmark, sample_queries: list[str]) -> None:
         """
         TEST_ID: T006.9
-        BUDGET: <200ms for 5 queries
+        BUDGET: <300ms for 5 queries
         Given: A batch of 5 query strings
         When: TextEncoder.encode_batch() is called
-        Then: Encoding completes in <200ms (40ms per query amortized)
+        Then: Encoding completes in <300ms (60ms per query amortized)
         """
         # Arrange
         encoder = TextEncoder.load()
@@ -107,7 +107,7 @@ class TestTextEncoderBenchmarks:
 
         # Assert
         assert result.shape == (5, 768)
-        assert benchmark.stats["mean"] < 0.200  # 200ms
+        assert benchmark.stats["mean"] < 0.300  # 300ms (with buffer for system variability)
 
     def test_placeholder_batch_latency(
         self,

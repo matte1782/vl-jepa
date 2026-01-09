@@ -24,6 +24,22 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎬</text></svg>">
 </head>
 <body class="min-h-screen">
+    <!-- P0 FIX: Fallback for users with JavaScript disabled -->
+    <noscript>
+        <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #f1f5f9; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 2rem; font-family: 'Inter', system-ui, sans-serif;">
+            <div style="max-width: 500px; text-align: center;">
+                <div style="font-size: 4rem; margin-bottom: 1rem;">🎬</div>
+                <h1 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: #06b6d4;">Lecture Mind</h1>
+                <p style="font-size: 1.125rem; margin-bottom: 1.5rem; color: #94a3b8;">JavaScript is required to use this application.</p>
+                <p style="color: #64748b; line-height: 1.6;">Lecture Mind uses advanced AI processing to analyze your lecture videos. Please enable JavaScript in your browser settings to access all features including video upload, transcription, and semantic search.</p>
+                <div style="margin-top: 2rem; padding: 1rem; background: rgba(6, 182, 212, 0.1); border-radius: 0.5rem; border: 1px solid rgba(6, 182, 212, 0.2);">
+                    <p style="color: #06b6d4; font-size: 0.875rem;">How to enable JavaScript:</p>
+                    <p style="color: #94a3b8; font-size: 0.875rem; margin-top: 0.5rem;">Chrome: Settings → Privacy and security → Site settings → JavaScript<br>Firefox: about:config → javascript.enabled → true<br>Safari: Preferences → Security → Enable JavaScript</p>
+                </div>
+            </div>
+        </div>
+    </noscript>
+
     <!-- Skip to main content - Accessibility -->
     <a href="#app-section" class="skip-link">Skip to app</a>
 
@@ -544,6 +560,12 @@
                                             </svg>
                                             Export
                                         </button>
+                                        <button class="tabs-trigger" data-state="inactive" data-tab="study-tools" role="tab" aria-selected="false" aria-controls="tab-study-tools">
+                                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                                            </svg>
+                                            Study Tools
+                                        </button>
                                     </div>
 
                                     <!-- Tab Content -->
@@ -637,6 +659,243 @@
                                                         <p class="text-muted">Your notes include bookmarks, confusion markers, and transcript</p>
                                                     </div>
                                                     <div id="study-notes-content" class="study-notes-content"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Study Tools Tab -->
+                                        <div id="tab-study-tools" class="tabs-content" data-state="inactive" role="tabpanel" aria-labelledby="tab-study-tools">
+                                            <div class="study-tools-section">
+                                                <!-- Study Tools Grid -->
+                                                <div class="study-tools-grid">
+                                                    <!-- Quiz Generation Card -->
+                                                    <div class="study-tool-card" data-tool="quiz">
+                                                        <div class="study-tool-icon study-tool-icon--quiz">
+                                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+                                                            </svg>
+                                                        </div>
+                                                        <h4 class="study-tool-title">Quiz Generator</h4>
+                                                        <p class="study-tool-desc">Generate practice questions from your lecture transcript</p>
+                                                        <button id="generate-quiz-btn" class="btn study-tool-btn" data-variant="primary" disabled>
+                                                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456z" />
+                                                            </svg>
+                                                            Generate Quiz
+                                                        </button>
+                                                    </div>
+
+                                                    <!-- Flashcards Card -->
+                                                    <div class="study-tool-card" data-tool="flashcards">
+                                                        <div class="study-tool-icon study-tool-icon--flashcards">
+                                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3" />
+                                                            </svg>
+                                                        </div>
+                                                        <h4 class="study-tool-title">Flashcards</h4>
+                                                        <p class="study-tool-desc">Create flip cards for key concepts and terms</p>
+                                                        <button id="create-flashcards-btn" class="btn study-tool-btn" data-variant="primary" disabled>
+                                                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                                            </svg>
+                                                            Create Cards
+                                                        </button>
+                                                    </div>
+
+                                                    <!-- Share & Collaborate Card -->
+                                                    <div class="study-tool-card" data-tool="share">
+                                                        <div class="study-tool-icon study-tool-icon--share">
+                                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
+                                                            </svg>
+                                                        </div>
+                                                        <h4 class="study-tool-title">Share & Collaborate</h4>
+                                                        <p class="study-tool-desc">Share timestamps and notes with classmates</p>
+                                                        <button id="share-btn" class="btn study-tool-btn" data-variant="primary" disabled>
+                                                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+                                                            </svg>
+                                                            Create Share Link
+                                                        </button>
+                                                    </div>
+
+                                                    <!-- Notes & Annotations Card -->
+                                                    <div class="study-tool-card" data-tool="notes">
+                                                        <div class="study-tool-icon study-tool-icon--notes">
+                                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                                                            </svg>
+                                                        </div>
+                                                        <h4 class="study-tool-title">Notes & Annotations</h4>
+                                                        <p class="study-tool-desc">Add detailed notes to any timestamp</p>
+                                                        <button id="open-notes-btn" class="btn study-tool-btn" data-variant="primary" disabled>
+                                                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                                                            </svg>
+                                                            Add Note
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Quiz Panel (hidden by default) -->
+                                                <div id="quiz-panel" class="study-panel hidden">
+                                                    <div class="study-panel-header">
+                                                        <h4>Practice Quiz</h4>
+                                                        <button id="close-quiz-btn" class="btn" data-variant="ghost" data-size="icon">
+                                                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                    <div id="quiz-content" class="quiz-content">
+                                                        <!-- Quiz questions will be populated here -->
+                                                    </div>
+                                                    <div class="quiz-footer">
+                                                        <span id="quiz-progress" class="quiz-progress">Question 1 of 5</span>
+                                                        <button id="next-question-btn" class="btn" data-variant="primary">Next Question</button>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Flashcards Panel (hidden by default) -->
+                                                <div id="flashcards-panel" class="study-panel hidden">
+                                                    <div class="study-panel-header">
+                                                        <h4>Flashcards</h4>
+                                                        <div class="flashcard-controls">
+                                                            <button id="shuffle-cards-btn" class="btn" data-variant="ghost" data-size="sm" title="Shuffle cards">
+                                                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 00-3.7-3.7 48.678 48.678 0 00-7.324 0 4.006 4.006 0 00-3.7 3.7c-.017.22-.032.441-.046.662M19.5 12l3-3m-3 3l-3-3m-12 3c0 1.232.046 2.453.138 3.662a4.006 4.006 0 003.7 3.7 48.656 48.656 0 007.324 0 4.006 4.006 0 003.7-3.7c.017-.22.032-.441.046-.662M4.5 12l3 3m-3-3l-3 3" />
+                                                                </svg>
+                                                            </button>
+                                                            <button id="close-flashcards-btn" class="btn" data-variant="ghost" data-size="icon">
+                                                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div id="flashcard-container" class="flashcard-container">
+                                                        <div class="flashcard" id="current-flashcard">
+                                                            <div class="flashcard-inner">
+                                                                <div class="flashcard-front">
+                                                                    <span class="flashcard-label">Question</span>
+                                                                    <p id="flashcard-front-text">Click to flip</p>
+                                                                </div>
+                                                                <div class="flashcard-back">
+                                                                    <span class="flashcard-label">Answer</span>
+                                                                    <p id="flashcard-back-text">Answer here</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flashcard-nav">
+                                                        <button id="prev-card-btn" class="btn" data-variant="secondary">
+                                                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                                                            </svg>
+                                                            Previous
+                                                        </button>
+                                                        <span id="flashcard-progress" class="flashcard-progress">1 / 10</span>
+                                                        <button id="next-card-btn" class="btn" data-variant="secondary">
+                                                            Next
+                                                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Share Panel (hidden by default) -->
+                                                <div id="share-panel" class="study-panel hidden">
+                                                    <div class="study-panel-header">
+                                                        <h4>Share & Collaborate</h4>
+                                                        <button id="close-share-btn" class="btn" data-variant="ghost" data-size="icon">
+                                                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                    <div class="share-options">
+                                                        <div class="share-option-card">
+                                                            <div class="share-option-icon">
+                                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
+                                                                </svg>
+                                                            </div>
+                                                            <div class="share-option-content">
+                                                                <h5>Copy Share Link</h5>
+                                                                <p class="text-muted">Share a link with your current timestamp and notes</p>
+                                                            </div>
+                                                            <button id="copy-share-link-btn" class="btn" data-variant="secondary" data-size="sm">Copy Link</button>
+                                                        </div>
+                                                        <div class="share-option-card">
+                                                            <div class="share-option-icon">
+                                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                                                                </svg>
+                                                            </div>
+                                                            <div class="share-option-content">
+                                                                <h5>Study Group</h5>
+                                                                <p class="text-muted">Create a collaborative study session</p>
+                                                            </div>
+                                                            <button id="create-study-group-btn" class="btn" data-variant="secondary" data-size="sm">Create Group</button>
+                                                        </div>
+                                                        <div class="share-option-card">
+                                                            <div class="share-option-icon">
+                                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                                                                </svg>
+                                                            </div>
+                                                            <div class="share-option-content">
+                                                                <h5>Email Summary</h5>
+                                                                <p class="text-muted">Send notes summary via email</p>
+                                                            </div>
+                                                            <button id="email-summary-btn" class="btn" data-variant="secondary" data-size="sm">Send Email</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Notes Panel (hidden by default) -->
+                                                <div id="notes-panel" class="study-panel hidden">
+                                                    <div class="study-panel-header">
+                                                        <h4>Notes & Annotations</h4>
+                                                        <button id="close-notes-btn" class="btn" data-variant="ghost" data-size="icon">
+                                                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                    <div class="notes-editor">
+                                                        <div class="notes-timestamp-selector">
+                                                            <label for="note-timestamp" class="notes-label">Timestamp:</label>
+                                                            <div class="notes-timestamp-input">
+                                                                <input type="text" id="note-timestamp" class="input" placeholder="00:00" readonly>
+                                                                <button id="use-current-time-btn" class="btn" data-variant="ghost" data-size="sm">Use Current Time</button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="notes-content-editor">
+                                                            <label for="note-content" class="notes-label">Note:</label>
+                                                            <textarea id="note-content" class="input notes-textarea" placeholder="Write your note here... (Supports markdown)" rows="4"></textarea>
+                                                        </div>
+                                                        <div class="notes-tags">
+                                                            <label class="notes-label">Tags:</label>
+                                                            <div class="notes-tag-list">
+                                                                <button class="notes-tag" data-tag="important">Important</button>
+                                                                <button class="notes-tag" data-tag="question">Question</button>
+                                                                <button class="notes-tag" data-tag="example">Example</button>
+                                                                <button class="notes-tag" data-tag="definition">Definition</button>
+                                                                <button class="notes-tag" data-tag="formula">Formula</button>
+                                                            </div>
+                                                        </div>
+                                                        <button id="save-note-btn" class="btn btn-full" data-variant="primary">
+                                                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                                            </svg>
+                                                            Save Note
+                                                        </button>
+                                                    </div>
+                                                    <div id="notes-list" class="notes-list">
+                                                        <!-- Saved notes will be populated here -->
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

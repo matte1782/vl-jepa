@@ -2,7 +2,7 @@
 # IMPLEMENTS: v0.3.0 G4 - Docker image
 #
 # Build: docker build -t lecture-mind .
-# Run:   docker run -p 7860:7860 lecture-mind
+# Run:   docker run -p 8000:8000 lecture-mind
 #
 # Target: <3GB image size
 
@@ -32,9 +32,9 @@ ENV PATH="/opt/venv/bin:$PATH"
 COPY pyproject.toml README.md ./
 COPY src/ ./src/
 
-# Install the package with all extras except dev
+# Install the package with API dependencies
 RUN pip install --upgrade pip && \
-    pip install ".[ml,audio,ui]"
+    pip install ".[ml,audio,api]"
 
 # ==============================================================================
 # Stage 2: Runtime - Minimal production image
@@ -53,11 +53,9 @@ LABEL org.opencontainers.image.title="Lecture Mind" \
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONFAULTHANDLER=1 \
-    # Gradio settings
-    GRADIO_SERVER_NAME=0.0.0.0 \
-    GRADIO_SERVER_PORT=7860 \
-    # Disable telemetry
-    GRADIO_ANALYTICS_ENABLED=false \
+    # API server settings
+    HOST=0.0.0.0 \
+    PORT=8000 \
     # Model cache directory
     HF_HOME=/app/cache/huggingface \
     TORCH_HOME=/app/cache/torch
@@ -98,12 +96,12 @@ COPY --chown=appuser:appgroup pyproject.toml README.md ./
 # Switch to non-root user
 USER appuser
 
-# Expose Gradio port
-EXPOSE 7860
+# Expose API port
+EXPOSE 8000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:7860/')" || exit 1
+    CMD python -c "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')" || exit 1
 
-# Default command: Launch Gradio UI
-CMD ["python", "-m", "vl_jepa.ui.app", "--port", "7860"]
+# Default command: Launch FastAPI server
+CMD ["uvicorn", "vl_jepa.api.main:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -87,6 +87,11 @@ const elements = {
 };
 
 // ============================================
+// PROCESSING STATE (for beforeunload warning)
+// ============================================
+let isProcessing = false;
+
+// ============================================
 // INITIALIZATION
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
@@ -100,7 +105,37 @@ document.addEventListener('DOMContentLoaded', () => {
   initExport();
   initExportOptions();
   initBookmarks();
+  initBeforeUnloadWarning();
+  initFocusTrapManagement();
 });
+
+// ============================================
+// P0 FIX: BEFOREUNLOAD WARNING
+// Prevents data loss when user navigates away during upload/processing
+// ============================================
+function initBeforeUnloadWarning() {
+  window.addEventListener('beforeunload', (e) => {
+    if (isProcessing) {
+      // Standard way to trigger the browser's "unsaved changes" dialog
+      e.preventDefault();
+      // For older browsers
+      e.returnValue = 'Your video is still being processed. Are you sure you want to leave?';
+      return e.returnValue;
+    }
+  });
+}
+
+// ============================================
+// P0 FIX: FOCUS TRAP MANAGEMENT
+// Ensures hidden panels don't trap focus
+// ============================================
+function initFocusTrapManagement() {
+  // Apply inert to all hidden panels on init
+  const hiddenPanels = document.querySelectorAll('.study-panel.hidden, .tabs-content[data-state="inactive"]');
+  hiddenPanels.forEach(panel => {
+    panel.setAttribute('inert', '');
+  });
+}
 
 // ============================================
 // ADVANCED UI EFFECTS
@@ -206,7 +241,7 @@ function initTypewriter() {
   setTimeout(type, 500);
 }
 
-// 3. INTERACTIVE PARTICLES
+// 3. INTERACTIVE PARTICLES (RAF-throttled for performance)
 function initInteractiveParticles() {
   const particles = document.querySelectorAll('.particle');
   const hero = document.querySelector('.hero');
@@ -215,16 +250,19 @@ function initInteractiveParticles() {
   particles.forEach(p => p.classList.add('interactive'));
 
   let mouseX = 0, mouseY = 0;
+  let ticking = false;
+  let heroRect = hero.getBoundingClientRect();
 
-  hero.addEventListener('mousemove', (e) => {
-    const rect = hero.getBoundingClientRect();
-    mouseX = e.clientX - rect.left;
-    mouseY = e.clientY - rect.top;
+  // Update rect on scroll/resize
+  const updateRect = () => { heroRect = hero.getBoundingClientRect(); };
+  window.addEventListener('scroll', updateRect, { passive: true });
+  window.addEventListener('resize', updateRect, { passive: true });
 
+  function updateParticles() {
     particles.forEach(particle => {
       const pRect = particle.getBoundingClientRect();
-      const pX = pRect.left - rect.left + pRect.width / 2;
-      const pY = pRect.top - rect.top + pRect.height / 2;
+      const pX = pRect.left - heroRect.left + pRect.width / 2;
+      const pY = pRect.top - heroRect.top + pRect.height / 2;
 
       const dx = mouseX - pX;
       const dy = mouseY - pY;
@@ -239,37 +277,66 @@ function initInteractiveParticles() {
         particle.style.transform = '';
       }
     });
-  });
+    ticking = false;
+  }
+
+  hero.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX - heroRect.left;
+    mouseY = e.clientY - heroRect.top;
+
+    if (!ticking) {
+      requestAnimationFrame(updateParticles);
+      ticking = true;
+    }
+  }, { passive: true });
 
   hero.addEventListener('mouseleave', () => {
     particles.forEach(p => p.style.transform = '');
   });
 }
 
-// 4. 3D CARD TILT
+// 4. 3D CARD TILT (RAF-throttled with will-change management)
 function initCardTilt() {
   const cards = document.querySelectorAll('.feature-card, .tech-card');
 
   cards.forEach(card => {
     card.classList.add('tilt-card');
+    let ticking = false;
+    let mouseX = 0, mouseY = 0;
 
-    card.addEventListener('mousemove', (e) => {
+    function updateTilt() {
       const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
 
-      const rotateX = (y - centerY) / centerY * -8;
-      const rotateY = (x - centerX) / centerX * 8;
+      const rotateX = (mouseY - centerY) / centerY * -8;
+      const rotateY = (mouseX - centerX) / centerX * 8;
 
       card.style.setProperty('--rotateX', `${rotateX}deg`);
       card.style.setProperty('--rotateY', `${rotateY}deg`);
+      ticking = false;
+    }
+
+    card.addEventListener('mouseenter', () => {
+      card.style.willChange = 'transform';
     });
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      mouseX = e.clientX - rect.left;
+      mouseY = e.clientY - rect.top;
+
+      if (!ticking) {
+        requestAnimationFrame(updateTilt);
+        ticking = true;
+      }
+    }, { passive: true });
 
     card.addEventListener('mouseleave', () => {
       card.style.setProperty('--rotateX', '0deg');
       card.style.setProperty('--rotateY', '0deg');
+      // Remove will-change after transition
+      setTimeout(() => { card.style.willChange = 'auto'; }, 400);
     });
   });
 }
@@ -633,6 +700,9 @@ async function uploadFile(file) {
   videoUrl = URL.createObjectURL(file);
   elements.videoPlayer.src = videoUrl;
 
+  // Set processing state (enables beforeunload warning)
+  isProcessing = true;
+
   // Show video player and progress
   showElement(elements.videoPlayerSection);
   showElement(elements.progressSection);
@@ -751,6 +821,9 @@ async function loadResults() {
     }
 
     processingResult = data.result;
+
+    // Clear processing state (disables beforeunload warning)
+    isProcessing = false;
 
     // Hide progress, show results with animation
     hideElement(elements.progressSection);
@@ -1023,10 +1096,16 @@ function switchTab(tabName) {
     t.setAttribute('aria-selected', isActive ? 'true' : 'false');
   });
 
-  // Update content panels
+  // Update content panels with inert management for focus trap fix
   $$('.tabs-content').forEach(panel => {
     const isActive = panel.id === `tab-${tabName}`;
     panel.setAttribute('data-state', isActive ? 'active' : 'inactive');
+    // P0 FIX: Prevent focus trap in inactive panels
+    if (isActive) {
+      panel.removeAttribute('inert');
+    } else {
+      panel.setAttribute('inert', '');
+    }
   });
 }
 
@@ -1442,6 +1521,8 @@ function removeToast(toast) {
 // ============================================
 function showElement(el) {
   el.classList.remove('hidden');
+  // P0 FIX: Remove inert when showing element (enables focus)
+  el.removeAttribute('inert');
   if (!prefersReducedMotion.matches) {
     el.style.opacity = '0';
     requestAnimationFrame(() => {
@@ -1452,6 +1533,8 @@ function showElement(el) {
 }
 
 function hideElement(el) {
+  // P0 FIX: Add inert when hiding element (prevents focus trap)
+  el.setAttribute('inert', '');
   if (!prefersReducedMotion.matches) {
     el.style.transition = 'opacity 150ms ease-out';
     el.style.opacity = '0';
@@ -1477,6 +1560,9 @@ async function fetchWithTimeout(url, options = {}) {
 }
 
 function resetUpload() {
+  // Clear processing state (disables beforeunload warning)
+  isProcessing = false;
+
   showElement(elements.uploadSection);
   hideElement(elements.progressSection);
   hideElement(elements.videoInfo);
@@ -2270,5 +2356,932 @@ style.textContent = `
     background: var(--surface-1);
     border-radius: var(--radius-sm);
   }
+
+  /* Bookmark type selector */
+  .bookmark-type-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.2s ease;
+  }
+
+  .bookmark-type-selector {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    min-width: 280px;
+    animation: scaleIn 0.2s ease;
+  }
+
+  .bookmark-type-title {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    margin: 0 0 var(--space-3) 0;
+    color: var(--foreground);
+  }
+
+  .bookmark-type-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+  }
+
+  .bookmark-type-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-3);
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .bookmark-type-option:hover {
+    border-color: var(--primary);
+    background: var(--glow-primary);
+  }
+
+  .bookmark-type-option--yellow:hover { border-color: #eab308; }
+  .bookmark-type-option--blue:hover { border-color: #3b82f6; }
+  .bookmark-type-option--green:hover { border-color: #22c55e; }
+  .bookmark-type-option--orange:hover { border-color: #f97316; }
+
+  .bookmark-type-option-icon {
+    font-size: 24px;
+  }
+
+  .bookmark-type-option-label {
+    font-size: var(--text-xs);
+    font-weight: 500;
+  }
+
+  .bookmark-type-option-key {
+    font-size: 10px;
+    padding: 2px 6px;
+    background: var(--surface-2);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+  }
+
+  .bookmark-type-hint {
+    margin-top: var(--space-3);
+    font-size: var(--text-xs);
+    text-align: center;
+  }
+
+  /* Bookmark modal */
+  .bookmark-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.2s ease;
+  }
+
+  .bookmark-modal {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+    min-width: 320px;
+    max-width: 90vw;
+    animation: scaleIn 0.2s ease;
+  }
+
+  .bookmark-modal-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  .bookmark-icon {
+    font-size: 24px;
+  }
+
+  .bookmark-icon--yellow { color: #eab308; }
+  .bookmark-icon--blue { color: #3b82f6; }
+  .bookmark-icon--green { color: #22c55e; }
+  .bookmark-icon--orange { color: #f97316; }
+
+  .bookmark-item-icon {
+    font-size: 14px;
+  }
+
+  .bookmark-modal-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .bookmark-modal-title {
+    font-size: var(--text-base);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .bookmark-modal-timestamp {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .bookmark-modal-note-group {
+    margin-bottom: var(--space-4);
+  }
+
+  .bookmark-modal-label {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    margin-bottom: var(--space-2);
+  }
+
+  .bookmark-modal-textarea {
+    width: 100%;
+    resize: vertical;
+  }
+
+  .bookmark-modal-buttons {
+    display: flex;
+    gap: var(--space-2);
+    justify-content: flex-end;
+  }
 `;
 document.head.appendChild(style);
+
+// ============================================
+// STUDY TOOLS MODULE
+// ============================================
+const NOTES_STORAGE_KEY = 'lectureMind_notes';
+let studyToolsState = {
+  quizQuestions: [],
+  currentQuizIndex: 0,
+  quizScore: 0,
+  flashcards: [],
+  currentFlashcardIndex: 0,
+  userNotes: [],
+  selectedTags: []
+};
+
+// Initialize study tools when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  initStudyTools();
+});
+
+function initStudyTools() {
+  // Load notes from storage
+  loadNotesFromStorage();
+
+  // Quiz buttons
+  const generateQuizBtn = $('#generate-quiz-btn');
+  const closeQuizBtn = $('#close-quiz-btn');
+  const nextQuestionBtn = $('#next-question-btn');
+
+  if (generateQuizBtn) {
+    generateQuizBtn.addEventListener('click', handleGenerateQuiz);
+  }
+  if (closeQuizBtn) {
+    closeQuizBtn.addEventListener('click', closeQuizPanel);
+  }
+  if (nextQuestionBtn) {
+    nextQuestionBtn.addEventListener('click', handleNextQuestion);
+  }
+
+  // Flashcard buttons
+  const createFlashcardsBtn = $('#create-flashcards-btn');
+  const closeFlashcardsBtn = $('#close-flashcards-btn');
+  const shuffleCardsBtn = $('#shuffle-cards-btn');
+  const prevCardBtn = $('#prev-card-btn');
+  const nextCardBtn = $('#next-card-btn');
+  const flashcard = $('#current-flashcard');
+
+  if (createFlashcardsBtn) {
+    createFlashcardsBtn.addEventListener('click', handleCreateFlashcards);
+  }
+  if (closeFlashcardsBtn) {
+    closeFlashcardsBtn.addEventListener('click', closeFlashcardsPanel);
+  }
+  if (shuffleCardsBtn) {
+    shuffleCardsBtn.addEventListener('click', shuffleFlashcards);
+  }
+  if (prevCardBtn) {
+    prevCardBtn.addEventListener('click', showPreviousCard);
+  }
+  if (nextCardBtn) {
+    nextCardBtn.addEventListener('click', showNextCard);
+  }
+  if (flashcard) {
+    flashcard.addEventListener('click', () => flashcard.classList.toggle('flipped'));
+  }
+
+  // Share buttons
+  const shareBtn = $('#share-btn');
+  const closeShareBtn = $('#close-share-btn');
+  const copyShareLinkBtn = $('#copy-share-link-btn');
+  const createStudyGroupBtn = $('#create-study-group-btn');
+  const emailSummaryBtn = $('#email-summary-btn');
+
+  if (shareBtn) {
+    shareBtn.addEventListener('click', openSharePanel);
+  }
+  if (closeShareBtn) {
+    closeShareBtn.addEventListener('click', closeSharePanel);
+  }
+  if (copyShareLinkBtn) {
+    copyShareLinkBtn.addEventListener('click', handleCopyShareLink);
+  }
+  if (createStudyGroupBtn) {
+    createStudyGroupBtn.addEventListener('click', handleCreateStudyGroup);
+  }
+  if (emailSummaryBtn) {
+    emailSummaryBtn.addEventListener('click', handleEmailSummary);
+  }
+
+  // Notes buttons
+  const openNotesBtn = $('#open-notes-btn');
+  const closeNotesBtn = $('#close-notes-btn');
+  const useCurrentTimeBtn = $('#use-current-time-btn');
+  const saveNoteBtn = $('#save-note-btn');
+  const noteTags = $$('.notes-tag');
+
+  if (openNotesBtn) {
+    openNotesBtn.addEventListener('click', openNotesPanel);
+  }
+  if (closeNotesBtn) {
+    closeNotesBtn.addEventListener('click', closeNotesPanel);
+  }
+  if (useCurrentTimeBtn) {
+    useCurrentTimeBtn.addEventListener('click', useCurrentVideoTime);
+  }
+  if (saveNoteBtn) {
+    saveNoteBtn.addEventListener('click', handleSaveNote);
+  }
+  noteTags.forEach(tag => {
+    tag.addEventListener('click', () => toggleNoteTag(tag));
+  });
+}
+
+/**
+ * Enable study tools buttons after video is processed
+ */
+function enableStudyTools() {
+  const buttons = [
+    '#generate-quiz-btn',
+    '#create-flashcards-btn',
+    '#share-btn',
+    '#open-notes-btn'
+  ];
+
+  buttons.forEach(selector => {
+    const btn = $(selector);
+    if (btn) {
+      btn.disabled = false;
+    }
+  });
+}
+
+// ============================================
+// QUIZ GENERATION
+// ============================================
+function handleGenerateQuiz() {
+  if (!processingResult || !processingResult.transcript) {
+    showToast('warning', 'No Content', 'Process a video first to generate a quiz');
+    return;
+  }
+
+  // Generate quiz questions from transcript
+  studyToolsState.quizQuestions = generateQuizFromTranscript(processingResult.transcript);
+  studyToolsState.currentQuizIndex = 0;
+  studyToolsState.quizScore = 0;
+
+  if (studyToolsState.quizQuestions.length === 0) {
+    showToast('warning', 'Cannot Generate Quiz', 'Not enough content in transcript');
+    return;
+  }
+
+  // Show quiz panel
+  const studyToolsGrid = $('.study-tools-grid');
+  const quizPanel = $('#quiz-panel');
+
+  if (studyToolsGrid) hideElement(studyToolsGrid);
+  if (quizPanel) {
+    showElement(quizPanel);
+    renderQuizQuestion();
+  }
+
+  showToast('success', 'Quiz Generated', `${studyToolsState.quizQuestions.length} questions created`);
+}
+
+function generateQuizFromTranscript(transcript) {
+  const questions = [];
+
+  // Extract key sentences from transcript chunks
+  const sentences = transcript
+    .map(chunk => chunk.text)
+    .join(' ')
+    .split(/[.!?]+/)
+    .filter(s => s.trim().length > 20)
+    .slice(0, 10);
+
+  // Generate fill-in-blank style questions
+  sentences.forEach((sentence, i) => {
+    const words = sentence.trim().split(/\s+/);
+    if (words.length < 5) return;
+
+    // Find a key word to blank out (noun-like words, 4+ chars)
+    const keywordIndex = words.findIndex((w, idx) =>
+      idx > 1 && idx < words.length - 1 && w.length >= 4 && /^[A-Z]?[a-z]+$/.test(w)
+    );
+
+    if (keywordIndex === -1) return;
+
+    const keyword = words[keywordIndex];
+    const blankedSentence = [...words];
+    blankedSentence[keywordIndex] = '_____';
+
+    // Generate wrong options
+    const otherWords = words
+      .filter((w, idx) => idx !== keywordIndex && w.length >= 3)
+      .slice(0, 2);
+
+    const options = [
+      keyword,
+      otherWords[0] || 'option',
+      otherWords[1] || 'answer',
+      'none of the above'
+    ].sort(() => Math.random() - 0.5);
+
+    questions.push({
+      id: i,
+      question: `Complete the sentence:\n"${blankedSentence.join(' ')}"`,
+      options: options,
+      correctIndex: options.indexOf(keyword),
+      selectedIndex: null
+    });
+  });
+
+  return questions.slice(0, 5); // Limit to 5 questions
+}
+
+function renderQuizQuestion() {
+  const quizContent = $('#quiz-content');
+  const quizProgress = $('#quiz-progress');
+  const nextBtn = $('#next-question-btn');
+
+  if (!quizContent) return;
+
+  const question = studyToolsState.quizQuestions[studyToolsState.currentQuizIndex];
+  if (!question) {
+    renderQuizScore();
+    return;
+  }
+
+  // Update progress
+  if (quizProgress) {
+    quizProgress.textContent = `Question ${studyToolsState.currentQuizIndex + 1} of ${studyToolsState.quizQuestions.length}`;
+  }
+
+  if (nextBtn) {
+    nextBtn.textContent = studyToolsState.currentQuizIndex === studyToolsState.quizQuestions.length - 1
+      ? 'See Results' : 'Next Question';
+  }
+
+  clearElement(quizContent);
+
+  const questionDiv = createElement('div', 'quiz-question');
+  const questionText = createElement('p', 'quiz-question-text', {
+    textContent: question.question
+  });
+
+  const optionsDiv = createElement('div', 'quiz-options');
+  const letters = ['A', 'B', 'C', 'D'];
+
+  question.options.forEach((option, i) => {
+    const optionBtn = createElement('div', 'quiz-option', {
+      tabindex: '0',
+      role: 'button',
+      'data-index': i
+    });
+
+    const letter = createElement('span', 'quiz-option-letter', { textContent: letters[i] });
+    const text = createElement('span', 'quiz-option-text', { textContent: option });
+
+    optionBtn.appendChild(letter);
+    optionBtn.appendChild(text);
+
+    optionBtn.addEventListener('click', () => selectQuizOption(i));
+    optionBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        selectQuizOption(i);
+      }
+    });
+
+    optionsDiv.appendChild(optionBtn);
+  });
+
+  questionDiv.appendChild(questionText);
+  questionDiv.appendChild(optionsDiv);
+  quizContent.appendChild(questionDiv);
+}
+
+function selectQuizOption(index) {
+  const question = studyToolsState.quizQuestions[studyToolsState.currentQuizIndex];
+  if (!question || question.selectedIndex !== null) return;
+
+  question.selectedIndex = index;
+
+  // Update UI
+  const options = $$('.quiz-option');
+  options.forEach((opt, i) => {
+    opt.setAttribute('data-selected', i === index ? 'true' : 'false');
+
+    if (i === question.correctIndex) {
+      opt.setAttribute('data-correct', 'true');
+    } else if (i === index && i !== question.correctIndex) {
+      opt.setAttribute('data-incorrect', 'true');
+    }
+  });
+
+  if (index === question.correctIndex) {
+    studyToolsState.quizScore++;
+  }
+}
+
+function handleNextQuestion() {
+  const question = studyToolsState.quizQuestions[studyToolsState.currentQuizIndex];
+  if (question && question.selectedIndex === null) {
+    showToast('warning', 'Select an Answer', 'Please select an option before continuing');
+    return;
+  }
+
+  studyToolsState.currentQuizIndex++;
+  renderQuizQuestion();
+}
+
+function renderQuizScore() {
+  const quizContent = $('#quiz-content');
+  const quizFooter = $('.quiz-footer');
+
+  if (!quizContent) return;
+
+  clearElement(quizContent);
+
+  const scoreDiv = createElement('div', 'quiz-score');
+
+  const scoreCircle = createElement('div', 'quiz-score-circle');
+  const scoreValue = createElement('span', 'quiz-score-value', {
+    textContent: `${studyToolsState.quizScore}/${studyToolsState.quizQuestions.length}`
+  });
+  const scoreLabel = createElement('span', 'quiz-score-label', { textContent: 'Correct' });
+  scoreCircle.appendChild(scoreValue);
+  scoreCircle.appendChild(scoreLabel);
+
+  const percentage = Math.round((studyToolsState.quizScore / studyToolsState.quizQuestions.length) * 100);
+  const message = percentage >= 80 ? 'Excellent!' : percentage >= 60 ? 'Good job!' : 'Keep studying!';
+
+  const messageP = createElement('p', 'quiz-score-message', { textContent: message });
+
+  const retryBtn = createElement('button', 'btn', { 'data-variant': 'primary' });
+  retryBtn.textContent = 'Try Again';
+  retryBtn.addEventListener('click', () => {
+    studyToolsState.currentQuizIndex = 0;
+    studyToolsState.quizScore = 0;
+    studyToolsState.quizQuestions.forEach(q => q.selectedIndex = null);
+    renderQuizQuestion();
+  });
+
+  scoreDiv.appendChild(scoreCircle);
+  scoreDiv.appendChild(messageP);
+  scoreDiv.appendChild(retryBtn);
+  quizContent.appendChild(scoreDiv);
+
+  if (quizFooter) {
+    hideElement(quizFooter);
+  }
+}
+
+function closeQuizPanel() {
+  const studyToolsGrid = $('.study-tools-grid');
+  const quizPanel = $('#quiz-panel');
+  const quizFooter = $('.quiz-footer');
+
+  if (quizPanel) hideElement(quizPanel);
+  if (studyToolsGrid) showElement(studyToolsGrid);
+  if (quizFooter) showElement(quizFooter);
+}
+
+// ============================================
+// FLASHCARDS
+// ============================================
+function handleCreateFlashcards() {
+  if (!processingResult || !processingResult.transcript) {
+    showToast('warning', 'No Content', 'Process a video first to create flashcards');
+    return;
+  }
+
+  // Generate flashcards from transcript
+  studyToolsState.flashcards = generateFlashcardsFromTranscript(processingResult.transcript);
+  studyToolsState.currentFlashcardIndex = 0;
+
+  if (studyToolsState.flashcards.length === 0) {
+    showToast('warning', 'Cannot Create Flashcards', 'Not enough content in transcript');
+    return;
+  }
+
+  // Show flashcards panel
+  const studyToolsGrid = $('.study-tools-grid');
+  const flashcardsPanel = $('#flashcards-panel');
+
+  if (studyToolsGrid) hideElement(studyToolsGrid);
+  if (flashcardsPanel) {
+    showElement(flashcardsPanel);
+    renderCurrentFlashcard();
+  }
+
+  showToast('success', 'Flashcards Created', `${studyToolsState.flashcards.length} cards ready`);
+}
+
+function generateFlashcardsFromTranscript(transcript) {
+  const flashcards = [];
+
+  // Create flashcards from transcript chunks
+  transcript.forEach((chunk, i) => {
+    const text = chunk.text.trim();
+    if (text.length < 30) return;
+
+    // Split into question/answer format
+    const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 10);
+    if (sentences.length < 2) return;
+
+    // First sentence as question context, rest as answer
+    const question = `What was discussed at ${chunk.start_formatted}?`;
+    const answer = sentences.slice(0, 2).join('. ').trim();
+
+    if (answer.length > 20) {
+      flashcards.push({
+        id: i,
+        front: question,
+        back: answer,
+        timestamp: chunk.start
+      });
+    }
+  });
+
+  return flashcards.slice(0, 10); // Limit to 10 cards
+}
+
+function renderCurrentFlashcard() {
+  const flashcard = studyToolsState.flashcards[studyToolsState.currentFlashcardIndex];
+  const frontText = $('#flashcard-front-text');
+  const backText = $('#flashcard-back-text');
+  const progress = $('#flashcard-progress');
+  const card = $('#current-flashcard');
+
+  if (!flashcard) return;
+
+  if (frontText) frontText.textContent = flashcard.front;
+  if (backText) backText.textContent = flashcard.back;
+  if (progress) {
+    progress.textContent = `${studyToolsState.currentFlashcardIndex + 1} / ${studyToolsState.flashcards.length}`;
+  }
+
+  // Reset flip state
+  if (card) card.classList.remove('flipped');
+}
+
+function showPreviousCard() {
+  if (studyToolsState.currentFlashcardIndex > 0) {
+    const card = $('#current-flashcard');
+    if (card && !prefersReducedMotion.matches) {
+      card.classList.add('swiping-right');
+      setTimeout(() => {
+        card.classList.remove('swiping-right');
+        studyToolsState.currentFlashcardIndex--;
+        renderCurrentFlashcard();
+      }, 300);
+    } else {
+      studyToolsState.currentFlashcardIndex--;
+      renderCurrentFlashcard();
+    }
+  }
+}
+
+function showNextCard() {
+  if (studyToolsState.currentFlashcardIndex < studyToolsState.flashcards.length - 1) {
+    const card = $('#current-flashcard');
+    if (card && !prefersReducedMotion.matches) {
+      card.classList.add('swiping-left');
+      setTimeout(() => {
+        card.classList.remove('swiping-left');
+        studyToolsState.currentFlashcardIndex++;
+        renderCurrentFlashcard();
+      }, 300);
+    } else {
+      studyToolsState.currentFlashcardIndex++;
+      renderCurrentFlashcard();
+    }
+  }
+}
+
+function shuffleFlashcards() {
+  // Fisher-Yates shuffle
+  for (let i = studyToolsState.flashcards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [studyToolsState.flashcards[i], studyToolsState.flashcards[j]] =
+    [studyToolsState.flashcards[j], studyToolsState.flashcards[i]];
+  }
+
+  studyToolsState.currentFlashcardIndex = 0;
+  renderCurrentFlashcard();
+  showToast('info', 'Cards Shuffled', 'Flashcards have been randomized');
+}
+
+function closeFlashcardsPanel() {
+  const studyToolsGrid = $('.study-tools-grid');
+  const flashcardsPanel = $('#flashcards-panel');
+
+  if (flashcardsPanel) hideElement(flashcardsPanel);
+  if (studyToolsGrid) showElement(studyToolsGrid);
+}
+
+// ============================================
+// SHARE & COLLABORATE
+// ============================================
+function openSharePanel() {
+  if (!currentJobId) {
+    showToast('warning', 'No Video', 'Process a video first to share');
+    return;
+  }
+
+  const studyToolsGrid = $('.study-tools-grid');
+  const sharePanel = $('#share-panel');
+
+  if (studyToolsGrid) hideElement(studyToolsGrid);
+  if (sharePanel) showElement(sharePanel);
+}
+
+function closeSharePanel() {
+  const studyToolsGrid = $('.study-tools-grid');
+  const sharePanel = $('#share-panel');
+
+  if (sharePanel) hideElement(sharePanel);
+  if (studyToolsGrid) showElement(studyToolsGrid);
+}
+
+async function handleCopyShareLink() {
+  if (!currentJobId) return;
+
+  const currentTime = elements.videoPlayer?.currentTime || 0;
+  const shareData = {
+    jobId: currentJobId,
+    timestamp: currentTime,
+    notes: studyToolsState.userNotes.filter(n => n.jobId === currentJobId)
+  };
+
+  // Encode share data
+  const encodedData = btoa(JSON.stringify(shareData));
+  const shareUrl = `${window.location.origin}${window.location.pathname}#share=${encodedData}`;
+
+  try {
+    await navigator.clipboard.writeText(shareUrl);
+    showToast('success', 'Link Copied!', 'Share this link with your classmates');
+  } catch (e) {
+    // Fallback: show in prompt
+    prompt('Copy this share link:', shareUrl);
+  }
+}
+
+function handleCreateStudyGroup() {
+  // Generate a unique group ID
+  const groupId = Math.random().toString(36).substring(2, 8).toUpperCase();
+
+  showToast('info', 'Study Group Created', `Group ID: ${groupId} (Feature coming soon!)`);
+
+  // In a real implementation, this would create a collaborative session
+}
+
+function handleEmailSummary() {
+  if (!processingResult) {
+    showToast('warning', 'No Content', 'Process a video first');
+    return;
+  }
+
+  const meta = processingResult.metadata;
+  const subject = encodeURIComponent(`Lecture Notes: ${meta.filename}`);
+  const body = encodeURIComponent(generateStudyNotesMarkdown().substring(0, 2000) + '\n\n...');
+
+  window.open(`mailto:?subject=${subject}&body=${body}`, '_blank');
+  showToast('success', 'Email Draft Opened', 'Check your email client');
+}
+
+// ============================================
+// NOTES & ANNOTATIONS
+// ============================================
+function openNotesPanel() {
+  if (!currentJobId) {
+    showToast('warning', 'No Video', 'Process a video first to add notes');
+    return;
+  }
+
+  const studyToolsGrid = $('.study-tools-grid');
+  const notesPanel = $('#notes-panel');
+
+  if (studyToolsGrid) hideElement(studyToolsGrid);
+  if (notesPanel) {
+    showElement(notesPanel);
+    renderNotesList();
+  }
+
+  // Set initial timestamp
+  useCurrentVideoTime();
+}
+
+function closeNotesPanel() {
+  const studyToolsGrid = $('.study-tools-grid');
+  const notesPanel = $('#notes-panel');
+
+  if (notesPanel) hideElement(notesPanel);
+  if (studyToolsGrid) showElement(studyToolsGrid);
+
+  // Reset form
+  clearNoteForm();
+}
+
+function useCurrentVideoTime() {
+  const timestampInput = $('#note-timestamp');
+  if (timestampInput && elements.videoPlayer) {
+    timestampInput.value = formatDurationFull(elements.videoPlayer.currentTime);
+  }
+}
+
+function toggleNoteTag(tagBtn) {
+  const tag = tagBtn.getAttribute('data-tag');
+  const isSelected = tagBtn.classList.contains('selected');
+
+  if (isSelected) {
+    tagBtn.classList.remove('selected');
+    studyToolsState.selectedTags = studyToolsState.selectedTags.filter(t => t !== tag);
+  } else {
+    tagBtn.classList.add('selected');
+    studyToolsState.selectedTags.push(tag);
+  }
+}
+
+function handleSaveNote() {
+  const timestampInput = $('#note-timestamp');
+  const contentTextarea = $('#note-content');
+
+  if (!timestampInput || !contentTextarea) return;
+
+  const content = contentTextarea.value.trim();
+  if (!content) {
+    showToast('warning', 'Empty Note', 'Please write something before saving');
+    return;
+  }
+
+  // Parse timestamp to seconds
+  const timestampParts = timestampInput.value.split(':').map(Number);
+  let timestampSeconds = 0;
+  if (timestampParts.length === 3) {
+    timestampSeconds = timestampParts[0] * 3600 + timestampParts[1] * 60 + timestampParts[2];
+  } else if (timestampParts.length === 2) {
+    timestampSeconds = timestampParts[0] * 60 + timestampParts[1];
+  }
+
+  const note = {
+    id: Date.now().toString(),
+    jobId: currentJobId,
+    timestamp: timestampSeconds,
+    timestampFormatted: timestampInput.value,
+    content: content,
+    tags: [...studyToolsState.selectedTags],
+    createdAt: new Date().toISOString()
+  };
+
+  studyToolsState.userNotes.push(note);
+  saveNotesToStorage();
+  renderNotesList();
+  clearNoteForm();
+
+  showToast('success', 'Note Saved', `Note added at ${timestampInput.value}`);
+}
+
+function clearNoteForm() {
+  const contentTextarea = $('#note-content');
+  if (contentTextarea) contentTextarea.value = '';
+
+  studyToolsState.selectedTags = [];
+  $$('.notes-tag').forEach(tag => tag.classList.remove('selected'));
+}
+
+function renderNotesList() {
+  const notesList = $('#notes-list');
+  if (!notesList) return;
+
+  clearElement(notesList);
+
+  const notes = studyToolsState.userNotes
+    .filter(n => n.jobId === currentJobId)
+    .sort((a, b) => a.timestamp - b.timestamp);
+
+  if (notes.length === 0) {
+    const empty = createElement('p', 'text-muted', {
+      textContent: 'No notes yet. Add your first note above!'
+    });
+    empty.style.textAlign = 'center';
+    empty.style.padding = 'var(--space-4)';
+    notesList.appendChild(empty);
+    return;
+  }
+
+  notes.forEach((note, i) => {
+    const item = createElement('div', 'note-item animate-fadeInUp', {
+      'data-timestamp': note.timestamp,
+      tabindex: '0'
+    });
+    item.style.animationDelay = `${i * 50}ms`;
+
+    const header = createElement('div', 'note-item-header');
+    const timestamp = createElement('span', 'note-item-timestamp', {
+      textContent: note.timestampFormatted
+    });
+
+    const tagsDiv = createElement('div', 'note-item-tags');
+    note.tags.forEach(tag => {
+      const tagSpan = createElement('span', 'note-item-tag', { textContent: tag });
+      tagsDiv.appendChild(tagSpan);
+    });
+
+    header.appendChild(timestamp);
+    header.appendChild(tagsDiv);
+
+    const content = createElement('p', 'note-item-content', {
+      textContent: note.content.substring(0, 150) + (note.content.length > 150 ? '...' : '')
+    });
+
+    const deleteBtn = createElement('button', 'note-item-delete', { textContent: 'Delete' });
+    deleteBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      deleteNote(note.id);
+    });
+
+    item.appendChild(header);
+    item.appendChild(content);
+    item.appendChild(deleteBtn);
+
+    item.addEventListener('click', () => seekVideo(note.timestamp));
+    item.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        seekVideo(note.timestamp);
+      }
+    });
+
+    notesList.appendChild(item);
+  });
+}
+
+function deleteNote(noteId) {
+  studyToolsState.userNotes = studyToolsState.userNotes.filter(n => n.id !== noteId);
+  saveNotesToStorage();
+  renderNotesList();
+  showToast('info', 'Note Deleted', 'Your note has been removed');
+}
+
+function loadNotesFromStorage() {
+  try {
+    const stored = localStorage.getItem(NOTES_STORAGE_KEY);
+    if (stored) {
+      studyToolsState.userNotes = JSON.parse(stored);
+    }
+  } catch (e) {
+    console.warn('Failed to load notes from storage:', e);
+    studyToolsState.userNotes = [];
+  }
+}
+
+function saveNotesToStorage() {
+  try {
+    localStorage.setItem(NOTES_STORAGE_KEY, JSON.stringify(studyToolsState.userNotes));
+  } catch (e) {
+    console.warn('Failed to save notes to storage:', e);
+  }
+}
+
+// Hook into the results loading to enable study tools
+const originalLoadResults = loadResults;
+loadResults = async function() {
+  await originalLoadResults();
+  enableStudyTools();
+};

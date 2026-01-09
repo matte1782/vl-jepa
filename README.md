@@ -193,7 +193,7 @@ pytest tests/benchmarks/ -v --benchmark-only
 
 - [x] **v0.1.0**: Foundation (placeholder encoders, basic pipeline)
 - [x] **v0.2.0**: Real Models + Audio (DINOv2, Whisper, multimodal search)
-- [ ] **v0.3.0**: Web UI + Cloud Demo (FastAPI, Docker, security hardening) - *In Progress*
+- [x] **v0.3.0**: Web UI + Cloud Demo (FastAPI, Docker, security hardening)
 - [ ] **v0.4.0**: Student Playground (flashcards, multi-lecture library, offline mode)
 - [ ] **v1.0.0**: Production (optimization, real decoder, deployment)
 

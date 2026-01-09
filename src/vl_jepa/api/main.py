@@ -27,10 +27,13 @@ _startup_logger = logging.getLogger("vl_jepa.api.startup")
 _startup_logger.info("Starting Lecture Mind API module import...")
 _startup_logger.info(f"Python version: {sys.version}")
 _startup_logger.info(f"Working directory: {os.getcwd()}")
-_startup_logger.info(f"PORT env variable: {os.environ.get('PORT', 'not set (will use 8000)')}")
+_startup_logger.info(
+    f"PORT env variable: {os.environ.get('PORT', 'not set (will use 8000)')}"
+)
 
 try:
     import numpy as np
+
     _startup_logger.info(f"NumPy version: {np.__version__}")
 except ImportError as e:
     _startup_logger.error(f"Failed to import numpy: {e}")
@@ -41,6 +44,7 @@ try:
     from fastapi.middleware.cors import CORSMiddleware
     from fastapi.responses import HTMLResponse
     from fastapi.staticfiles import StaticFiles
+
     _startup_logger.info("FastAPI imports successful")
 except ImportError as e:
     _startup_logger.error(f"Failed to import fastapi: {e}")

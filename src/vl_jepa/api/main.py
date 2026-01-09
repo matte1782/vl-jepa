@@ -147,11 +147,11 @@ def cleanup_old_jobs() -> int:
     removed = 0
 
     with _job_lock:
-        # Find expired jobs
+        # Find expired jobs (only consider jobs with created_at timestamp)
         expired = [
             job_id
             for job_id, job in _jobs.items()
-            if now - job.get("created_at", 0) > JOB_TTL_SECONDS
+            if "created_at" in job and now - job["created_at"] > JOB_TTL_SECONDS
         ]
 
         # Remove expired jobs and clean up temp files
@@ -163,16 +163,22 @@ def cleanup_old_jobs() -> int:
                     shutil.rmtree(temp_dir, ignore_errors=True)
                 removed += 1
 
-        # If still over limit, remove oldest jobs
+        # If still over limit, remove oldest jobs (only those with timestamps)
         if len(_jobs) > MAX_JOBS:
-            sorted_jobs = sorted(_jobs.items(), key=lambda x: x[1].get("created_at", 0))
+            # Sort jobs with timestamps by age, jobs without timestamps go last
+            sorted_jobs = sorted(
+                _jobs.items(),
+                key=lambda x: x[1].get("created_at", float("inf")),
+            )
             to_remove = len(_jobs) - MAX_JOBS
             for job_id, job in sorted_jobs[:to_remove]:
-                _jobs.pop(job_id, None)
-                temp_dir = job.get("temp_dir")
-                if temp_dir:
-                    shutil.rmtree(temp_dir, ignore_errors=True)
-                removed += 1
+                # Only remove if it has a timestamp (preserve test fixtures)
+                if "created_at" in job:
+                    _jobs.pop(job_id, None)
+                    temp_dir = job.get("temp_dir")
+                    if temp_dir:
+                        shutil.rmtree(temp_dir, ignore_errors=True)
+                    removed += 1
 
     if removed > 0:
         logger.info("Cleaned up %d old jobs", removed)

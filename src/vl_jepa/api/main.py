@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import logging
 import os
+import shutil
 import sys
 import tempfile
 import threading
@@ -40,7 +41,14 @@ except ImportError as e:
     raise
 
 try:
-    from fastapi import BackgroundTasks, FastAPI, File, HTTPException, UploadFile
+    from fastapi import (
+        BackgroundTasks,
+        FastAPI,
+        File,
+        HTTPException,
+        Request,
+        UploadFile,
+    )
     from fastapi.middleware.cors import CORSMiddleware
     from fastapi.responses import HTMLResponse
     from fastapi.staticfiles import StaticFiles
@@ -76,6 +84,102 @@ logger = logging.getLogger(__name__)
 _jobs: dict[str, dict[str, Any]] = {}
 _job_lock = threading.Lock()
 
+# Security fix C3: Simple rate limiter (use Redis in production)
+_rate_limit_store: dict[str, list[float]] = {}
+_rate_limit_lock = threading.Lock()
+
+# Rate limit config (from env or defaults)
+RATE_LIMIT_REQUESTS = int(os.environ.get("RATE_LIMIT_REQUESTS", "10"))
+RATE_LIMIT_WINDOW_SECONDS = int(os.environ.get("RATE_LIMIT_WINDOW", "60"))
+
+
+def check_rate_limit(client_ip: str) -> bool:
+    """
+    Check if client has exceeded rate limit.
+
+    Returns True if allowed, False if rate limited.
+    """
+    now = time.time()
+    window_start = now - RATE_LIMIT_WINDOW_SECONDS
+
+    with _rate_limit_lock:
+        # Get or create request history for this IP
+        if client_ip not in _rate_limit_store:
+            _rate_limit_store[client_ip] = []
+
+        # Clean old entries for this IP
+        _rate_limit_store[client_ip] = [
+            t for t in _rate_limit_store[client_ip] if t > window_start
+        ]
+
+        # Fix N1 (round 3): Clean up stale IP entries periodically
+        # Remove IPs with no recent requests (every ~100 requests)
+        if len(_rate_limit_store) > 100:
+            stale_ips = [
+                ip
+                for ip, timestamps in _rate_limit_store.items()
+                if not timestamps or max(timestamps) < window_start
+            ]
+            for ip in stale_ips:
+                del _rate_limit_store[ip]
+
+        # Check limit
+        if len(_rate_limit_store[client_ip]) >= RATE_LIMIT_REQUESTS:
+            return False
+
+        # Record this request
+        _rate_limit_store[client_ip].append(now)
+        return True
+
+
+# Fix M4 (round 2): Job TTL-based cleanup
+JOB_TTL_SECONDS = int(os.environ.get("JOB_TTL_SECONDS", "3600"))  # 1 hour default
+MAX_JOBS = int(os.environ.get("MAX_JOBS", "50"))  # Max concurrent jobs
+
+
+def cleanup_old_jobs() -> int:
+    """
+    Clean up expired jobs and enforce max job limit.
+
+    Returns number of jobs removed.
+    """
+    now = time.time()
+    removed = 0
+
+    with _job_lock:
+        # Find expired jobs
+        expired = [
+            job_id
+            for job_id, job in _jobs.items()
+            if now - job.get("created_at", 0) > JOB_TTL_SECONDS
+        ]
+
+        # Remove expired jobs and clean up temp files
+        for job_id in expired:
+            job = _jobs.pop(job_id, None)
+            if job:
+                temp_dir = job.get("temp_dir")
+                if temp_dir:
+                    shutil.rmtree(temp_dir, ignore_errors=True)
+                removed += 1
+
+        # If still over limit, remove oldest jobs
+        if len(_jobs) > MAX_JOBS:
+            sorted_jobs = sorted(_jobs.items(), key=lambda x: x[1].get("created_at", 0))
+            to_remove = len(_jobs) - MAX_JOBS
+            for job_id, job in sorted_jobs[:to_remove]:
+                _jobs.pop(job_id, None)
+                temp_dir = job.get("temp_dir")
+                if temp_dir:
+                    shutil.rmtree(temp_dir, ignore_errors=True)
+                removed += 1
+
+    if removed > 0:
+        logger.info("Cleaned up %d old jobs", removed)
+
+    return removed
+
+
 # Static files directory
 STATIC_DIR = Path(__file__).parent / "static"
 
@@ -102,13 +206,19 @@ def create_app(
         redoc_url="/api/redoc",
     )
 
-    # CORS for local development
+    # CORS configuration
+    # Security fix C1: Don't use wildcard origins with credentials
+    # For public demo, allow all origins without credentials
+    # For production, specify exact origins and enable credentials
+    allowed_origins = os.environ.get("CORS_ORIGINS", "").split(",")
+    allowed_origins = [o.strip() for o in allowed_origins if o.strip()]
+
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
+        allow_origins=allowed_origins if allowed_origins else ["*"],
+        allow_credentials=bool(allowed_origins),  # Only with specific origins
+        allow_methods=["GET", "POST", "DELETE"],
+        allow_headers=["Content-Type", "Authorization"],
     )
 
     # Store config in app state
@@ -157,8 +267,14 @@ def _register_routes(app: FastAPI) -> None:
             "local_setup_url": "https://github.com/matte1782/lecture-mind#local-installation",
         }
 
+    # Security fix C2: Server-side file size limit (100MB default, aligned with frontend)
+    MAX_FILE_SIZE_MB = int(os.environ.get("MAX_FILE_SIZE_MB", "100"))
+    MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024
+    CHUNK_SIZE = 1024 * 1024  # 1MB chunks for streaming upload
+
     @app.post("/api/upload", response_model=UploadResponse)
     async def upload_video(
+        request: Request,
         background_tasks: BackgroundTasks,
         file: UploadFile = File(...),  # noqa: B008 - FastAPI pattern
     ) -> UploadResponse:
@@ -167,6 +283,20 @@ def _register_routes(app: FastAPI) -> None:
 
         Returns a job_id to track processing status.
         """
+        # Security fix C3: Rate limiting
+        # Fix C2 (round 2): Reject requests without client identification
+        if not request.client:
+            raise HTTPException(
+                status_code=400,
+                detail="Cannot determine client IP. Request rejected.",
+            )
+        client_ip = request.client.host
+        if not check_rate_limit(client_ip):
+            raise HTTPException(
+                status_code=429,
+                detail="Too many requests. Please wait before uploading again.",
+            )
+
         # Validate file type
         if not file.filename:
             raise HTTPException(status_code=400, detail="No filename provided")
@@ -182,12 +312,39 @@ def _register_routes(app: FastAPI) -> None:
         # Generate job ID
         job_id = str(uuid.uuid4())[:8]
 
-        # Save uploaded file
+        # Save uploaded file with size limit check (streaming)
         temp_dir = Path(tempfile.mkdtemp())
-        video_path = temp_dir / file.filename
-        with open(video_path, "wb") as f:
-            content = await file.read()
-            f.write(content)
+        # Fix C1 (round 2): Sanitize filename to prevent path traversal attacks
+        safe_filename = os.path.basename(file.filename)
+        if not safe_filename:
+            shutil.rmtree(temp_dir, ignore_errors=True)
+            raise HTTPException(status_code=400, detail="Invalid filename")
+        video_path = temp_dir / safe_filename
+        total_size = 0
+
+        try:
+            with open(video_path, "wb") as f:
+                while chunk := await file.read(CHUNK_SIZE):
+                    total_size += len(chunk)
+                    if total_size > MAX_FILE_SIZE_BYTES:
+                        # Fix M2 (round 2): Use shutil.rmtree for robust cleanup
+                        f.close()
+                        shutil.rmtree(temp_dir, ignore_errors=True)
+                        raise HTTPException(
+                            status_code=413,
+                            detail=f"File too large. Maximum size: {MAX_FILE_SIZE_MB}MB",
+                        )
+                    f.write(chunk)
+        except HTTPException:
+            raise
+        except Exception as e:
+            # Fix M2 (round 2): Use shutil.rmtree for robust cleanup
+            shutil.rmtree(temp_dir, ignore_errors=True)
+            logger.error("Upload failed: %s", e)
+            raise HTTPException(status_code=500, detail="Upload failed") from e
+
+        # Fix M4 (round 2): Clean up old jobs before creating new one
+        cleanup_old_jobs()
 
         # Initialize job
         with _job_lock:
@@ -201,6 +358,7 @@ def _register_routes(app: FastAPI) -> None:
                 "result": None,
                 "error": None,
                 "use_placeholders": app.state.use_placeholders,
+                "created_at": time.time(),  # For TTL-based cleanup
             }
 
         # Start processing in background
@@ -214,6 +372,9 @@ def _register_routes(app: FastAPI) -> None:
     @app.get("/api/status/{job_id}", response_model=ProgressResponse)
     async def get_status(job_id: str) -> ProgressResponse:
         """Get processing status for a job."""
+        # Fix N2 (round 3): Clean up old jobs on status check (frequent endpoint)
+        cleanup_old_jobs()
+
         with _job_lock:
             job = _jobs.get(job_id)
 
@@ -232,6 +393,9 @@ def _register_routes(app: FastAPI) -> None:
     @app.get("/api/results/{job_id}", response_model=ResultsResponse)
     async def get_results(job_id: str) -> ResultsResponse:
         """Get processing results for a completed job."""
+        # Fix N2 (round 3): Also clean up on results check
+        cleanup_old_jobs()
+
         with _job_lock:
             job = _jobs.get(job_id)
 
@@ -457,19 +621,22 @@ def _process_video(job_id: str) -> None:
         time.sleep(0.3)  # Simulate work
 
         # Get video metadata
+        # Fix M1 (round 2): Ensure video handle is always closed
         try:
             from vl_jepa.video import VideoInput
 
             video = VideoInput.open(video_path)
-            metadata = VideoMetadata(
-                filename=video_path.name,
-                duration=video.duration,
-                width=video.width,
-                height=video.height,
-                fps=video.fps,
-                codec=video.codec,
-            )
-            video.close()
+            try:
+                metadata = VideoMetadata(
+                    filename=video_path.name,
+                    duration=video.duration,
+                    width=video.width,
+                    height=video.height,
+                    fps=video.fps,
+                    codec=video.codec,
+                )
+            finally:
+                video.close()
         except Exception:
             # Fallback for demo
             metadata = VideoMetadata(
@@ -572,17 +739,20 @@ def _process_video(job_id: str) -> None:
         update_progress(ProcessingStage.SAMPLING_FRAMES, 0.45, "Sampling frames...")
 
         # Sample frames from video (1 FPS for event detection)
+        # Fix M1 (round 2): Ensure video handle is always closed
         frames = []
         frame_timestamps = []
         try:
             from vl_jepa.video import VideoInput
 
             video = VideoInput.open(video_path)
-            sampled = list(video.sample_frames(target_fps=1.0))
-            frames = [f.data for f in sampled]
-            frame_timestamps = [f.timestamp for f in sampled]
-            video.close()
-            logger.info("Sampled %d frames at 1 FPS", len(frames))
+            try:
+                sampled = list(video.sample_frames(target_fps=1.0))
+                frames = [f.data for f in sampled]
+                frame_timestamps = [f.timestamp for f in sampled]
+                logger.info("Sampled %d frames at 1 FPS", len(frames))
+            finally:
+                video.close()
         except Exception as e:
             logger.warning("Frame sampling failed: %s", e)
 
@@ -773,7 +943,13 @@ def _process_video(job_id: str) -> None:
 # Module-level app instance for uvicorn (used by Render deployment)
 _startup_logger.info("Creating FastAPI application...")
 try:
-    app = create_app(use_placeholders=True, debug=False)
+    # Check environment variable for placeholder mode (default: False for local development)
+    _use_placeholders = os.environ.get("USE_PLACEHOLDERS", "false").lower() in (
+        "true",
+        "1",
+        "yes",
+    )
+    app = create_app(use_placeholders=_use_placeholders, debug=False)
     _startup_logger.info("FastAPI application created successfully!")
 except Exception as e:
     _startup_logger.error(f"Failed to create FastAPI application: {e}")

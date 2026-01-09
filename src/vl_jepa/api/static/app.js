@@ -49,6 +49,32 @@ const BOOKMARK_TYPES = {
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 // ============================================
+// LISTENER CLEANUP REGISTRY (P1 FIX: Memory leak prevention)
+// ============================================
+const listenerRegistry = new Map(); // eventType -> Set of {target, handler, options}
+
+function registerListener(target, eventType, handler, options = {}) {
+  target.addEventListener(eventType, handler, options);
+
+  if (!listenerRegistry.has(eventType)) {
+    listenerRegistry.set(eventType, new Set());
+  }
+  listenerRegistry.get(eventType).add({ target, handler, options });
+}
+
+function cleanupListeners() {
+  listenerRegistry.forEach((listeners, eventType) => {
+    listeners.forEach(({ target, handler, options }) => {
+      target.removeEventListener(eventType, handler, options);
+    });
+  });
+  listenerRegistry.clear();
+}
+
+// Clean up all listeners on page unload (prevents accumulation during hot-reload)
+window.addEventListener('beforeunload', cleanupListeners);
+
+// ============================================
 // DOM ELEMENTS
 // ============================================
 const $ = (selector) => document.querySelector(selector);
@@ -253,10 +279,10 @@ function initInteractiveParticles() {
   let ticking = false;
   let heroRect = hero.getBoundingClientRect();
 
-  // Update rect on scroll/resize
+  // Update rect on scroll/resize (registered for cleanup)
   const updateRect = () => { heroRect = hero.getBoundingClientRect(); };
-  window.addEventListener('scroll', updateRect, { passive: true });
-  window.addEventListener('resize', updateRect, { passive: true });
+  registerListener(window, 'scroll', updateRect, { passive: true });
+  registerListener(window, 'resize', updateRect, { passive: true });
 
   function updateParticles() {
     particles.forEach(particle => {
@@ -363,7 +389,7 @@ function initButtonRipple() {
   });
 }
 
-// 6. CURSOR GLOW TRAIL
+// 6. CURSOR GLOW TRAIL (MEMORY LEAK FIX: RAF is now properly managed)
 function initCursorGlow() {
   // Only on desktop
   if (window.innerWidth < 768) return;
@@ -377,26 +403,62 @@ function initCursorGlow() {
 
   let glowX = 0, glowY = 0;
   let currentX = 0, currentY = 0;
+  let rafId = null;
+  let isActive = false;
 
-  hero.addEventListener('mouseenter', () => glow.classList.add('active'));
-  hero.addEventListener('mouseleave', () => glow.classList.remove('active'));
+  function startAnimation() {
+    if (rafId !== null) return; // Already running
+    isActive = true;
+    animateGlow();
+  }
 
-  document.addEventListener('mousemove', (e) => {
-    glowX = e.clientX;
-    glowY = e.clientY;
-  });
+  function stopAnimation() {
+    isActive = false;
+    if (rafId !== null) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    }
+  }
 
   function animateGlow() {
+    if (!isActive) return;
+
     currentX += (glowX - currentX) * 0.1;
     currentY += (glowY - currentY) * 0.1;
 
     glow.style.left = currentX + 'px';
     glow.style.top = currentY + 'px';
 
-    requestAnimationFrame(animateGlow);
+    rafId = requestAnimationFrame(animateGlow);
   }
 
-  animateGlow();
+  // Start/stop animation based on mouse entering/leaving hero
+  hero.addEventListener('mouseenter', () => {
+    glow.classList.add('active');
+    startAnimation();
+  });
+
+  hero.addEventListener('mouseleave', () => {
+    glow.classList.remove('active');
+    stopAnimation();
+  });
+
+  // Pause animation when tab is hidden (saves CPU/battery)
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      stopAnimation();
+    } else if (glow.classList.contains('active')) {
+      startAnimation();
+    }
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    glowX = e.clientX;
+    glowY = e.clientY;
+  });
+
+  // Cleanup on page unload
+  window.addEventListener('beforeunload', stopAnimation);
 }
 
 // 7. MAGNETIC BUTTONS
@@ -475,12 +537,14 @@ function initHeaderScroll() {
     ticking = false;
   }
 
-  window.addEventListener('scroll', () => {
+  // Named handler for cleanup registry
+  const scrollHandler = () => {
     if (!ticking) {
       requestAnimationFrame(updateHeader);
       ticking = true;
     }
-  }, { passive: true });
+  };
+  registerListener(window, 'scroll', scrollHandler, { passive: true });
 
   // Initial check
   updateHeader();
@@ -589,12 +653,14 @@ function initParallax() {
     ticking = false;
   }
 
-  window.addEventListener('scroll', () => {
+  // Named handler for cleanup registry
+  const parallaxScrollHandler = () => {
     if (!ticking) {
       requestAnimationFrame(updateParallax);
       ticking = true;
     }
-  }, { passive: true });
+  };
+  registerListener(window, 'scroll', parallaxScrollHandler, { passive: true });
 }
 
 // ============================================
@@ -709,6 +775,9 @@ async function uploadFile(file) {
   hideElement(elements.uploadSection);
   updateProgress('Uploading', 'Preparing upload...', 0);
 
+  // MEMORY LEAK FIX: Stop any existing polling before starting new upload
+  stopPolling();
+
   // Cancel any existing request
   if (abortController) {
     abortController.abort();
@@ -750,10 +819,25 @@ async function uploadFile(file) {
 // POLLING & PROGRESS
 // ============================================
 function startPolling() {
+  // RACE CONDITION FIX: Store the job ID we're polling for
+  const pollingJobId = currentJobId;
+
   pollInterval = setInterval(async () => {
+    // RACE CONDITION FIX: Stop if job ID changed (new upload started)
+    if (currentJobId !== pollingJobId || !currentJobId) {
+      stopPolling();
+      return;
+    }
+
     try {
       const response = await fetchWithTimeout(`/api/status/${currentJobId}`);
       const data = await response.json();
+
+      // Double-check job ID hasn't changed during the fetch
+      if (currentJobId !== pollingJobId) {
+        stopPolling();
+        return;
+      }
 
       updateProgress(
         formatStage(data.stage),
@@ -771,6 +855,10 @@ function startPolling() {
       }
 
     } catch (error) {
+      // RACE CONDITION FIX: Ignore AbortError from cancelled requests
+      if (error.name === 'AbortError') {
+        return;
+      }
       console.error('Polling error:', error);
     }
   }, CONFIG.POLL_INTERVAL);

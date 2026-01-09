@@ -831,6 +831,21 @@ function startPolling() {
 
     try {
       const response = await fetchWithTimeout(`/api/status/${currentJobId}`);
+
+      // Handle 404 - job not found (server restart, job expired, etc.)
+      if (response.status === 404) {
+        stopPolling();
+        showToast('error', 'Job Not Found', 'The processing job was lost. This can happen if the server restarted. Please upload again.');
+        resetUpload();
+        return;
+      }
+
+      // Handle other HTTP errors
+      if (!response.ok) {
+        console.error('Status check failed:', response.status);
+        return; // Keep polling, might be temporary
+      }
+
       const data = await response.json();
 
       // Double-check job ID hasn't changed during the fetch

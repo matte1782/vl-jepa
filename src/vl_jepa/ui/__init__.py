@@ -23,7 +23,7 @@ Example:
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 
 # Lazy imports for gradio-dependent modules (gradio is optional)
 if TYPE_CHECKING:
@@ -140,7 +140,7 @@ __all__ = [
 ]
 
 
-def __getattr__(name: str):
+def __getattr__(name: str) -> Any:
     """Lazy loading for gradio-dependent modules."""
     if name in ("create_app", "launch"):
         from vl_jepa.ui.app import create_app, launch

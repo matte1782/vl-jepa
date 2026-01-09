@@ -20,13 +20,13 @@ from __future__ import annotations
 
 SPACING = {
     "0": "0",
-    "1": "4px",    # 0.5 unit
-    "2": "8px",    # 1 unit
-    "3": "12px",   # 1.5 units
-    "4": "16px",   # 2 units
-    "5": "20px",   # 2.5 units
-    "6": "24px",   # 3 units
-    "8": "32px",   # 4 units
+    "1": "4px",  # 0.5 unit
+    "2": "8px",  # 1 unit
+    "3": "12px",  # 1.5 units
+    "4": "16px",  # 2 units
+    "5": "20px",  # 2.5 units
+    "6": "24px",  # 3 units
+    "8": "32px",  # 4 units
     "10": "40px",  # 5 units
     "12": "48px",  # 6 units
     "16": "64px",  # 8 units
@@ -39,16 +39,14 @@ SPACING = {
 LIGHT_THEME = {
     # Brand gradient
     "gradient_start": "#6366f1",  # Indigo 500
-    "gradient_end": "#8b5cf6",    # Violet 500
-    "gradient_accent": "#ec4899", # Pink 500
-
+    "gradient_end": "#8b5cf6",  # Violet 500
+    "gradient_accent": "#ec4899",  # Pink 500
     # Primary palette
     "primary_50": "#eef2ff",
     "primary_100": "#e0e7ff",
     "primary_500": "#6366f1",
     "primary_600": "#4f46e5",
     "primary_700": "#4338ca",
-
     # Neutral palette
     "gray_50": "#f9fafb",
     "gray_100": "#f3f4f6",
@@ -60,18 +58,15 @@ LIGHT_THEME = {
     "gray_700": "#374151",
     "gray_800": "#1f2937",
     "gray_900": "#111827",
-
     # Semantic colors
     "success": "#10b981",
     "warning": "#f59e0b",
     "error": "#ef4444",
     "info": "#3b82f6",
-
     # Surface colors
     "background": "#f8fafc",
     "surface": "#ffffff",
     "surface_elevated": "#ffffff",
-
     # Text colors
     "text_primary": "#111827",
     "text_secondary": "#6b7280",
@@ -84,14 +79,12 @@ DARK_THEME = {
     "gradient_start": "#818cf8",
     "gradient_end": "#a78bfa",
     "gradient_accent": "#f472b6",
-
     # Primary palette (lighter for dark bg)
     "primary_50": "#1e1b4b",
     "primary_100": "#312e81",
     "primary_500": "#818cf8",
     "primary_600": "#a5b4fc",
     "primary_700": "#c7d2fe",
-
     # Neutral palette (inverted)
     "gray_50": "#111827",
     "gray_100": "#1f2937",
@@ -103,18 +96,15 @@ DARK_THEME = {
     "gray_700": "#e5e7eb",
     "gray_800": "#f3f4f6",
     "gray_900": "#f9fafb",
-
     # Semantic colors (brighter for dark)
     "success": "#34d399",
     "warning": "#fbbf24",
     "error": "#f87171",
     "info": "#60a5fa",
-
     # Surface colors
     "background": "#0f172a",
     "surface": "#1e293b",
     "surface_elevated": "#334155",
-
     # Text colors
     "text_primary": "#f9fafb",
     "text_secondary": "#9ca3af",
@@ -129,23 +119,20 @@ DARK_THEME = {
 TYPOGRAPHY = {
     "font_sans": "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
     "font_mono": "'JetBrains Mono', 'Fira Code', Consolas, monospace",
-
     # Scale (1.25 ratio)
-    "text_xs": "0.75rem",     # 12px
-    "text_sm": "0.875rem",    # 14px
-    "text_base": "1rem",      # 16px
-    "text_lg": "1.125rem",    # 18px
-    "text_xl": "1.25rem",     # 20px
-    "text_2xl": "1.5rem",     # 24px
-    "text_3xl": "1.875rem",   # 30px
-    "text_4xl": "2.25rem",    # 36px
-
+    "text_xs": "0.75rem",  # 12px
+    "text_sm": "0.875rem",  # 14px
+    "text_base": "1rem",  # 16px
+    "text_lg": "1.125rem",  # 18px
+    "text_xl": "1.25rem",  # 20px
+    "text_2xl": "1.5rem",  # 24px
+    "text_3xl": "1.875rem",  # 30px
+    "text_4xl": "2.25rem",  # 36px
     # Weights
     "font_normal": "400",
     "font_medium": "500",
     "font_semibold": "600",
     "font_bold": "700",
-
     # Line heights
     "leading_tight": "1.25",
     "leading_normal": "1.5",

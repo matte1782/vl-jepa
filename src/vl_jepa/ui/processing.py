@@ -441,7 +441,8 @@ class ProcessingPipeline:
         try:
             from vl_jepa.audio import extract_audio
 
-            return extract_audio(video_path)
+            audio_str = extract_audio(str(video_path))
+            return Path(audio_str)
         except ImportError:
             logger.warning("Audio extraction not available")
             return None

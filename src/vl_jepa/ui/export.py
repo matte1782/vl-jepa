@@ -71,7 +71,6 @@ class ProcessingResultProtocol(Protocol):
     transcript_chunks: list[Any]  # list[TranscriptChunkProtocol]
     processing_time: float
     frame_count: int
-    error: str | None
 
 
 def _escape_markdown(text: str) -> str:
@@ -85,7 +84,24 @@ def _escape_markdown(text: str) -> str:
         Text with Markdown special characters escaped.
     """
     # Characters that have special meaning in Markdown
-    special_chars = ["\\", "`", "*", "_", "{", "}", "[", "]", "(", ")", "#", "+", "-", ".", "!", "|"]
+    special_chars = [
+        "\\",
+        "`",
+        "*",
+        "_",
+        "{",
+        "}",
+        "[",
+        "]",
+        "(",
+        ")",
+        "#",
+        "+",
+        "-",
+        ".",
+        "!",
+        "|",
+    ]
     result = text
     for char in special_chars:
         result = result.replace(char, f"\\{char}")

@@ -543,7 +543,9 @@ def create_app(
 
             except Exception:
                 logger.exception("Search failed")
-                return "<div class='search-error'>Search failed. Please try again.</div>"
+                return (
+                    "<div class='search-error'>Search failed. Please try again.</div>"
+                )
 
         def export_results(
             format_choice: str,

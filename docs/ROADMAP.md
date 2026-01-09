@@ -1,10 +1,10 @@
-# Lecture Mind — Product Roadmap v2.1
+# Lecture Mind — Product Roadmap v3.0
 
 > **Last Updated**: 2026-01-09
 > **Current Version**: v0.2.0
-> **Status**: v0.3.0 IN PROGRESS (Week 6-8 in progress)
-> **Hostile Review**: GO - Ready for PyPI publication
-> **Architecture**: FastAPI + Premium Vanilla JS (deployed on Render)
+> **Status**: v0.3.0 IN PROGRESS (Week 8 - Security & Stability)
+> **Hostile Review**: PENDING - Security fixes C1-C4 required
+> **Architecture**: FastAPI + Premium Vanilla JS (Cloud Demo + Local Full)
 
 ---
 
@@ -15,394 +15,386 @@
 | v0.1.0 | Foundation | - | DONE | ✅ Released |
 | Gate 0 | Technical Validation | 12h | Week 1 | ✅ Complete |
 | **v0.2.0** | **Real Models + Audio** | **80h** | **Weeks 2-5** | ✅ Released |
-| **v0.3.0** | **User Experience** | **80h** | **Weeks 6-9** | ⏳ In Progress |
-| v1.0.0 | Production | 80h | Weeks 10-13 | Blocked by v0.3.0 |
+| **v0.3.0** | **Cloud Demo + Security** | **60h** | **Weeks 6-9** | ⏳ In Progress |
+| **v0.4.0** | **🎓 Student Playground** | **120h** | **Weeks 10-15** | 📋 Planned |
+| v1.0.0 | Production | 80h | Weeks 16-19 | Blocked by v0.4.0 |
 
 **Assumptions:**
 - Work velocity: 20 hours/week
-- Single developer
+- Single developer + AI agents for specialized tasks
 - Part-time project
 
 ---
 
-## Gate 0: Technical Validation ✅ COMPLETE
+## v0.3.0 — Cloud Demo + Security Hardening
 
-> **Gate passed on 2026-01-01**
-> **Effort: 12 hours**
-
-### Completed Tasks
-
-```
-✅ G0.1: Technical Spike (4h)
-  ✅ Created technical_spike.py script
-  ✅ Placeholder encoder validates interface
-  ✅ Synthetic frame tests show semantic clustering
-
-✅ G0.2: Test Data Creation (3h)
-  ✅ Private lecture video tested (31 min)
-  ✅ 50 frames extracted, 3 transitions detected
-  ✅ Stored in tests/lecture_ex/ (gitignored)
-
-✅ G0.3: Encoder Interface Design (2h)
-  ✅ VisualEncoderProtocol defined
-  ✅ TextEncoderProtocol defined
-  ✅ 23 interface tests passing
-
-✅ G0.4: Acceptance Criteria (1h)
-  ✅ PASS/FAIL criteria defined for v0.2.0
-
-✅ G0.5: Dependency Validation (2h)
-  ✅ Version matrix documented
-  ✅ CI uses placeholder encoder
-```
-
-### Decision: GO
-
-Proceed to v0.2.0 implementation.
-
----
-
-## v0.2.0 — Real Models & Core Pipeline
-
-**Theme**: Replace placeholders with working models + audio transcription
-**Effort**: 80 hours (4 weeks @ 20h/week)
-**Prerequisites**: Gate 0 complete ✅
-**Status**: ⏳ In Progress
+**Theme**: Stable cloud demo + fix all security issues
+**Effort**: 60 hours (3 weeks remaining)
+**Prerequisites**: v0.2.0 complete ✅
+**Status**: ⏳ Week 8 In Progress
 
 ### Goals with Acceptance Criteria
 
 | ID | Goal | PASS Criteria | FAIL Criteria | Status |
 |----|------|---------------|---------------|--------|
-| G1 | Real visual encoder | DINOv2 768-dim embeddings, similar frames cosine >0.85 | Load fails, random similarity | ✅ Validated Week 3 |
-| G2 | Real text encoder | sentence-transformers, 768-dim embeddings | Import error | ✅ Validated Week 3 |
-| G3 | Video pipeline | 10-min video in <120s, 1 FPS, memory <4GB | Crash, OOM | ✅ Tested Week 3 |
-| G7 | Audio transcription | Whisper <60s for 10-min, WER <10%, aligned timestamps | Garbled text | ✅ Module complete |
-| G8 | Multimodal index | Combined visual + transcript ranking | Single modality | ✅ Tested Week 3 |
-| G4 | PyPI publication | `pip install lecture-mind` works | Install fails | ⏳ Week 5 |
-| G5 | Performance baselines | Documented latency for all operations | No measurements | ✅ Documented Week 3 |
-| G6 | Test coverage 70%+ | pytest --cov ≥70% | Below 70% | ✅ 71% achieved |
+| G1 | Web UI | Upload video, see events, execute query | Crashes, no output | ✅ Complete |
+| G2 | Progress indication | Progress bar updates during processing | Freezes | ✅ Complete |
+| G3 | Export functionality | Download as Markdown/JSON/SRT/StudyNotes | No export | ✅ Complete |
+| G4 | Docker image | `docker run` works, <3GB | Build fails | ✅ Complete |
+| G5 | Cloud demo | Render deployment works in demo mode | OOM crash | ✅ Fixed today |
+| G6 | **Security C1-C4** | **All critical security issues fixed** | **Vulnerabilities remain** | ⏳ Pending |
+| G7 | Test coverage 80%+ | pytest --cov ≥80% | Below 80% | ⏳ 74% current |
 
-### Task Breakdown
+### Security Issues (Hostile Review Findings)
+
+| ID | Issue | Severity | Status | Agent Assigned |
+|----|-------|----------|--------|----------------|
+| **C1** | CORS wildcard + credentials | CRITICAL | ⏳ Pending | security-lead |
+| **C2** | No server-side file size limit | CRITICAL | ⏳ Pending | security-lead |
+| **C3** | No rate limiting | CRITICAL | ⏳ Pending | security-lead |
+| **C4** | innerHTML usage (minor XSS risk) | CRITICAL | ⏳ Pending | frontend-design |
+
+### Task Breakdown (Updated)
 
 | Week | Task | Hours | Status |
 |------|------|-------|--------|
-| **Week 2** | **Audio Module** | 16h | **In Progress** |
-| | ~~Whisper transcriber~~ | ~~6h~~ | ✅ `audio/transcriber.py` |
-| | ~~FFmpeg audio extractor~~ | ~~4h~~ | ✅ `audio/extractor.py` |
-| | ~~Placeholder transcriber~~ | ~~2h~~ | ✅ `audio/placeholder.py` |
-| | ~~Audio tests~~ | ~~4h~~ | ✅ 17 tests passing |
-| | Transcript chunking | 4h | ⏳ `audio/chunker.py` |
-| | DINOv2 integration test | 6h | ⏳ Requires torch |
-| | Debug buffer | 6h | - |
-| **Week 3** | **Video + Text Pipeline** | 20h | ✅ Complete |
-| | Video processing with OpenCV | 6h | ✅ `video.py` tested |
-| | Multimodal index | 6h | ✅ 98% coverage |
-| | Text encoder real model | 4h | ✅ `text.py` validated |
-| | Debug buffer | 4h | ✅ Used for fixes |
-| **Week 4** | **Benchmarks + Polish** | 20h | ✅ Complete |
-| | ~~Benchmark suite~~ | ~~6h~~ | ✅ `tests/benchmarks/` |
-| | ~~Performance docs~~ | ~~4h~~ | ✅ `BENCHMARKS.md` |
-| | ~~Coverage to 70%+~~ | ~~6h~~ | ✅ 74% achieved |
-| | ~~Debug buffer~~ | ~~4h~~ | ✅ Used for polish |
-| **Week 5** | **Release** | 20h | |
-| | PyPI packaging | 4h | `pyproject.toml` final |
-| | README + docs update | 4h | Documentation |
-| | CI updates | 4h | `.github/workflows/` |
-| | Final testing | 4h | - |
-| | Release v0.2.0 | 4h | Tag, PyPI publish |
+| **Week 6** | **FastAPI + Frontend Foundation** | 20h | ✅ Complete |
+| **Week 7** | **UI Features** | 20h | ✅ Complete |
+| **Week 8** | **Security + Stability** | 20h | ⏳ In Progress |
+| | ~~Dockerfile creation~~ | ~~4h~~ | ✅ Complete |
+| | ~~Render deployment~~ | ~~4h~~ | ✅ Live (demo mode) |
+| | ~~Demo mode for cloud~~ | ~~2h~~ | ✅ Fixed today |
+| | ~~NaN% bug fix~~ | ~~1h~~ | ✅ Fixed today |
+| | ~~404 polling fix~~ | ~~1h~~ | ✅ Fixed today |
+| | **Security fixes C1-C4** | **4h** | ⏳ Next |
+| | **Hostile review gate** | **2h** | ⏳ After fixes |
+| | docker-compose polish | 2h | ⏳ Pending |
+| **Week 9** | **Docs + Release** | 20h | Next |
+| | Local setup guide | 4h | Student Playground docs |
+| | mkdocs setup | 4h | Documentation framework |
+| | API documentation | 6h | All endpoints documented |
+| | Demo recording | 2h | GIF/video for README |
+| | Release v0.3.0 | 4h | Tag, release |
 
-### Deliverables
+### Quality Gates
 
 ```
-v0.2.0/
-├── src/vl_jepa/
-│   ├── encoders/
-│   │   ├── __init__.py
-│   │   ├── base.py          # Protocol definitions
-│   │   ├── dinov2.py        # DINOv2 implementation
-│   │   ├── placeholder.py   # Current placeholder (for testing)
-│   │   └── clip.py          # Optional CLIP fallback
-│   ├── audio/               # NEW: Audio transcription
-│   │   ├── __init__.py
-│   │   ├── transcriber.py   # Whisper integration
-│   │   ├── chunker.py       # Transcript segmentation
-│   │   └── extractor.py     # Audio extraction from video
-│   ├── video.py             # Tested with real videos
-│   ├── text.py              # Real sentence-transformers
-│   └── index.py             # Multimodal index (visual + transcript)
-├── tests/
-│   ├── fixtures/
-│   │   └── videos/          # Sample test videos
-│   ├── unit/
-│   │   ├── test_encoders.py
-│   │   └── test_audio.py    # NEW: Audio tests
-│   └── integration/
-│       ├── test_video.py
-│       ├── test_audio.py    # NEW: Transcription integration
-│       └── test_pipeline.py # Full multimodal pipeline
-├── benchmarks/
-│   ├── bench_encoder.py
-│   ├── bench_search.py
-│   ├── bench_transcribe.py  # NEW: Whisper benchmarks
-│   └── results/
-├── docs/
-│   ├── BENCHMARKS.md
-│   └── INSTALLATION.md      # Including model download
-└── pyproject.toml           # PyPI ready
+┌─────────────────────────────────────────────────────────────────┐
+│                    v0.3.0 RELEASE GATE                          │
+├─────────────────────────────────────────────────────────────────┤
+│  ✅ All C1-C4 security issues fixed                             │
+│  ✅ Hostile reviewer APPROVE (no critical/major issues)         │
+│  ✅ Cloud demo stable (no OOM)                                  │
+│  ✅ Local setup documented and tested                           │
+│  ✅ Test coverage ≥80%                                          │
+│  ✅ CI green                                                    │
+└─────────────────────────────────────────────────────────────────┘
 ```
-
-### Risk Mitigations
-
-| Risk | Mitigation | Contingency |
-|------|------------|-------------|
-| DINOv2 doesn't produce good embeddings | Technical spike in Gate 0 | Switch to CLIP |
-| Model too slow on CPU | Document GPU requirements | Offer cloud API option |
-| PyPI name taken | ✅ `lecture-mind` verified available | Use `lecture-mind-ai` |
-| **Whisper too slow on CPU** | **Use faster-whisper (CTranslate2)** | **Whisper.cpp or cloud API** |
-| **Audio extraction fails** | **FFmpeg dependency** | **moviepy fallback** |
-| **Non-English lectures** | **Whisper supports 99 languages** | **Language detection first** |
-| CI can't run real models | Use lightweight model for CI | Mock in CI, test locally |
 
 ---
 
-## v0.3.0 — User Experience & Distribution
+## v0.4.0 — 🎓 Student Playground
 
-**Theme**: Make it usable by non-developers
-**Effort**: 80 hours (4 weeks @ 20h/week)
-**Prerequisites**: v0.2.0 complete, working pipeline
+**Theme**: Advanced local-first learning platform for students and educators
+**Effort**: 120 hours (6 weeks @ 20h/week)
+**Prerequisites**: v0.3.0 complete, security hardened
+**Target Users**: Students, Teaching Assistants, Professors
+
+### Vision
+
+> **"Not just a tool for viewing lectures, but a complete learning companion."**
+
+The Student Playground transforms Lecture Mind from a simple video summarizer into a comprehensive study platform with:
+
+- 🎨 **Premium Animations** - Fluid, delightful interactions that make studying enjoyable
+- 🧠 **Active Learning Tools** - Flashcards, quizzes, spaced repetition
+- 📚 **Multi-Lecture Management** - Track progress across an entire course
+- 👨‍🏫 **Educator Dashboard** - Analytics for professors to understand student confusion points
+- 🔌 **Offline-First** - Works without internet after initial setup
 
 ### Goals with Acceptance Criteria
 
 | ID | Goal | PASS Criteria | FAIL Criteria |
 |----|------|---------------|---------------|
-| G1 | Web UI | Upload video, see events, execute query in browser | Crashes, no output | ✅ FastAPI + Vanilla JS |
-| G2 | Progress indication | Progress bar updates during processing | Freezes without feedback | ✅ 8-stage polling |
-| G3 | Export functionality | Download results as Markdown/JSON/SRT | No export option | ✅ 4 formats |
-| G4 | Docker image | `docker run` starts working app, <3GB image | Build fails, >5GB | ✅ Dockerfile ready |
-| G5 | API documentation | Hosted docs with examples | No docs | ⏳ OpenAPI auto-generated |
-| G6 | Test coverage 80%+ | pytest --cov reports ≥80% | Below 80% | ⏳ 74% current |
+| SP1 | Flashcard System | Auto-generate from transcript, spaced repetition | Manual creation only |
+| SP2 | Multi-Lecture Library | Import, organize, search across lectures | Single video only |
+| SP3 | Progress Tracking | Track watched segments, quiz scores, review schedule | No persistence |
+| SP4 | Confusion Analytics | Aggregate anonymous confusion votes, show professors | No aggregation |
+| SP5 | Premium Animations | 60fps, micro-interactions, delightful UX | Janky, slow |
+| SP6 | Offline Mode | Full functionality without network | Requires constant connection |
+| SP7 | Professor Dashboard | View class confusion hotspots, export reports | Student-only features |
+
+### Feature Breakdown
+
+#### 🃏 Flashcard System (SP1)
+```
+Features:
+├── Auto-generation from transcript key concepts
+├── Manual card creation with rich text
+├── Spaced repetition algorithm (SM-2)
+├── Progress tracking per card
+├── Export to Anki format
+└── Study sessions with statistics
+```
+
+#### 📚 Multi-Lecture Library (SP2)
+```
+Features:
+├── Import multiple videos
+├── Course/folder organization
+├── Cross-lecture search
+├── Lecture series playlist
+├── Progress indicators per lecture
+└── Favorites and bookmarks
+```
+
+#### 📊 Progress Tracking (SP3)
+```
+Features:
+├── Watch progress per segment
+├── Quiz score history
+├── Flashcard mastery levels
+├── Study time analytics
+├── Weekly goals and streaks
+└── Export study reports
+```
+
+#### 🔥 Confusion Analytics (SP4)
+```
+Features:
+├── Student confusion voting (anonymous)
+├── Aggregate heatmap per lecture
+├── Professor dashboard view
+├── Export confusion reports
+├── Compare across lecture series
+└── AI suggestions for unclear sections
+```
+
+#### ✨ Premium Animations (SP5)
+```
+Animations:
+├── Page transitions (fade, slide, morph)
+├── Card flip effects (3D transforms)
+├── Progress celebrations (confetti, particles)
+├── Micro-interactions (hover, focus, click)
+├── Loading skeletons
+├── Smooth scrolling with parallax
+└── Gesture support (swipe, pinch)
+```
+
+#### 🌐 Offline Mode (SP6)
+```
+Features:
+├── IndexedDB for local storage
+├── Service Worker for caching
+├── Background sync when online
+├── Video caching (optional, large files)
+├── Full functionality offline
+└── Sync indicator UI
+```
+
+#### 👨‍🏫 Professor Dashboard (SP7)
+```
+Features:
+├── Class-wide confusion heatmap
+├── Most-replayed segments
+├── Quiz performance analytics
+├── Student engagement metrics
+├── Export for course improvement
+└── Anonymous (privacy-first)
+```
 
 ### Task Breakdown
 
-| Week | Task | Hours | Status |
-|------|------|-------|--------|
-| **Week 6** | **FastAPI + Frontend Foundation** | 20h | ✅ Complete |
-| | ~~FastAPI backend~~ | ~~8h~~ | ✅ `src/vl_jepa/api/main.py` |
-| | ~~Video upload + progress~~ | ~~8h~~ | ✅ 8-stage pipeline with polling |
-| | ~~Premium CSS styling~~ | ~~4h~~ | ✅ Light/Dark themes, animations |
-| **Week 7** | **UI Features** | 20h | ✅ Complete |
-| | ~~Event timeline display~~ | ~~6h~~ | ✅ Interactive timeline component |
-| | ~~Query interface~~ | ~~6h~~ | ✅ Multimodal search with highlighting |
-| | ~~Export to Markdown/JSON/SRT~~ | ~~4h~~ | ✅ 4 formats (+ Study Notes) |
-| | ~~Study Tools (bookmarks, notes)~~ | ~~4h~~ | ✅ Confusion voting, bookmarks |
-| **Week 8** | **Docker + Deploy** | 20h | ⏳ In Progress |
-| | ~~Dockerfile creation~~ | ~~8h~~ | ✅ Multi-stage, optimized |
-| | ~~Render deployment~~ | ~~4h~~ | ✅ lecture-mind.onrender.com |
-| | ~~P0/P1 bug fixes~~ | ~~4h~~ | ✅ Memory leaks, focus trap |
-| | docker-compose setup | 4h | Easy local deployment |
-| **Week 9** | **Docs + Release** | 20h | Next |
-| | mkdocs setup | 4h | Documentation framework |
-| | API documentation | 6h | All public APIs documented |
-| | User tutorials | 4h | Getting started guide |
-| | Demo recording | 2h | GIF/video for README |
-| | Release v0.3.0 | 4h | Tag, release, Docker Hub |
+| Week | Focus | Hours | Agents/Engineers |
+|------|-------|-------|------------------|
+| **Week 10** | **Foundation + Architecture** | 20h | |
+| | Design system enhancement | 4h | frontend-design |
+| | IndexedDB storage layer | 6h | architect |
+| | Multi-lecture data model | 4h | architect |
+| | Animation framework | 4h | frontend-design |
+| | Hostile review: architecture | 2h | hostile-reviewer |
+| **Week 11** | **Flashcard System** | 20h | |
+| | Card data model | 2h | architect |
+| | Auto-generation from transcript | 6h | ml-engineer |
+| | Spaced repetition (SM-2) | 4h | ml-engineer |
+| | Card UI with flip animation | 4h | frontend-design |
+| | Study session flow | 4h | frontend-design |
+| **Week 12** | **Multi-Lecture Library** | 20h | |
+| | Library UI design | 4h | frontend-design |
+| | Import/organization system | 6h | architect |
+| | Cross-lecture search | 6h | ml-engineer |
+| | Progress persistence | 4h | architect |
+| **Week 13** | **Progress & Analytics** | 20h | |
+| | Watch progress tracking | 4h | architect |
+| | Quiz score persistence | 4h | architect |
+| | Study analytics UI | 6h | frontend-design |
+| | Confusion aggregation | 6h | ml-engineer |
+| **Week 14** | **Professor Dashboard** | 20h | |
+| | Dashboard UI design | 6h | frontend-design |
+| | Confusion heatmap visualization | 6h | frontend-design |
+| | Export reports | 4h | architect |
+| | Privacy controls | 4h | security-lead |
+| **Week 15** | **Polish + Release** | 20h | |
+| | Offline mode (Service Worker) | 6h | architect |
+| | Animation polish | 4h | frontend-design |
+| | Hostile review: final | 4h | hostile-reviewer |
+| | Documentation | 4h | docs-writer |
+| | Release v0.4.0 | 2h | - |
+
+### Multi-Agent Workflow
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    STUDENT PLAYGROUND AGENTS                         │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                      │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐          │
+│  │  architect   │    │ frontend-    │    │ ml-engineer  │          │
+│  │              │    │ design       │    │              │          │
+│  │ - Data model │    │ - Premium UI │    │ - Flashcard  │          │
+│  │ - Storage    │    │ - Animations │    │   generation │          │
+│  │ - Offline    │    │ - Components │    │ - Search     │          │
+│  └──────┬───────┘    └──────┬───────┘    └──────┬───────┘          │
+│         │                   │                   │                   │
+│         └───────────────────┼───────────────────┘                   │
+│                             │                                        │
+│                    ┌────────▼────────┐                              │
+│                    │ hostile-reviewer│                              │
+│                    │                 │                              │
+│                    │ Quality Gates   │                              │
+│                    │ at each phase   │                              │
+│                    └────────┬────────┘                              │
+│                             │                                        │
+│                    ┌────────▼────────┐                              │
+│                    │ security-lead   │                              │
+│                    │                 │                              │
+│                    │ Privacy audit   │                              │
+│                    │ for analytics   │                              │
+│                    └─────────────────┘                              │
+│                                                                      │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### Quality Gates (Per Week)
+
+```
+Week 10 Gate: Architecture approved by hostile-reviewer
+Week 11 Gate: Flashcard system functional, animations smooth
+Week 12 Gate: Library manages 10+ lectures without slowdown
+Week 13 Gate: Analytics accurate, privacy preserved
+Week 14 Gate: Dashboard useful for real professors (user testing)
+Week 15 Gate: FINAL - Full hostile review, all issues resolved
+```
 
 ### Deliverables
 
 ```
-v0.3.0/
+v0.4.0/
 ├── src/vl_jepa/
-│   └── api/                     # FastAPI backend (replaces Gradio)
+│   ├── api/
+│   │   └── static/
+│   │       ├── app.js           # Enhanced with Playground features
+│   │       ├── flashcards.js    # NEW: Flashcard system
+│   │       ├── library.js       # NEW: Multi-lecture management
+│   │       ├── analytics.js     # NEW: Progress tracking
+│   │       ├── dashboard.js     # NEW: Professor dashboard
+│   │       ├── offline.js       # NEW: Service Worker + IndexedDB
+│   │       └── animations/      # NEW: Premium animation library
+│   │           ├── transitions.js
+│   │           ├── particles.js
+│   │           └── gestures.js
+│   └── storage/                 # NEW: Local storage layer
 │       ├── __init__.py
-│       ├── main.py              # ✅ FastAPI app with endpoints
-│       ├── models.py            # ✅ Pydantic schemas
-│       ├── processing.py        # ✅ Video processing pipeline
-│       └── static/              # ✅ Premium frontend
-│           ├── index.html       # ✅ Landing page + app
-│           ├── app.js           # ✅ Client-side logic (2000+ LOC)
-│           ├── components.css   # ✅ Premium components
-│           └── animations.css   # ✅ Cutting-edge animations
-├── Dockerfile                   # ✅ Optimized, multi-stage
-├── docker-compose.yml           # ⏳ Local deployment
+│       ├── models.py            # Data models
+│       └── sync.py              # Online/offline sync
 ├── docs/
-│   ├── index.md                 # mkdocs home
-│   ├── getting-started.md       # Tutorial
-│   ├── api/                     # Generated API docs
-│   └── assets/
-│       └── demo.gif             # README demo
-├── mkdocs.yml                   # Documentation config
+│   ├── student-playground/
+│   │   ├── quickstart.md        # 5-minute setup
+│   │   ├── flashcards.md        # Flashcard guide
+│   │   ├── library.md           # Multi-lecture guide
+│   │   └── professor.md         # Educator guide
+│   └── LOCAL_SETUP.md           # Full local installation
 └── tests/
     └── integration/
-        └── test_api.py          # ✅ API tests
+        ├── test_flashcards.py
+        ├── test_library.py
+        └── test_offline.py
 ```
-
-### Scope Limitations
-
-> **NOT included in v0.3.0:**
-> - OCR integration (deferred to v0.4.0)
-> - Real Y-decoder summaries (use placeholder text)
-> - GPU support in Docker (CPU only)
 
 ---
 
 ## v1.0.0 — Production Stable
 
-**Theme**: Reliable, optimized, deployable
+**Theme**: Production-ready with real AI summaries
 **Effort**: 80 hours (4 weeks @ 20h/week)
-**Prerequisites**: v0.3.0 complete, user feedback collected
+**Prerequisites**: v0.4.0 complete, Student Playground stable
 
-### Goals with Acceptance Criteria
+### Goals
 
-| ID | Goal | PASS Criteria | FAIL Criteria |
-|----|------|---------------|---------------|
-| G1 | Performance optimization | Query latency p99 <200ms on CPU | Slower than v0.3.0 |
-| G2 | Real Y-decoder | Generate actual summaries (Phi-3 mini or similar) | Still placeholder |
-| G3 | Security audit | bandit + safety pass with 0 high issues | Critical vulnerabilities |
-| G4 | AWS deployment guide | Step-by-step instructions that work | Broken instructions |
-| G5 | Health monitoring | /health endpoint, basic metrics | No observability |
-| G6 | Test coverage 85%+ | pytest --cov reports ≥85% | Below 85% |
-
-### Task Breakdown
-
-| Week | Task | Hours | Deliverable |
-|------|------|-------|-------------|
-| **Week 10** | | 20h | |
-| | Real decoder integration (Phi-3) | 12h | Working summaries |
-| | Decoder tests | 4h | Quality validation |
-| | Debug buffer | 4h | - |
-| **Week 11** | | 20h | |
-| | Performance profiling | 6h | Identify bottlenecks |
-| | Optimization implementation | 8h | Caching, batching |
-| | Benchmark comparison | 2h | vs v0.3.0 |
-| | Debug buffer | 4h | - |
-| **Week 12** | | 20h | |
-| | Security audit (bandit, safety) | 4h | Vulnerability report |
-| | Security fixes | 6h | Address findings |
-| | Health endpoints | 4h | /health, /metrics |
-| | Logging improvements | 2h | Structured logging |
-| | Debug buffer | 4h | - |
-| **Week 13** | | 20h | |
-| | AWS deployment guide | 6h | ECS or Lambda docs |
-| | Final documentation | 4h | All docs complete |
-| | Release preparation | 4h | Changelog, migration guide |
-| | Release v1.0.0 | 2h | Tag, release |
-| | Buffer | 4h | - |
-
-### Deferred to v1.1.0+
-
-| Feature | Reason |
-|---------|--------|
-| Real-time streaming | Fundamentally different architecture |
-| Multi-language (i18n) | Nice-to-have, not core |
-| Multi-cloud (GCP, Azure) | AWS first, document others later |
-| Kubernetes deployment | Docker sufficient for v1.0 |
-| OCR integration | Adds complexity without core value |
+| ID | Goal | PASS Criteria |
+|----|------|---------------|
+| G1 | Real Y-decoder | Generate actual summaries (Phi-3 mini) |
+| G2 | Performance | Query latency p99 <200ms |
+| G3 | Security audit | bandit + safety pass |
+| G4 | AWS deployment | Step-by-step guide |
+| G5 | Test coverage 85%+ | pytest --cov ≥85% |
 
 ---
 
-## Dependency Matrix
-
-| Package | Min | Max | Notes |
-|---------|-----|-----|-------|
-| python | 3.10 | 3.12 | 3.13 experimental |
-| torch | 2.0.0 | 2.3.x | DINOv2 compatibility |
-| torchvision | 0.15.0 | 0.18.x | Must match torch |
-| transformers | 4.35.0 | 4.x | DINOv2 models |
-| sentence-transformers | 2.2.0 | 2.x | Text encoding |
-| **faster-whisper** | **1.0.0** | **1.x** | **Audio transcription (CTranslate2)** |
-| gradio | 4.0.0 | 4.x | Pin major version |
-| faiss-cpu | 1.7.4 | 1.x | Embedding search |
-| opencv-python | 4.8.0 | 4.x | Video processing |
-| **ffmpeg-python** | **0.2.0** | **0.x** | **Audio extraction** |
-
-### Version Lock Strategy
-
-```toml
-# pyproject.toml
-dependencies = [
-    "torch>=2.0.0,<2.4",
-    "transformers>=4.35.0,<5",
-    # ... etc
-]
-```
-
----
-
-## Risk Register (Updated)
-
-| ID | Risk | Impact | Prob | Mitigation | Status |
-|----|------|--------|------|------------|--------|
-| R1 | DINOv2 embeddings don't work for lectures | HIGH | MED | Gate 0 technical spike | ⏳ Validate |
-| R2 | GPU required for usable speed | MED | HIGH | Document, offer cloud | ⏳ Measure |
-| R3 | Video codec issues | MED | MED | Test matrix in Gate 0 | ⏳ Validate |
-| R4 | PyPI name taken | LOW | LOW | Check now | ✅ Available |
-| R5 | Scope creep | HIGH | HIGH | Strict version scopes | ✅ Defined |
-| R6 | Single maintainer | MED | HIGH | Document everything | ⏳ Ongoing |
-| R7 | Model licensing issues | MED | LOW | Use Apache/MIT models | ✅ DINOv2 OK |
-
----
-
-## Success Metrics (Realistic)
-
-| Version | Metric | Target | Stretch |
-|---------|--------|--------|---------|
-| v0.2.0 | PyPI downloads (month 1) | 50 | 200 |
-| v0.2.0 | 10-min video processing time | <120s | <60s |
-| v0.3.0 | GitHub stars | 25 | 100 |
-| v0.3.0 | Docker pulls (month 1) | 100 | 500 |
-| v1.0.0 | Query latency (p99) | <200ms | <100ms |
-| v1.0.0 | Active users (monthly) | 10 | 50 |
-
----
-
-## Decision Log
-
-| Date | Decision | Rationale | Alternatives Considered |
-|------|----------|-----------|------------------------|
-| 2026-01-01 | DINOv2 as primary encoder | Apache license, good availability, proven quality | V-JEPA (complex), CLIP (less semantic) |
-| 2026-01-01 | Gradio over Streamlit | Better ML integration, simpler deployment | Streamlit, FastAPI+React |
-| 2026-01-01 | Gate 0 before v0.2.0 | Validate approach before major investment | YOLO (risky) |
-| 2026-01-01 | Defer OCR to v0.4.0 | Focus on core pipeline first | Include in v0.3.0 (scope creep) |
-| 2026-01-01 | Phi-3 mini for decoder | Small, fast, permissive license | Gemma (restrictive), GPT (API cost) |
-
----
-
-## Calendar View
+## Calendar View (Updated)
 
 ```
 January 2026
-├── Week 1 (Jan 1-7): Gate 0 - Technical Validation ✅ COMPLETE
-│   └── Spike, test data, interface design, audio module started
-│
-├── Week 2-5 (Jan 8 - Feb 4): v0.2.0 - Real Models + Audio ✅ RELEASED
-│   ├── Week 2: Audio module + DINOv2 integration ✅ COMPLETE
-│   ├── Week 3: Video + Text pipeline ✅ COMPLETE
-│   ├── Week 4: Benchmarks + Polish ✅ COMPLETE
-│   └── Week 5: Release prep + PyPI publish ✅ COMPLETE
-│
+├── Week 1 (Jan 1-7): Gate 0 ✅ COMPLETE
+├── Weeks 2-5 (Jan 8 - Feb 4): v0.2.0 ✅ RELEASED
+
 February 2026
-├── Week 6-9 (Feb 5 - Mar 4): v0.3.0 - User Experience ⏳ IN PROGRESS
-│   ├── Week 6: FastAPI + Frontend Foundation ✅ COMPLETE
-│   ├── Week 7: UI Features ✅ COMPLETE (Study Tools, Export)
-│   ├── Week 8: Docker + Deploy ← CURRENT (Render live, P0/P1 fixed)
-│   └── Week 9: Docs + release
-│
+├── Weeks 6-9 (Feb 5 - Mar 4): v0.3.0 ⏳ IN PROGRESS
+│   ├── Week 6: FastAPI + Frontend ✅ COMPLETE
+│   ├── Week 7: UI Features ✅ COMPLETE
+│   ├── Week 8: Security + Stability ← CURRENT
+│   │   ├── ✅ Demo mode for Render
+│   │   ├── ✅ NaN% bug fix
+│   │   ├── ✅ 404 polling fix
+│   │   ├── ⏳ Security fixes C1-C4
+│   │   └── ⏳ Hostile review gate
+│   └── Week 9: Docs + v0.3.0 release
+
 March 2026
-├── Week 10-13 (Mar 5 - Apr 1): v1.0.0 - Production
-│   ├── Week 10: Real decoder
-│   ├── Week 11: Optimization
-│   ├── Week 12: Security
-│   └── Week 13: AWS + release
+├── Weeks 10-15 (Mar 5 - Apr 15): v0.4.0 - Student Playground 📋 PLANNED
+│   ├── Week 10: Architecture + Design System
+│   ├── Week 11: Flashcard System
+│   ├── Week 12: Multi-Lecture Library
+│   ├── Week 13: Progress + Analytics
+│   ├── Week 14: Professor Dashboard
+│   └── Week 15: Polish + v0.4.0 release
+
+April-May 2026
+├── Weeks 16-19: v1.0.0 - Production
 ```
 
 ---
 
 ## Next Actions
 
-1. **Complete**: Week 6-7 - FastAPI + Premium Frontend ✅ (Study Tools, Export, Animations)
-2. **Complete**: Week 8 - Dockerfile ✅, Render deployment ✅, P0/P1 bug fixes ✅
-3. **Now**: Week 8 - docker-compose setup (4h remaining)
-4. **Next**: Week 9 - Documentation + v0.3.0 release
+1. **NOW**: Fix security issues C1-C4 (use security-lead agent)
+2. **THEN**: Run hostile-reviewer to verify fixes
+3. **THEN**: Complete Week 9 documentation
+4. **THEN**: Release v0.3.0
+5. **NEXT**: Start v0.4.0 Student Playground
+
+---
+
+## Decision Log
+
+| Date | Decision | Rationale |
+|------|----------|-----------|
+| 2026-01-09 | Add v0.4.0 Student Playground | Transform from tool to learning platform |
+| 2026-01-09 | Cloud demo + local full features | Free tier limits require placeholder mode |
+| 2026-01-09 | Multi-agent workflow | Specialized agents for UI, ML, security |
+| 2026-01-09 | Professor dashboard | Expand audience beyond students |
+| 2026-01-09 | Offline-first architecture | Students need to study anywhere |
 
 ---
 
@@ -410,15 +402,13 @@ March 2026
 
 | Version | Date | Changes |
 |---------|------|---------|
-| v2.6 | 2026-01-09 | Week 8: Dockerfile, Render deploy, P0/P1 bug fixes (memory leaks, focus trap) |
-| v2.5 | 2026-01-08 | Week 6-7 complete: FastAPI + Premium Vanilla JS, Study Tools, 4 export formats |
-| v2.4 | 2026-01-07 | v0.2.0 release ready, README comprehensive, PyPI metadata complete |
-| v2.3 | 2026-01-06 | Week 4 complete, 74% coverage, v0.2.0-rc1 ready |
-| v2.2 | 2026-01-04 | Week 3 complete, 7/8 v0.2.0 goals achieved, 71% coverage |
-| v2.1 | 2026-01-01 | Updated Gate 0 complete, audio module progress tracked |
-| v2.0 | 2026-01-01 | Added Gate 0, realistic estimates, acceptance criteria |
+| v3.0 | 2026-01-09 | **Major**: Added v0.4.0 Student Playground, multi-agent workflow, security gates |
+| v2.6 | 2026-01-09 | Week 8: Demo mode, bug fixes (NaN%, 404 polling) |
+| v2.5 | 2026-01-08 | Week 6-7 complete: FastAPI + Premium Vanilla JS |
+| v2.4 | 2026-01-07 | v0.2.0 release ready |
+| v2.0 | 2026-01-01 | Added Gate 0, realistic estimates |
 | v1.0 | 2026-01-01 | Initial roadmap |
 
 ---
 
-*"Measure twice, cut once. Validate before you build."*
+*"Build tools that make learning a joy, not a chore."*

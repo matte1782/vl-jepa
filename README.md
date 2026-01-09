@@ -16,6 +16,10 @@ Event-aware lecture summarizer using V-JEPA visual encoder for real-time, contex
 
 > **Note:** The cloud demo runs in demo mode with placeholder processing. For full functionality with real AI models, use the local installation.
 
+## See It In Action
+
+![Lecture Mind Demo](docs/assets/demo.gif)
+
 ## Features
 
 - **Visual Encoding**: DINOv2 ViT-L/16 for 768-dim frame embeddings

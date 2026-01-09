@@ -8,6 +8,8 @@ Provides REST endpoints for video processing, search, and export.
 from __future__ import annotations
 
 import logging
+import os
+import sys
 import tempfile
 import threading
 import time
@@ -15,11 +17,33 @@ import uuid
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
-import numpy as np
-from fastapi import BackgroundTasks, FastAPI, File, HTTPException, UploadFile
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
+# Configure logging early for debugging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    stream=sys.stdout,
+)
+_startup_logger = logging.getLogger("vl_jepa.api.startup")
+_startup_logger.info("Starting Lecture Mind API module import...")
+_startup_logger.info(f"Python version: {sys.version}")
+_startup_logger.info(f"Working directory: {os.getcwd()}")
+
+try:
+    import numpy as np
+    _startup_logger.info(f"NumPy version: {np.__version__}")
+except ImportError as e:
+    _startup_logger.error(f"Failed to import numpy: {e}")
+    raise
+
+try:
+    from fastapi import BackgroundTasks, FastAPI, File, HTTPException, UploadFile
+    from fastapi.middleware.cors import CORSMiddleware
+    from fastapi.responses import HTMLResponse
+    from fastapi.staticfiles import StaticFiles
+    _startup_logger.info("FastAPI imports successful")
+except ImportError as e:
+    _startup_logger.error(f"Failed to import fastapi: {e}")
+    raise
 
 from vl_jepa.api.models import (
     EventItem,
@@ -712,7 +736,13 @@ def _process_video(job_id: str) -> None:
 
 
 # Module-level app instance for uvicorn (used by Render deployment)
-app = create_app(use_placeholders=True, debug=False)
+_startup_logger.info("Creating FastAPI application...")
+try:
+    app = create_app(use_placeholders=True, debug=False)
+    _startup_logger.info("FastAPI application created successfully!")
+except Exception as e:
+    _startup_logger.error(f"Failed to create FastAPI application: {e}")
+    raise
 
 
 # CLI entry point

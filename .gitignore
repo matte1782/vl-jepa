@@ -61,4 +61,9 @@ tests/lecture_ex/
 # OS
 .DS_Store
 Thumbs.db
+
+# Claude Code internal files (keep local, exclude from public repo)
+.claude/
 .claude-backup/
+CLAUDE.md
+docs/.claude/

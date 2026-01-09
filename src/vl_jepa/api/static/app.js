@@ -839,10 +839,12 @@ function startPolling() {
         return;
       }
 
+      // Defensive: ensure progress is a valid number to prevent NaN%
+      const progressPercent = typeof data.progress === 'number' ? data.progress * 100 : 0;
       updateProgress(
         formatStage(data.stage),
-        data.message,
-        data.progress * 100
+        data.message || 'Processing...',
+        progressPercent
       );
 
       if (data.status === 'completed') {
@@ -872,13 +874,16 @@ function stopPolling() {
 }
 
 function updateProgress(stage, message, percent) {
-  elements.progressStage.textContent = stage;
-  elements.progressMessage.textContent = message;
-  elements.progressPercent.textContent = Math.round(percent) + '%';
-  elements.progressBar.style.width = percent + '%';
+  // Defensive: ensure percent is valid number, default to 0 if NaN/undefined
+  const safePercent = Number.isFinite(percent) ? percent : 0;
+
+  elements.progressStage.textContent = stage || 'Processing';
+  elements.progressMessage.textContent = message || 'Please wait...';
+  elements.progressPercent.textContent = Math.round(safePercent) + '%';
+  elements.progressBar.style.width = safePercent + '%';
 
   // Update ARIA
-  elements.progressSection.setAttribute('aria-valuenow', Math.round(percent));
+  elements.progressSection.setAttribute('aria-valuenow', Math.round(safePercent));
 }
 
 function formatStage(stage) {
